@@ -10,15 +10,17 @@
 
 
     &-container {
+        height: auto;
         @include container($container-widths);
+        padding-bottom: 7rem;
 
         @include grid-fluid(250px, 1.8rem);
-        padding-top: 5rem;
-        padding: 3rem;
-        height: 300px;
-        padding-bottom: 7rem;
+
+        // padding-top: 5rem;
+        // padding: 3rem;
         // TODO:  Temporalmente otro color mientras se mejora
         background-color: core.$brown;
+
         //  Se ha comprobado diversos modos de desplegar el footer
         // display: grid;
         // grid-template-columns: repeat(4, 1fr);
@@ -105,6 +107,7 @@
     }
 
     .footer-contact {
+
         .contact-item {
             line-height: 1.5rem;
             margin-bottom: 0; // reduce espacio entre email y teléfono
@@ -116,7 +119,7 @@
             padding-left: 15px;
             // align-items: center;
             gap: 1.7rem; // espacio entre íconos
-            margin-top: 3.2rem;
+            margin-top: 2rem;
 
             a {
                 font-size: 2.8rem; // tamaño visible de los íconos
@@ -132,18 +135,21 @@
     }
 
 
-    @include respond(tablet) {
+    // TODO: Revisar la importancia de este  bloque
 
-        &-branding {
-            flex-direction: column;
-            align-items: left;
+    // @include respond(tablet) {
 
-        }
+    //     &-branding {
+    //         flex-direction: column;
+    //         align-items: left;
+
+    //     }
 
 
-        img {
-            width: 100px;
-        }
-    }
+    //     img {
+    //         width: 100px;
+    //     }
+    // }
+
 
 }

@@ -1,10 +1,13 @@
+@use "sass:color";
+
 @use "../core/variables" as core;
 @use "../config/" as *;
 
 .about-us {
-  // background-color: core.$primary;
 
   @include container($container-widths);
+  border-radius: 8px;
+  background-color: color.scale(core.$brand-color-one, $lightness: +90%, $saturation: -65%);
 
   &__container {
 
@@ -17,24 +20,40 @@
     // margin-top: 2rem;
 
     // cambié el diseño/formato
-    @include grid-fluid(180px, 1.8rem);
+    @include grid-fluid(180px, 4.8rem);
 
 
     .about-us__img {
+      display: block;
       width: 100%;
+
+      picture,
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        // border-radius: 20px;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      // width: 100%;
       // background-image: url("../../../assets/img/helena-lopes-2MBtXGq4Pfs-unsplash.jpg");
       // background-image: linear-gradient(0deg,
       // rgba(0, 0, 0, 0.5),
       // rgba(0, 0, 0, 0.5)),
       // url("../../../assets/img/helena-lopes-2MBtXGq4Pfs-unsplash.jpg");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      max-width: 80%;
-      height: auto;
-      border-radius: 8px; // opcional, estética
-      display: block; // asegura que se comporte como bloque
-      margin: 0 auto; // centra horizontalmente
+      // REMOVE - si la imagen se ajusta correctamente
+      // background-repeat: no-repeat;
+      // background-position: center;
+      // background-size: cover;
+      // max-width: 100%;
+      // height: auto;
+      // border-radius: 8px; // opcional, estética
+      // display: block; // asegura que se comporte como bloque
+      // margin: 0 auto; // centra horizontalmente
+      // REMOVE - hasta aqui
     }
 
   }

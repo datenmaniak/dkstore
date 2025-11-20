@@ -1,6 +1,11 @@
+@use "sass:color";
+@use "../core/" as core;
+
+
 .dark-mode {
 
-
+    background-color: color.scale(core.$brown, $lightness: -80%, $saturation: +20%);
+    ;
 
     header.scrolled {
         background-color: #312939;
@@ -8,8 +13,20 @@
         .nav__options li a {
             color: #fff;
             color: #8f7e7e;
+            color: #f1eaea;
+
 
         }
+    }
+
+    .nav__options.active {
+        background-color: color.scale(core.$brown, $lightness: -80%, $saturation: +40%);
+
+    }
+
+    a,
+    li {
+        color: #f1eaea;
     }
 
     h1,
@@ -17,7 +34,7 @@
     h3,
     ul li a,
     p {
-        color: #8f7e7e;
+        color: #dfcaca;
     }
 
 

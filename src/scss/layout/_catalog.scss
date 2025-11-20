@@ -1,7 +1,16 @@
+@use "sass:color";
+
 @use '../core/' as core;
 @use "../config/" as *;
 
+
+
 .catalog {
+    border-radius: 8px;
+    margin: 1rem;
+
+    background-color: color.scale(core.$brand-color-three, $lightness: +90%, $saturation: -65%);
+
     width: 100%;
     @include container($container-widths);
 
