@@ -1,0 +1,174 @@
+@use "sass:color";
+@use "sass:map";
+
+@use "../core/" as *;
+
+$border-radius: 7px;
+
+// 🎯 Mixin base: define estructura común
+@mixin button-base($bg, $text: #fff) {
+    display: inline-block;
+    background-color: $bg;
+    color: $text;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none; // útil para <a>
+}
+
+// 🎯 Mixin de estados: hover, active, disabled
+@mixin button-states($bg) {
+    &:hover {
+        background-color: color.scale($bg, $lightness: -10%, $saturation: +5%);
+        transform: scale(1.03);
+    }
+
+    &:active {
+        background-color: color.scale($bg, $lightness: -20%, $saturation: +10%);
+        transform: scale(0.97);
+    }
+
+    &:disabled {
+        background-color: color.scale($bg, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Mixin de tamaños: estándar, bloque, full
+@mixin button-size($type) {
+    @if $type ==standard {
+        width: auto;
+    }
+
+    @else if $type ==block {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    @else if $type ==full {
+        width: 100%;
+        display: block;
+    }
+}
+
+// Botón primario
+.button-primary {
+    @include button-base(#7700f0);
+    @include button-states(#7700f0);
+    @include button-size(standard);
+}
+
+// Botón secundario
+.button-secondary {
+    @include button-base(#ff4081);
+    @include button-states(#ff4081);
+    @include button-size(standard);
+}
+
+// Botón ghost/outline
+.button-ghost {
+    @include button-base(transparent, #7700f0);
+    border: 2px solid #7700f0;
+
+    &:hover {
+        background-color: color.scale(#7700f0, $lightness: +40%);
+        color: #fff;
+    }
+
+    &:active {
+        background-color: #7700f0;
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: color.scale(#7700f0, $lightness: +30%, $saturation: -30%);
+        color: color.scale(#7700f0, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+
+
+// 🎯 Definición de variantes de color
+$button-variants: (
+    primary: #7700f0,
+    secondary: #ff4081,
+    danger: #e53935,
+    ghost: transparent
+);
+
+// 🎯 Estados de cada variante
+@function button-states($color) {
+    @return (default: $color,
+        hover: if($color ==transparent, color.scale(#7700f0, $lightness: +40%), color.scale($color, $lightness: -10%, $saturation: +5%)),
+        active: if($color ==transparent, #7700f0, color.scale($color, $lightness: -20%, $saturation: +10%)),
+        disabled: if($color ==transparent, color.scale(#7700f0, $lightness: +30%, $saturation: -30%), color.scale($color, $lightness: +30%, $saturation: -30%)));
+}
+
+// 🎯 Mixin base
+@mixin button($variant, $size: standard) {
+    $color: map.get($button-variants, $variant);
+    $states: button-states($color);
+
+    display: inline-block;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+
+    // Color base
+    background-color: map.get($states, default);
+    color: if($variant ==ghost, #7700f0, #fff);
+    border: if($variant ==ghost, 2px solid #7700f0, none);
+
+    // Estados
+    &:hover {
+        background-color: map.get($states, hover);
+        color: if($variant ==ghost, #fff, #fff);
+        transform: scale(1.03);
+    }
+
+    &:active {
+        background-color: map.get($states, active);
+        color: #fff;
+        transform: scale(0.97);
+    }
+
+    &:disabled {
+        background-color: map.get($states, disabled);
+        color: if($variant ==ghost, map.get($states, disabled), #fff);
+        cursor: not-allowed;
+    }
+
+    // Tamaños
+    @if $size ==block {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    @else if $size ==full {
+        width: 100%;
+        display: block;
+    }
+}
+
+// Loop para generar todas las variantes
+@each $variant, $color in $button-variants {
+    .button-#{$variant} {
+        @include button($variant);
+    }
+
+    .button-#{$variant}-block {
+        @include button($variant, block);
+    }
+
+    .button-#{$variant}-full {
+        @include button($variant, full);
+    }
+}

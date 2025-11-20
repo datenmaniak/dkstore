@@ -1,0 +1,205 @@
+@use "sass:color";
+@use "sass:map";
+
+@use "../core/" as core;
+@use "../config/" as *;
+
+$border-radius: 7px;
+
+// Hover 
+$darker: color.scale(core.$primary, $lightness: -30%, $saturation: +20%); // más oscuro
+$lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%); // más claro
+
+
+// 1) Botón por defecto (sin clases)
+button {
+    display: inline-block;
+    background-color: core.$primary; // tu color primario
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    padding: 1.50rem 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+        // background-color: color.scale(core.$primary, $lightness: +15%, $saturation: +40%);
+        background-color: $lighter;
+    }
+}
+
+// 2) Botón con clase .btn
+.btn {
+    display: inline-block;
+    background-color: core.$primary; // ejemplo color secundario
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 1.50rem 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+        background-color: color.scale(core.$primary, $lightness: +5%, $saturation: +35%);
+        background-color: $darker;
+    }
+}
+
+/* Botón que ocupa 80% del ancho de la columna */
+.btn-block {
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.btn-ghost {
+    display: inline-block;
+    background-color: transparent; // sin relleno
+    color: core.$primary; // tu color primario
+    border: .185em solid core.$primary; // borde visible
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    // padding: 1.50rem 1.25rem;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+        background-color: color.scale(core.$primary, $lightness: +40%); // relleno suave
+        color: #fff; // texto blanco
+        text-decoration: none;
+    }
+
+    &:active {
+        background-color: core.$primary; // relleno completo
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: color.scale(core.$primary, $lightness: +30%, $saturation: -30%);
+        color: color.scale(core.$primary, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Mixin base con opción de tipo
+@mixin button-base($bg, $text: #fff, $type: inline-block) {
+    display: $type; // ahora configurable
+    background-color: $bg;
+    color: $text;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    text-align: center;
+    text-decoration: none;
+
+    // Si es block, ocupa todo el ancho del contenedor
+    @if $type ==block {
+        width: 100%;
+    }
+}
+
+// 🎯 Mixin para estados
+@mixin button-states($bg, $text: #fff) {
+    &:hover {
+        background-color: color.scale($bg, $lightness: -10%, $saturation: +5%);
+        color: $text;
+    }
+
+    &:active {
+        background-color: color.scale($bg, $lightness: -20%, $saturation: +10%);
+        color: $text;
+    }
+
+    &:disabled {
+        background-color: color.scale($bg, $lightness: +30%, $saturation: -30%);
+        color: $text;
+        cursor: not-allowed;
+    }
+}
+
+@mixin button($bg: core.$primary, $text-color: #fff, $type: inline-block) {
+    display: $type;
+    background-color: $bg;
+    color: $text-color;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+
+    @if $type ==block {
+        width: 80%;
+    }
+
+    &:hover {
+        background-color: color.scale($bg, $lightness: -10%, $saturation: +5%);
+        color: $text-color;
+    }
+
+    &:active {
+        background-color: color.scale($bg, $lightness: -20%, $saturation: +10%);
+        color: $text-color;
+    }
+
+    &:disabled {
+        background-color: color.scale($bg, $lightness: +30%, $saturation: -30%);
+        color: $text-color;
+        cursor: not-allowed;
+    }
+}
+
+// Sin parámetros: usa los valores por defecto
+button {
+    @include button;
+}
+
+// Con parámetros: sobreescribes los valores
+.btn-secondary {
+    @include button(core.$primary, #fff, inline-block);
+}
+
+.btn-block {
+    @include button(core.$primary, #fff, block);
+}
+
+// 🎯 Mixin para botón ghost
+@mixin button-ghost($color: core.$primary, $type: inline-block, $width: auto) {
+    display: $type;
+    background-color: transparent;
+    color: $color;
+    border: .185em solid $color; // borde visible
+    border: 1px solid $color;
+
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    width: $width;
+
+    &:hover {
+        background-color: color.scale($color, $lightness: +40%);
+        color: #fff;
+    }
+
+    &:active {
+        background-color: $color;
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}

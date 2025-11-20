@@ -64,6 +64,7 @@
   ],
   "workbench.settings.applyToAllProfiles": [
   
+
   
   
   ],
@@ -77,5 +78,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "liveServer.settings.CustomBrowser": "firefox-aurora"
+  "liveServer.settings.CustomBrowser": "firefox-aurora",
+  "window.zoomLevel": 1
 }

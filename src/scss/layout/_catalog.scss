@@ -19,6 +19,7 @@
         @include grid-fluid(250px, 1.5rem);
         // fuerza que todas las cards tengan la misma altura
         align-items: stretch;
+        padding-bottom: 7rem;
 
         .card {
             // position: relative;

@@ -1,0 +1,45 @@
+@use "../../core/" as core;
+@use '../../config/' as *;
+
+
+
+
+.dark-mode-button {
+  right: 20px;
+  padding: 0.2rem;
+  // position: absolute;
+  width: 25px;
+  height: 25px;
+
+  // padding: 0.5rem;
+
+  -webkit-mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  mask-size: cover;
+  background-color: rgb(54, 124, 204);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
+
+.dark-mode-button.active {
+  right: 20px;
+  padding: 0.2rem;
+  // position: absolute;
+  width: 25px;
+  height: 25px;
+
+  padding: 0.5rem;
+
+  -webkit-mask: url("./../../../../assets/dark-mode/sunny-outline.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/dark-mode/sunny-outline.svg") no-repeat center;
+  mask-size: cover;
+  background-color: yellow;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+
+}

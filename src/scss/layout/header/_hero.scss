@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../../core/" as core;
 @use "../../config" as *;
 
@@ -40,7 +41,7 @@
         linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
         // linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), // capa oscura
         image-set( // versión pequeña
-          url('../../../../build/img/neon-wang-2jthqzpshb0-unsplash.webp') type('image/webp') 1x,
+          url('../../../../build/img/xianjuan-hu-uPYpcsbICI4-unsplash.webp') type('image/webp') 1x,
           url('../../../../build/img/neon-wang-2jthqzpshb0-unsplash-sm.jpg') type('image/jpeg') 1x,
 
           // versión mediana
@@ -85,18 +86,24 @@
         width: 95%;
       }
 
-      button {
-        background-color: core.$primary;
-        color: #fff;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background 0.3s ease;
+      a {
+        @include responsive-font($span-sizes);
+
       }
 
+      // button {
+      //   background-color: core.$primary;
+      //   color: #fff;
+      //   border: none;
+      //   padding: 0.75rem 1.5rem;
+      //   border-radius: 4px;
+      //   cursor: pointer;
+      //   transition: background 0.3s ease;
+      // }
+
       button:hover {
-        background: core.$bg-dark-section;
+        background-color: color.mix(core.$brown, core.$primary, 40%);
+        transform: scale(1.02);
       }
     }
   }

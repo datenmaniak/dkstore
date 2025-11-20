@@ -3,13 +3,14 @@
 
 .header {
 
+    width: 100%;
+
     position: fixed;
     top: 0;
-    width: 100%;
-    min-height: 7rem;
+    min-height: 6.476rem;
     // left: 0;
     z-index: 1000;
-    // transparente para que se vea la imagen detrás
+    // // transparente para que se vea la imagen detrás
     background-color: transparent;
     color: #fff; // texto en blanco para contraste
     transition: background-color 0.3s ease;
@@ -30,6 +31,8 @@
 
 // BEGIN header container
 .header__container {
+    // // transparente para que se vea la imagen detrás
+    // background-color: transparent;
 
     // background: core.$bg-primary;
     // Setup container y se adapta segun una lista de breakpoints
@@ -56,13 +59,16 @@
 
     }
 
-    .nav__options {
-        justify-content: flex-end; // empuja los enlaces a la derecha
+    // TODO: Revisar si es necesario este bloque
+    // .nav__options {
+    //     justify-content: flex-end; // empuja los enlaces a la derecha
 
-        li {
-            padding: 0 10px; // menos padding en tablet
-        }
-    }
+    //     li {
+    //         padding: 0 10px; // menos padding en tablet
+    //     }
+    // }
+    // REMOVE: En caso que comentar este bloque haya  sido la solución
+    //  REMOVE: para el boton Dark mode
 }
 
 

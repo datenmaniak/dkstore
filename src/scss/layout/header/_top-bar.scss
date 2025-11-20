@@ -1,0 +1,42 @@
+@use "../../core/" as core;
+@use '../../config/mixins' as *;
+
+
+nav {
+
+    .top-bar {
+        position: absolute;
+        margin-top: -1.215rem;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: flex-end;
+        // gap: 20rem;
+        // align-items: center;
+        left: 25rem;
+
+
+        p {
+            background: red;
+            color: white;
+            right: 25rem;
+            // @include responsive-font($list-sizes);
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: core.$montserrat;
+
+        }
+
+
+
+        @include respond(tablet) {
+            // background-color: rgba(245, 245, 220, 0.363);
+
+            .top-bar img {
+
+                display: none;
+            }
+        }
+
+    }
+
+}

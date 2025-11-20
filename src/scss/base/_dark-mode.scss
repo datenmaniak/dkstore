@@ -1,0 +1,61 @@
+.dark-mode {
+
+
+
+    header.scrolled {
+        background-color: #312939;
+
+        .nav__options li a {
+            color: #fff;
+            color: #8f7e7e;
+
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    ul li a,
+    p {
+        color: #8f7e7e;
+    }
+
+
+    .about-us,
+    .ads,
+    .catalog {
+        background-color: #211b27;
+    }
+
+    .footer-container {
+        color: #fff; // texto en blanco para contraste
+        background-color: #18131e;
+
+    }
+
+    article .card,
+    article .card--split,
+    article .card--minimal,
+    article .card--estandar,
+    article .card--featured {
+        background-color: #1a1a1a;
+        background-color: rgb(188, 183, 183);
+        color: #f5f5f5;
+        color: #8f7e7e;
+
+    }
+
+    html,
+    body {
+        height: 100%; // asegura que ocupen toda la altura
+        width: 100%; // asegura que ocupen todo el ancho
+        margin: 0; // elimina márgenes por defecto
+        padding: 0; // elimina padding por defecto
+    }
+
+    body {
+        background-color: #121212; // tu color de fondo
+    }
+
+
+}

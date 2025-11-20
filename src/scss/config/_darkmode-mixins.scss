@@ -1,0 +1,87 @@
+@use "sass:color";
+@use "sass:map";
+@use "../core/" as core;
+
+
+
+// Paleta modo claro
+// $colors-light: (
+//     background: #fdfdfd,
+//     text: #222,
+//     text-secondary: #555,
+//     accent: #7700F0,
+//     card: #ffffff,
+// );
+
+// // Paleta modo oscuro
+// $colors-dark: (
+//     background: #121212,
+//     text: #eaeaea,
+//     text-secondary: #b0b0b0,
+//     accent: #7700F0,
+//     card: #1e1e1e,
+// );
+// Paleta modo claro
+$colors-light: (
+    background: #fdfdfd,
+    text: black,
+    text-secondary: #555,
+    accent: white,
+    card: core.$bg-secondary,
+    header: transparent,
+    footer: core.$brown,
+);
+
+// Paleta modo oscuro
+$colors-dark: (
+    background: #121212,
+    text: #eaeaea,
+    text-secondary: #b0b0b0,
+    accent: #7700F0,
+    card: #8e8b8b,
+    header: #1a1a1a,
+    footer: #1a1a1a,
+);
+
+
+// Mixin para aplicar colores según modo
+@mixin theme-colors($theme) {
+    body {
+        background-color: map.get($theme, background);
+        color: map.get($theme, text);
+    }
+
+    a {
+        color: map.get($theme, accent);
+    }
+
+    .card {
+        background-color: map.get($theme, card);
+        color: map.get($theme, text-secondary);
+    }
+
+
+
+    // .footer-container {
+    //     background-color: map.get($theme, footer);
+    //     color: map.get($theme, text-secondary);
+    // }
+
+    li {
+        color: map.get($theme, text);
+    }
+
+
+}
+
+
+
+// Tema claro por defecto
+// body {
+//     @include theme-colors($colors-light);
+// }
+
+// // Tema oscuro cuando se activa la clase
+// body.dark-mode {
+//     @include theme-colors($colors-dark);
+// }

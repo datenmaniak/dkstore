@@ -1,4 +1,7 @@
-// Snippet mínimo para alternar la clase .scrolled
+/* 
+// Snippet mínimo para alternar la clase
+//  .scrolled 
+// */
 (function () {
     const header = document.querySelector('[data-header]');
     if (!header) return;

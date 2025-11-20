@@ -1,0 +1,50 @@
+@use "../../core/" as core;
+@use '../../config/mixins' as *;
+
+
+
+
+.dark-mode-button {
+  right: 20px;
+  padding: 0.2rem;
+  // position: absolute;
+  width: 25px;
+  height: 25px;
+  // remove: YA QUE NO FUE POSIBLE ASIGNAR COLOR A ICONO
+  // background-image: url("./../../../../assets/dark-mode/sunny-outline.svg");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // filter: invert(60%);
+  // remove
+
+  padding: 0.5rem;
+
+  -webkit-mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  mask-size: cover;
+  background-color: yellow;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: orange;
+}
+
+
+.dark-mode-button.active {
+  right: 20px;
+  padding: 0.2rem;
+  // position: absolute;
+  width: 25px;
+  height: 25px;
+
+  padding: 0.5rem;
+
+  -webkit-mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  mask-size: cover;
+  background-color: yellow;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: orange;
+}

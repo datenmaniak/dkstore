@@ -1,4 +1,8 @@
-/* toggleMenu */
+/* 
+
+toggleMenu 
+
+*/
 
 (function () {
   'use strict';
@@ -68,10 +72,5 @@
         navbar.setAttribute('aria-hidden', false);
       }
     });
-
-
   });
-
-
-
 })();

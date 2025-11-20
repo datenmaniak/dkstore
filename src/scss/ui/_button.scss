@@ -1,29 +1,36 @@
-@use '../core/' as core;
+@use "sass:color";
+@use "sass:map";
 
+@use "../core/" as *;
+
+$border-radius: 7px;
 
 button {
   all: unset;
 }
-button {
-  padding: 10px 20px;
-  font-weight: bold;
-  // background-color: core.$
-  background: core.$primary;
-  border-radius: 5px;
-  color: white;
-  font-size: .90em;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 
-}
+// Default, if there's not user's choise  as classes.- */
+// button {
+//   padding: 10px 20px;
+//   font-weight: bold;
+//   background: orangered;
+//   border-radius: 5px;
+//   color: white;
+//   font-size: 1.2rem;
+//   border: 2px solid rgba(0, 0, 0, 0.3);
+//   box-shadow: 1px solid rgba(0, 0, 0, 0.3);
+//   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 
-button:hover {
-  background-color: #5303a2;
-}
+// }
+
+// button:hover {
+//   background-color: color.mix(orangered, rgb(32, 225, 128), 10%);
+//   // transform: scale(1.02);
+//   color: black;
+// }
 
 .btn {
-  background: oklch(50.015% 0.29417 284.081);
+  background: oklch(72.445% 0.18897 50.929);
   border-radius: 8px;
   color: #fff;
   padding: 1rem;
@@ -32,5 +39,125 @@ button:hover {
 @layer base {
   .btn {
     display: inline-block;
+  }
+}
+
+@mixin btn($bg, $display) {
+  background-color: $bg;
+  color: white;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 1rem 3rem;
+  text-align: center;
+  margin-top: $margin-vertical-spacing;
+  border-radius: $border-radius;
+
+}
+
+.btn-std {
+  @include btn(green, block);
+}
+
+.btn-wide {
+  @include btn(magenta, inline-block);
+
+}
+
+
+
+$button-states: (
+  default: $primary,
+  hover: color.scale($primary, $lightness: -10%, $saturation: +5%),
+  active: color.scale($primary, $lightness: -20%, $saturation: +10%),
+  disabled: color.scale($primary, $lightness: +30%, $saturation: -30%)
+);
+
+@mixin button($state) {
+  background-color: map.get($button-states, $state);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.25s ease;
+}
+
+
+// desde aqui estoy trabajando
+
+$button-states: (
+  default: $primary,
+  hover: color.scale($primary, $lightness: -10%, $saturation: +5%),
+  active: color.scale($primary, $lightness: -20%, $saturation: +10%),
+  disabled: color.scale($primary, $lightness: +30%, $saturation: -30%)
+);
+
+$button-secondary-states: (
+  default: $secondary,
+  hover: color.scale($secondary, $lightness: -10%, $saturation: +5%),
+  active: color.scale($secondary, $lightness: -20%, $saturation: +10%),
+  disabled: color.scale($secondary, $lightness: +30%, $saturation: -30%)
+);
+
+
+.button-primary {
+  @include button(default);
+
+  &:hover {
+    @include button(hover);
+    transform: scale(1.03);
+  }
+
+  &:active {
+    @include button(active);
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    @include button(disabled);
+    cursor: not-allowed;
+  }
+}
+
+.button-secondary {
+  @include button(default, $button-secondary-states);
+
+  &:hover {
+    @include button(hover, $button-secondary-states);
+    transform: scale(1.03);
+  }
+
+  &:active {
+    @include button(active, $button-secondary-states);
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    @include button(disabled, $button-secondary-states);
+    cursor: not-allowed;
+  }
+}
+
+
+.button-ghost {
+  background-color: transparent;
+  color: $primary;
+  border: 2px solid $primary;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background-color: color.scale($primary, $lightness: +40%);
+    color: #fff;
+  }
+
+  &:active {
+    background-color: $primary;
+    color: #fff;
+  }
+
+  &:disabled {
+    border-color: color.scale($primary, $lightness: +30%, $saturation: -30%);
+    color: color.scale($primary, $lightness: +30%, $saturation: -30%);
+    cursor: not-allowed;
   }
 }

@@ -1,0 +1,101 @@
+@use "sass:color";
+@use "../core/" as core;
+@use "../config/" as *;
+
+$border-radius: 6px;
+
+// Hover helpers
+$darker: color.scale(core.$primary, $lightness: -30%, $saturation: +20%);
+$lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
+
+// 🎯 Mixin principal para botones
+@mixin button($bg: core.$primary, $text: #fff, $type: inline-block, $width: auto) {
+    display: $type;
+    background-color: $bg;
+    color: $text;
+    border: none;
+    border-radius: $border-radius;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+    width: $width;
+
+    // Centrado para block con ancho < 100%
+    @if $type ==block and $width !=100% and $width !=auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:hover {
+        background-color: color.scale($bg, $lightness: -10%, $saturation: +5%);
+    }
+
+    &:active {
+        background-color: color.scale($bg, $lightness: -20%, $saturation: +10%);
+    }
+
+    &:disabled {
+        background-color: color.scale($bg, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Mixin para ghost buttons
+@mixin button-ghost($color: core.$primary, $text: #fff, $type: inline-block, $width: auto) {
+    display: $type;
+    background-color: transparent;
+    color: $color;
+    border: 1px solid $color;
+    border-radius: $border-radius;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    width: $width;
+
+    // Centrado para block con ancho < 100%
+    @if $type ==block and $width !=100% and $width !=auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:hover {
+        background-color: color.scale($color, $lightness: +40%);
+        color: #fff;
+    }
+
+    &:active {
+        background-color: $color;
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Implementaciones
+button {
+    @include button(core.$primary, #fff);
+}
+
+.btn {
+    @include button(core.$primary, #fff);
+}
+
+.btn-secondary {
+    @include button(core.$secondary, #fff);
+}
+
+.btn-block {
+    @include button(core.$primary, #fff, block, 80%);
+}
+
+.btn-ghost {
+    @include button-ghost(core.$primary);
+}

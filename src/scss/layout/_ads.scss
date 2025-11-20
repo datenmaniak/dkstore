@@ -4,13 +4,13 @@
 .ads {
   // width: 100%;
   // background-color: core.$primary;
+  @include container($container-widths);
 
   .ads__container {
-    @include container($container-widths);
 
     margin-top: 50px;
-    background-color: core.$primary;
-    color: white;
+    // background-color: core.$primary;
+    color: black;
     text-align: justify;
     padding-top: 20px;
     padding-bottom: 30px;

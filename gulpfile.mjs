@@ -16,12 +16,12 @@ import concat from "gulp-concat";
 import terser from "gulp-terser";
 import rename from "gulp-rename";
 // import imagemin from 'gulp-imagemin';
-import newer from "gulp-newer";
+// import newer from "gulp-newer";
 // import webp from 'gulp-webp';
 // import imageminWebp from 'imagemin-webp';
 import fs from "fs";
 import path from "path";
-import imageResize from "gulp-image-resize";
+// import imageResize from "gulp-image-resize";
 import sharp from "sharp";
 
 import { deleteAsync } from "del";
@@ -157,16 +157,14 @@ function generateJSmini() {
 }
 
 // se preserva el nombre original del archivo
-function resizeImagesForWebWithSharp(done) {
+function resizeImages(done) {
+  // console.log('Processing images from ', 'src/img');
   // ensureFolder('src/img', 'carpeta de imágenes');
-  console.log('Processing images from ', paths.images);
-  ensureFolder(paths.images, 'carpeta de imágenes');
-  // ensureFolder(paths.images, "carpeta de imágenes");
-  // const inputDir = "src/img";
-  const inputDir = paths.images;
+  const inputDir = "src/img";
+  // const inputDir = paths.images;
   const outputDir = "build/img";
   const sizes = [
-    { width: 480, suffix: "-sm" },
+    { width: 300, suffix: "-sm" },
     { width: 768, suffix: "-md" },
     { width: 1000, suffix: "-lg" },
   ];
@@ -187,7 +185,9 @@ function resizeImagesForWebWithSharp(done) {
     if ([".jpg", ".jpeg", ".png"].includes(ext)) {
       sizes.forEach((size) => {
         sharp(`${inputDir}/${file}`)
-          .resize({ width: size.width })
+          .resize({
+            width: size.width, position: 'center'
+          })
           // .resize({ width: 535, fit: sharp.fit.cover })
           // .resize({ width: 1000 })
           .toFile(`${outputDir}/${base}${size.suffix}${ext}`)
@@ -284,21 +284,21 @@ function convertImagesToWebp(done) {
 //   });
 // }
 
-// REMOVE este bloque
 function watchFiles() {
   watch(paths.scss, series(buildStyles, buildStylesMini));
   watch(paths.js, series(generateJS, generateJSmini));
-  watch(paths.images, series(resizeImagesForWebWithSharp, convertImagesToWebp));
+  watch(paths.images, series(resizeImages, convertImagesToWebp));
 }
 
 console.log("🚀 Iniciando build...");
 
 const buildCSS = series(cleanCSS, buildStyles, buildStylesMini);
-const buildImages = parallel(resizeImagesForWebWithSharp, convertImagesToWebp);
+const buildImages = series(resizeImages);
+const generateWebp = series(convertImagesToWebp);
+// const buildImages = parallel(resizeImages, convertImagesToWebp);
 export const buildJS = series(cleanJS, generateJS, generateJSmini);
 
-export default parallel(buildCSS, buildJS, buildImages, watchFiles);
-// REMOVE hasta aqui
+export default parallel(buildCSS, buildJS, buildImages, generateWebp, watchFiles);
 
 // function watchFiles() {
 //   watch(paths.scss, series(buildStyles, buildStylesMini));
@@ -306,13 +306,13 @@ export default parallel(buildCSS, buildJS, buildImages, watchFiles);
 //   // Reemplazamos la línea que usaba generateJS y generateJSmini
 //   watch(paths.js, series(generateIndexJS));
 
-//   watch(paths.images, series(resizeImagesForWebWithSharp, convertImagesToWebp));
+//   watch(paths.images, series(resizeImages, convertImagesToWebp));
 // }
 
 // console.log("🚀 Iniciando build...");
 
 // const buildCSS = series(cleanCSS, buildStyles, buildStylesMini);
-// const buildImages = parallel(resizeImagesForWebWithSharp, convertImagesToWebp);
+// const buildImages = parallel(resizeImages, convertImagesToWebp);
 
 // // Reemplazamos buildJS para usar Rollup
 // export const buildJS = series(cleanJS, generateIndexJS);
@@ -324,13 +324,13 @@ export default parallel(buildCSS, buildJS, buildImages, watchFiles);
 // function watchFiles() {
 //   watch(paths.scss, series(buildStyles, buildStylesMini));
 //   watch(paths.js, series(generateIndexJS)); // ahora usa Vite
-//   watch(paths.images, series(resizeImagesForWebWithSharp, convertImagesToWebp));
+//   watch(paths.images, series(resizeImages, convertImagesToWebp));
 // }
 
 // console.log("🚀 Iniciando build...");
 
 // const buildCSS = series(cleanCSS, buildStyles, buildStylesMini);
-// const buildImages = parallel(resizeImagesForWebWithSharp, convertImagesToWebp);
+// const buildImages = parallel(resizeImages, convertImagesToWebp);
 // export const buildJS = series(cleanJS, generateIndexJS);
 
 // export default parallel(buildImages, buildCSS, buildJS, watchFiles);
