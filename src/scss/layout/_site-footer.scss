@@ -5,21 +5,21 @@
 .footer {
     width: 100%;
     color: #eee;
+    background-color: core.$brown;
     // margin-top: 2rem;
     // background-color: core.$primary;
+    @include container($container-widths);
+    height: auto;
+    padding-bottom: 7rem;
 
 
     &-container {
-        height: auto;
-        @include container($container-widths);
-        padding-bottom: 7rem;
 
         @include grid-fluid(250px, 1.8rem);
 
         // padding-top: 5rem;
         // padding: 3rem;
         // TODO:  Temporalmente otro color mientras se mejora
-        background-color: core.$brown;
 
         //  Se ha comprobado diversos modos de desplegar el footer
         // display: grid;
@@ -132,6 +132,12 @@
                 }
             }
         }
+    }
+
+    .copyright {
+        text-align: center;
+        @include responsive-font($span-sizes);
+        font-size: 1rem;
     }
 
 
