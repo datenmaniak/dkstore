@@ -128,6 +128,8 @@ toggleMenu
 // */
 (function () {
     const header = document.querySelector('[data-header]');
+    // const headerContainer = document.querySelector('.header__container');
+
     if (!header) return;
 
     const SCROLL_THRESHOLD = 10; // píxeles desde el top para activar
@@ -135,6 +137,7 @@ toggleMenu
     const onScroll = () => {
         if (window.scrollY > SCROLL_THRESHOLD) {
             header.classList.add('scrolled');
+            // headerContainer.classList.add('home');
         } else {
             header.classList.remove('scrolled');
         }
@@ -143,4 +146,23 @@ toggleMenu
     // Inicial y listeners
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Snippet para manejar flag 'home' en el headerContainer
+
+(function () {
+    document.addEventListener("DOMContentLoaded", () => {
+        const headerContainer = document.querySelector(".header__container");
+        if (!headerContainer) return; // seguridad: si no existe, no hace nada
+
+        // Detecta la página actual
+        const currentPage = window.location.pathname.split("/").pop();
+
+        // Aplica la clase 'home' solo en index.php o raíz
+        if (currentPage === "index.php" || currentPage === "") {
+            headerContainer.classList.remove("bg-active");
+        } else {
+            headerContainer.classList.add("bg-active");
+        }
+    });
 })();

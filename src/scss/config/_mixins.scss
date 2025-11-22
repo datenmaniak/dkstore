@@ -8,7 +8,7 @@
 $breakpoints: (
     // Teléfonos muy pequeños (modo retrato)
     obsolete-phone: 250px,
-    phone-small: 320px,
+    small-phone: 320px,
     // Teléfonos estándar
     phone: 576px,
     // Tablets verticales
@@ -39,6 +39,8 @@ $breakpoints: (
 
 // - anchos máximos del container standard 
 $container-widths: (
+    obsolete-phone: 237px,
+    small-phone: 304px,
     phone: 540px,
     tablet: 729px,
     laptop: 960px,
@@ -147,34 +149,52 @@ $container-narrow-widths: (
 // Tamaños base para listas no ordenadas y ordenadas
 $list-sizes: (
     obsolete-phone: 1.5rem,
-    phone-small: 1.5rem,
+    small-phone: 1.5rem,
     phone: 1.9rem,
     tablet: 1.3rem,
     laptop: 1.2rem,
     desktop: 1.6rem
 );
+// Tamaños para listas anidadas (un poco más pequeñas)
+$nested-list-sizes: (
+    obsolete-phone: 1.4rem,
+    small-phone: 1.4rem,
+    phone: 1.8rem,
+    tablet: 1.2rem,
+    laptop: 1.1rem,
+    desktop: 1.5rem
+);
 // Definimos los tamaños para h1
 $h1-sizes: (
     obsolete-phone: 1.5rem,
-    phone-small: 2.2rem,
+    small-phone: 2.2rem,
     phone: 1.8rem,
     tablet: 2.8rem,
     laptop: 3.8rem,
     desktop: 4.7rem
 );
-// Definimos los tamaños para h1
+// Definimos los tamaños para h2
 $h2-sizes: (
     obsolete-phone: 1.5rem,
-    phone-small: 1.9rem,
+    small-phone: 1.9rem,
     phone: 1.9rem,
     tablet: 2rem,
     laptop: 2.7rem,
     desktop: 3.1rem
 );
+// Definimos los tamaños para h3
+$h3-sizes: (
+    obsolete-phone: 1.2rem,
+    small-phone: 1.595rem,
+    phone: 1.885rem,
+    tablet: 1.825rem,
+    laptop: 1.735rem,
+    desktop: 1.875rem
+);
 // Definimos los tamaños para Título de secciones
 $section-titles-sizes: (
     obsolete-phone: 1.8rem,
-    phone-small: 2.6rem,
+    small-phone: 2.6rem,
     phone: 3.4rem,
     tablet: 3.8rem,
     laptop: 4rem,
@@ -184,26 +204,18 @@ $section-titles-sizes: (
 
 // Ejemplo de mapa de tamaños para párrafos
 $p-sizes: (
-    obsolete-phone: 1.2rem,
-    phone-small: 1.35rem,
-    phone: 1.45rem,
-    tablet: 1.8rem,
-    laptop: 2rem,
-    desktop: 2.2rem
+    obsolete-phone: 1.135rem,
+    small-phone: 1.395rem,
+    phone: 1.595rem,
+    tablet: 1.445rem,
+    laptop: 1.410rem,
+    desktop: 1.395rem
 );
-// Tamaños para listas anidadas (un poco más pequeñas)
-$nested-list-sizes: (
-    obsolete-phone: 1.8rem,
-    phone-small: 0.9rem,
-    phone: 0.95rem,
-    tablet: 1rem,
-    laptop: 1.05rem,
-    desktop: 1.1rem
-);
+
 /* / Tamaños de fuente para los enlaces del nav */
 $nav-font-sizes: (
     obsolete-phone: 1rem,
-    phone-small: 1rem,
+    small-phone: 1rem,
     phone: 1.1rem,
     tablet: 1.2rem,
     laptop: 1.3rem,
@@ -211,26 +223,36 @@ $nav-font-sizes: (
 );
 // Tamaños responsivos para <span>
 $span-sizes: (
-    phone-small: 1.2rem,
+    small-phone: 1.2rem,
     // -0.1rem respecto a párrafo
     phone: 1.5rem,
     // -0.1rem
-    tablet: 1.5rem,
+    tablet: 1.775rem,
     // -0.1rem
     laptop: 1.7rem,
     // -0.1rem
-    desktop: 1.8rem // -0.1rem
+    desktop: 1.555rem
 );
 // Tamaños responsivos para <span> usado en branding/header
 $span-brand-sizes: (
     obsolete-phone: 1.4rem,
     // un poco más pequeño que h1
-    phone-small: 1.5rem,
+    small-phone: 1.5rem,
     phone: 1.6rem,
     tablet: 1.50rem,
     laptop: 1.70rem,
     desktop: 1.7rem
 );
+// Tamaños responsivos para <small> utilizable en branding, header, footer. etc...
+$small-font-sizes: (
+    obsolete-phone: .575rem,
+    small-phone: 0.975rem,
+    phone: 0.995rem,
+    tablet: 1.5rem,
+    laptop: 1.2rem,
+    desktop: 1.375rem
+);
+
 
 // Mixin reutilizable para tipografía responsiva
 @mixin responsive-font($sizes) {

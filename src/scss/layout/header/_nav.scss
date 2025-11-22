@@ -7,16 +7,34 @@ nav {
   flex: 1; // nav ocupa el resto del ancho
 }
 
+.header_container.bg-active,
+
+// oscurece las fuentes al bajar
 .header.scrolled .nav__options li a {
   color: black; // estado al hacer scroll: color base
+
 }
 
-.header.scrolled .nav__login a {
-  color: #fff;
+
+// TODO: descomentar
+// .header.scrolled .nav__login a {
+//   color: #fff;
+// }
+
+// ajusta el contraste para adaptar al fondo
+.header__container.bg-active ul li a {
+  color: core.$brand-color-three;
+}
+
+// Dark mode icon style by default
+.header .dark-mode-button {
+  background-color: rgb(144, 159, 159);
 }
 
 .header.scrolled .dark-mode-button {
-  background-color: blue;
+  background-color: rgb(17, 4, 211);
+
+
 }
 
 .header.scrolled .dark-mode-button.active {
@@ -175,10 +193,11 @@ nav {
 
   // /* Default font menu */
   li a {
+    // REMOVE -- trabajando aqui
     color: #fff;
     @include responsive-font($list-sizes);
     font-weight: 500;
-    font-size: core.$alt-font;
+    // font-size: core.$alt-font;
     border-radius: 5px;
     padding: 0.5em 0.7rem;
   }

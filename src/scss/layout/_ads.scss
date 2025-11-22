@@ -6,7 +6,8 @@
   // background-color: core.$primary;
   @include container($container-widths);
 
-  .ads__container {
+  &__container {
+    border-radius: core.$high-border-radius;
 
     margin-top: 50px;
     // background-color: core.$primary;

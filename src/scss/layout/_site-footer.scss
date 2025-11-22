@@ -3,6 +3,7 @@
 
 
 .footer {
+    margin-top: 1rem;
     width: 100%;
     color: #eee;
     background-color: core.$brown;
@@ -10,12 +11,14 @@
     // background-color: core.$primary;
     @include container($container-widths);
     height: auto;
-    padding-bottom: 7rem;
+    padding-bottom: 3rem;
+
+    border-radius: core.$section-border-radius;
 
 
     &-container {
 
-        @include grid-fluid(250px, 1.8rem);
+        @include grid-fluid(250px, 0.875rem);
 
         // padding-top: 5rem;
         // padding: 3rem;
@@ -39,7 +42,8 @@
     &-links,
     &-contact {
         margin-bottom: 0;
-        padding-left: 1rem;
+        padding-left: 0.475rem;
+        margin-left: 1.950rem;
     }
 
     &-column {
@@ -60,6 +64,9 @@
 
             li {
                 margin-bottom: 0.15rem;
+                @include responsive-font($nested-list-sizes);
+                // @include responsive-font($small-font-sizes);
+
             }
 
             a {
@@ -77,7 +84,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     img {
@@ -109,9 +116,12 @@
     .footer-contact {
 
         .contact-item {
-            line-height: 1.5rem;
+            line-height: 2rem;
             margin-bottom: 0; // reduce espacio entre email y teléfono
             font-size: 1.3rem;
+            // @include responsive-font($small-font-sizes);
+            @include responsive-font($nested-list-sizes);
+
         }
 
         .social-icons {
@@ -135,9 +145,14 @@
     }
 
     .copyright {
+        //* Línea delgada y sutil en la parte superior */
+        border-top: 1px solid rgba(121, 119, 119, 0.7);
         text-align: center;
-        @include responsive-font($span-sizes);
-        font-size: 1rem;
+
+        small {
+            @include responsive-font($small-font-sizes);
+            // font-size: 1rem;
+        }
     }
 
 

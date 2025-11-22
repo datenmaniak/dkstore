@@ -184,8 +184,9 @@ header {
 }
 
 section {
-    margin-top: math.div(core.$margin-vertical-spacing, 2);
+    // margin-top: math.div(core.$margin-vertical-spacing, 2);
     // margin-bottom: math.div(core.$margin-vertical-spacing,2);
     margin-bottom: core.$margin-vertical-spacing;
+    margin-top: core.$margin-vertical-spacing;
 
 }

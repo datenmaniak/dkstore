@@ -8,10 +8,17 @@ $blue: #3e89ac;
 $gray: #b4cad7;
 
 
-// Color branding
-$brand-color-one: #7700F0;
+// Color branding 
+$brand-color-one: #ff0000;
 $brand-color-two: #3e89ac;
 $brand-color-three: #392a46;
+
+// Oficial branding - Palette
+$brand-primary-color: #7700F0;
+$brand-secondary-color: #3e89ac;
+$brand-alternate-color: #B1A8B9;
+$brand-light-color: #B4CAD7;
+$brand-dark-color: #392A46;
 
 // /* fondos */
 $bg-alt-pri: rgba(243, 237, 237, 0.7);
@@ -28,4 +35,9 @@ $color-badge-text: #000;
 $color-button-bg: #333;
 $color-button-text: #fff;
 
-$margin-vertical-spacing: 0rem;
+$margin-vertical-spacing: 0.575rem;
+
+// Border radius sizes
+$card-border-radius: 8px;
+$section-border-radius: 10px;
+$high-border-radius: 20px;

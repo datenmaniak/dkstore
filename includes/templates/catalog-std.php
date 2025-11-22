@@ -1,3 +1,8 @@
+<?php
+
+
+include  'includes/templates/color-palette.php' ?>;
+
 <div id="products"></div>
 <section id="catalog" class="catalog">
     <h2>Catálogo de productos</h2>

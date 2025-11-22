@@ -1,7 +1,7 @@
 @use "../../core/" as core;
 @use '../../config/' as *;
 
-
+// Show the dark mode button at navigation bar
 
 
 .dark-mode-button {
@@ -13,9 +13,12 @@
 
   // padding: 0.5rem;
 
-  -webkit-mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  // -webkit-mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  // -webkit-mask-size: cover;
+  // mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  -webkit-mask: url("./../../../../assets/dark-mode/moon-clear-fill.svg") no-repeat center;
   -webkit-mask-size: cover;
-  mask: url("./../../../../assets/dark-mode/moon-line.svg") no-repeat center;
+  mask: url("./../../../../assets/dark-mode/moon-clear-fill.svg") no-repeat center;
   mask-size: cover;
   background-color: rgb(54, 124, 204);
   cursor: pointer;

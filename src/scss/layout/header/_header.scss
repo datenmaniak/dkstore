@@ -1,18 +1,19 @@
 @use "../../core/" as core;
 @use "../../config" as *;
 
+// Control the header background when no Home
+
 .header {
-
     width: 100%;
-
     position: fixed;
     top: 0;
     min-height: 6.476rem;
     // left: 0;
     z-index: 1000;
-    // // transparente para que se vea la imagen detrás
+
+    // Default when currentPage is home
+    // color: #fff; // texto en blanco para contraste
     background-color: transparent;
-    color: #fff; // texto en blanco para contraste
     transition: background-color 0.3s ease;
 
     // opcional: al hacer scroll, darle fondo sólido
@@ -31,6 +32,18 @@
 
 // BEGIN header container
 .header__container {
+
+
+    &.bg-active {
+        background-color: rgba(255, 255, 255, 0.9); // casi sólido, ajusta opacidad
+        background-color: core.$bg-primary;
+        // TODO: Remover esto al solucionar el asunto de color de fuentes de menu
+        // background-color: rgba(13, 0, 255, 0.553);
+    }
+
+
+
+
     // // transparente para que se vea la imagen detrás
     // background-color: transparent;
 

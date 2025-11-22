@@ -5,8 +5,9 @@
 
 
 
+
 .catalog {
-    border-radius: 8px;
+    border-radius: core.$section-border-radius;
     margin: 1rem;
 
     background-color: color.scale(core.$brand-color-three, $lightness: +90%, $saturation: -65%);
@@ -18,6 +19,7 @@
     h2 {
         text-align: center;
         font-family: core.$secondary-font;
+        color: core.$brand-dark-color;
         font-weight: 400;
         @include responsive-font($section-titles-sizes);
 
@@ -64,8 +66,10 @@
 
             &__title {
                 margin: 1rem 0 0.5rem;
-                font-size: 1.85rem;
-                font-family: core.$alt-font;
+                // font-size: 1.85rem;
+                // font-family: core.$alt-font;
+                @include responsive-font($h3-sizes);
+                color: core.$brand-dark-color;
             }
 
             &__description {
@@ -73,6 +77,8 @@
                 color: core.$brown;
                 margin-bottom: 1rem;
                 font-family: core.$alt-font;
+                @include responsive-font($p-sizes);
+
             }
 
             &:hover {
@@ -82,7 +88,8 @@
 
             // Variantes
             &--standard {
-                background-color: #fff;
+                background-color: color.scale(core.$brand-alternate-color, $lightness: +90%);
+
 
                 .card__picture {
                     display: block;
@@ -104,6 +111,17 @@
                 // opcional: si quieres que solo la imagen toque el borde superior
                 .card__picture {
                     margin-top: 0rem; // compensa el padding de la tarjeta
+                }
+
+                // Title and description 
+                h3 {
+                    @include responsive-font($h3-sizes);
+                    color: core.$brand-dark-color;
+                }
+
+                p {
+                    @include responsive-font($p-sizes);
+                    // font-family: core.$alt-font;
                 }
 
             }
@@ -194,7 +212,8 @@
             }
 
             &--minimal {
-                // background: transparent;
+                background-color: color.scale(core.$brand-dark-color, $lightness: +90%);
+
                 border: none;
                 border: 1px solid core.$bg-secondary;
 

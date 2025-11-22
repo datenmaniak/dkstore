@@ -16,15 +16,17 @@
         </div>
 
         <!-- Menú -->
+
         <div class="footer-column footer-menu">
             <h3>Menú</h3>
             <ul>
-                <li><a href="/">Inicio</a></li>
+                <li><a href="index.php">Inicio</a></li>
                 <li><a href="#">Servicios</a></li>
                 <li><a href="#">Proyectos</a></li>
                 <li><a href="#">Contacto</a></li>
             </ul>
         </div>
+
 
         <!-- Otras secciones -->
         <div class="footer-column footer-links">
@@ -63,7 +65,7 @@
 
         </div>
     </div>
-    <p class="copyright"> &copy; datenmaniak - Derechos Reservados <?php echo date('Y'); ?></p>
+    <p class="copyright "> <small>&copy; datenmaniak - Derechos Reservados <?php echo date('Y'); ?></small></p>
 </footer>
 
 <script src="build/js/bundle.js"></script>
