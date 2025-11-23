@@ -5,11 +5,11 @@
 $border-radius: 6px;
 
 // Hover helpers
-$darker: color.scale(core.$primary, $lightness: -30%, $saturation: +20%);
-$lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
+$darker: color.scale(core.$brand-primary-color, $lightness: -30%, $saturation: +20%);
+$lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: +5%);
 
 // 🎯 Mixin principal para botones
-@mixin button($bg: core.$primary, $text: #fff, $type: inline-block, $width: auto) {
+@mixin button($bg: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
     display: $type;
     background-color: $bg;
     color: $text;
@@ -29,7 +29,11 @@ $lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
     }
 
     &:hover {
-        background-color: color.scale($bg, $lightness: -10%, $saturation: +5%);
+        background-color: color.scale($bg, $lightness: -30%);
+        // box-shadow: 10px 12px 24px rgba(60, 60, 60, 0.35);
+        // box-shadow: 1px 2px 15px color.scale($bg, $lightness: -10%);
+        // transform: translateY(+7px);
+        // background-color: color.scale($bg, $lightness: -80%, $saturation: -95%);
     }
 
     &:active {
@@ -43,7 +47,7 @@ $lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
 }
 
 // 🎯 Mixin para ghost buttons
-@mixin button-ghost($color: core.$primary, $text: #fff, $type: inline-block, $width: auto) {
+@mixin button-ghost($color: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
     display: $type;
     background-color: transparent;
     color: $color;
@@ -63,7 +67,7 @@ $lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
     }
 
     &:hover {
-        background-color: color.scale($color, $lightness: +40%);
+        background-color: color.scale($color, $lightness: +10%);
         color: #fff;
     }
 
@@ -81,21 +85,21 @@ $lighter: color.scale(core.$primary, $lightness: +15%, $saturation: +5%);
 
 // 🎯 Implementaciones
 button {
-    @include button(core.$primary, #fff);
+    @include button(core.$brand-primary-color, #fff);
 }
 
 .btn {
-    @include button(core.$primary, #fff);
+    @include button(core.$brand-primary-color, #fff);
 }
 
 .btn-secondary {
-    @include button(core.$secondary, #fff);
+    @include button(core.$brand-secondary-color, #fff);
 }
 
 .btn-block {
-    @include button(core.$primary, #fff, block, 80%);
+    @include button(core.$brand-primary-color, #fff, block, 80%);
 }
 
 .btn-ghost {
-    @include button-ghost(core.$primary);
+    @include button-ghost(core.$brand-primary-color);
 }

@@ -427,6 +427,86 @@ ul {
   list-style-type: disc;
 }
 
+.mt-5 {
+  margin-top: 5rem;
+}
+
+.mt-10 {
+  margin-top: 10rem;
+}
+
+.mt-15 {
+  margin-top: 15rem;
+}
+
+.mt-20 {
+  margin-top: 20rem;
+}
+
+.mt-30 {
+  margin-top: 25rem;
+}
+
+.m-5 {
+  margin-top: 5px;
+}
+
+.m-10 {
+  margin-top: 10px;
+}
+
+.m-15 {
+  margin-top: 15px;
+}
+
+.m-20 {
+  margin-top: 20px;
+}
+
+.m-30 {
+  margin-top: 30px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mb-5 {
+  margin-bottom: 5rem;
+}
+
+.mb-10 {
+  margin-bottom: 10rem;
+}
+
+.mb-15 {
+  margin-bottom: 15rem;
+}
+
+.mb-20 {
+  margin-bottom: 20rem;
+}
+
+.mb-30 {
+  margin-bottom: 25px;
+}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -487,6 +567,7 @@ body {
   line-height: 1.5;
   margin-bottom: 1.6rem;
   background: #f2f1f4;
+  padding-top: 100px;
 }
 
 p {
@@ -621,7 +702,7 @@ section {
 
 button {
   display: inline-block;
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -633,19 +714,19 @@ button {
   width: auto;
 }
 button:hover {
-  background-color: rgb(229.5, 0, 0);
+  background-color: rgb(83.3, 0, 168);
 }
 button:active {
-  background-color: #cc0000;
+  background-color: rgb(95.2, 0, 192);
 }
 button:disabled {
-  background-color: rgb(228.225, 103.275, 103.275);
+  background-color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 
 .btn {
   display: inline-block;
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -657,13 +738,13 @@ button:disabled {
   width: auto;
 }
 .btn:hover {
-  background-color: rgb(229.5, 0, 0);
+  background-color: rgb(83.3, 0, 168);
 }
 .btn:active {
-  background-color: #cc0000;
+  background-color: rgb(95.2, 0, 192);
 }
 .btn:disabled {
-  background-color: rgb(228.225, 103.275, 103.275);
+  background-color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 
@@ -681,7 +762,7 @@ button:disabled {
   width: auto;
 }
 .btn-secondary:hover {
-  background-color: rgb(53.01, 124.3145454545, 157.59);
+  background-color: rgb(43.4, 95.9, 120.4);
 }
 .btn-secondary:active {
   background-color: rgb(44.64, 111.4036363636, 142.56);
@@ -693,7 +774,7 @@ button:disabled {
 
 .btn-block {
   display: block;
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -707,21 +788,21 @@ button:disabled {
   margin-right: auto;
 }
 .btn-block:hover {
-  background-color: rgb(229.5, 0, 0);
+  background-color: rgb(83.3, 0, 168);
 }
 .btn-block:active {
-  background-color: #cc0000;
+  background-color: rgb(95.2, 0, 192);
 }
 .btn-block:disabled {
-  background-color: rgb(228.225, 103.275, 103.275);
+  background-color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 
 .btn-ghost {
   display: inline-block;
   background-color: transparent;
-  color: #ff0000;
-  border: 1px solid #ff0000;
+  color: #7700F0;
+  border: 1px solid #7700F0;
   border-radius: 6px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
@@ -731,16 +812,16 @@ button:disabled {
   width: auto;
 }
 .btn-ghost:hover {
-  background-color: #ff6666;
+  background-color: rgb(132.4875, 12, 255);
   color: #fff;
 }
 .btn-ghost:active {
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: #fff;
 }
 .btn-ghost:disabled {
-  border-color: rgb(228.225, 103.275, 103.275);
-  color: rgb(228.225, 103.275, 103.275);
+  border-color: rgb(159.94875, 94.35, 226.65);
+  color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 
@@ -749,6 +830,7 @@ button:disabled {
   position: fixed;
   top: 0;
   min-height: 6.476rem;
+  height: 100px;
   z-index: 1000;
   background-color: transparent;
   transition: background-color 0.3s ease;
@@ -985,7 +1067,7 @@ nav {
   margin-right: auto;
 }
 .nav__options.active .nav__login a:hover {
-  background-color: rgb(229.5, 0, 0);
+  background-color: rgb(178.5, 0, 0);
 }
 .nav__options.active .nav__login a:active {
   background-color: #cc0000;
@@ -1077,8 +1159,8 @@ nav {
   font-family: "Inter", sans-serif;
   display: inline-block;
   background-color: transparent;
-  color: #ff0000;
-  border: 1px solid #ff0000;
+  color: #7700F0;
+  border: 1px solid #7700F0;
   border-radius: 6px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
@@ -1088,16 +1170,16 @@ nav {
   width: auto;
 }
 .nav__options .nav__login a:hover {
-  background-color: #ff6666;
+  background-color: rgb(132.4875, 12, 255);
   color: #fff;
 }
 .nav__options .nav__login a:active {
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: #fff;
 }
 .nav__options .nav__login a:disabled {
-  border-color: rgb(228.225, 103.275, 103.275);
-  color: rgb(228.225, 103.275, 103.275);
+  border-color: rgb(159.94875, 94.35, 226.65);
+  color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 .nav__options .nav__login a {
@@ -2413,4 +2495,121 @@ nav .top-bar p {
   .footer .copyright small {
     font-size: 1.375rem;
   }
+}
+
+.admin-dashboard {
+  margin-top: 300px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+@media (min-width: 250px) {
+  .admin-dashboard {
+    max-width: 237px;
+  }
+}
+@media (min-width: 320px) {
+  .admin-dashboard {
+    max-width: 304px;
+  }
+}
+@media (min-width: 576px) {
+  .admin-dashboard {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .admin-dashboard {
+    max-width: 729px;
+  }
+}
+@media (min-width: 992px) {
+  .admin-dashboard {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .admin-dashboard {
+    max-width: 1140px;
+  }
+}
+.admin-dashboard {
+  display: grid;
+  grid-template-areas: "sidebar main";
+  grid-template-columns: 250px 1fr;
+  min-height: calc(100vh - 8rem);
+}
+.admin-dashboard .sidebar {
+  grid-area: sidebar;
+  background: #392A46;
+  background-color: rgb(39.9, 29.4, 49);
+  color: white;
+  padding: 1rem;
+}
+.admin-dashboard .sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+.admin-dashboard .sidebar nav ul li {
+  margin-bottom: 10px;
+}
+.admin-dashboard .sidebar nav ul li button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  padding: 8px;
+  cursor: pointer;
+}
+.admin-dashboard .sidebar nav ul li button:hover {
+  background-color: rgb(77.2553571429, 56.925, 94.875);
+}
+.admin-dashboard .main {
+  grid-area: main;
+  padding: 2rem;
+}
+.admin-dashboard .main h2 {
+  background-color: rgb(187.5, 207.3, 219);
+}
+.admin-dashboard .main #crud-area {
+  background: #f9f9f9;
+  background-color: rgb(187.5, 207.3, 219);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.crud-actions {
+  margin-bottom: 1rem;
+}
+.crud-actions button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.crud-actions button.add {
+  background: green;
+  color: #fff;
+}
+.crud-actions button.update {
+  background: orange;
+  color: #fff;
+}
+.crud-actions button.delete {
+  background: red;
+  color: #fff;
+}
+
+.crud-list {
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+.crud-list ul {
+  list-style: none;
+  padding: 0;
+}
+.crud-list ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
 }

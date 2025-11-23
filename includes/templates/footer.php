@@ -6,7 +6,7 @@
     <div class="footer-container">
         <!-- Branding -->
         <div class="footer-column footer-branding">
-            <img src="./build/img/9391712.webp" alt="Logo" />
+            <img src="/build/img/9391712.webp" alt="Logo" />
             <a href="/">
                 <span>DK Electronic</span>
                 <!-- <h2><span>ACME Company</span></h2> -->
@@ -20,7 +20,7 @@
         <div class="footer-column footer-menu">
             <h3>Menú</h3>
             <ul>
-                <li><a href="index.php">Inicio</a></li>
+                <li><a href="/index.php">Inicio</a></li>
                 <li><a href="#">Servicios</a></li>
                 <li><a href="#">Proyectos</a></li>
                 <li><a href="#">Contacto</a></li>
@@ -68,7 +68,7 @@
     <p class="copyright "> <small>&copy; datenmaniak - Derechos Reservados <?php echo date('Y'); ?></small></p>
 </footer>
 
-<script src="build/js/bundle.js"></script>
+<script src="/build/js/bundle.js"></script>
 
 </body>
 

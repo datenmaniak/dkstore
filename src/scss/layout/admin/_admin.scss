@@ -1,0 +1,65 @@
+@use "sass:color";
+
+@use '../../core/' as core;
+@use '../../config/' as *;
+
+.admin-dashboard {
+    margin-top: 300px; // empuja el grid hacia abajo
+    @include container($container-widths);
+
+
+    display: grid;
+    grid-template-areas: "sidebar main";
+    grid-template-columns: 250px 1fr;
+    min-height: calc(100vh - 8rem); // ajusta según el header/footer global
+
+    .sidebar {
+        grid-area: sidebar;
+        background: core.$brand-dark-color;
+        background-color: color.scale(core.$brand-dark-color, $lightness: -30%);
+
+        color: white;
+        padding: 1rem;
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                button {
+                    width: 100%;
+                    background: none;
+                    border: none;
+                    color: white;
+                    text-align: left;
+                    padding: 8px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: color.scale(core.$brand-dark-color, $lightness: +10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .main {
+        grid-area: main;
+        padding: 2rem;
+
+        h2 {
+            background-color: color.scale(core.$brand-light-color, $lightness: +10%);
+
+        }
+
+        #crud-area {
+            background: #f9f9f9;
+            background-color: color.scale(core.$brand-light-color, $lightness: +10%);
+
+            border-radius: 8px;
+            padding: 1rem;
+        }
+    }
+}

@@ -1,0 +1,15 @@
+@use "sass:color";
+@use "../core/" as core;
+@use "../config/" as *;
+
+
+
+main {
+
+    h2 {
+        border-top: 1px solid core.$brand-light-color;
+        @include responsive-font($h2-sizes);
+        border-bottom: 1px solid core.$brand-light-color;
+    }
+
+}

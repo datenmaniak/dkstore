@@ -45,6 +45,27 @@
     }
 })();
 
+
+/* admin dashboard */
+
+(function () {
+    document.querySelectorAll('.sidebar button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.dataset.section;
+
+            fetch(`/admin/${section}/${section}.php`)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('crud-area').innerHTML = html;
+                })
+                .catch(err => {
+                    document.getElementById('crud-area').innerHTML = "<p>Error al cargar la sección.</p>";
+                    console.error(err);
+                });
+        });
+    });
+})();
+
 /* 
 
 toggleMenu 
@@ -164,5 +185,14 @@ toggleMenu
         } else {
             headerContainer.classList.add("bg-active");
         }
+
+        // any other index without hero, no count!
+        // if (currentPage === "/admin/index.php") {
+        //     // if (currentPage === "/admin/index.php" || currentPage === "") {
+        //     headerContainer.classList.add("bg-active");
+        // } else {
+        //     headerContainer.classList.remove("bg-active");
+        // }
+
     });
 })();

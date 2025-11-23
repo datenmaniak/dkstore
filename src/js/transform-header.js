@@ -14,5 +14,14 @@
         } else {
             headerContainer.classList.add("bg-active");
         }
+
+        // any other index without hero, no count!
+        // if (currentPage === "/admin/index.php") {
+        //     // if (currentPage === "/admin/index.php" || currentPage === "") {
+        //     headerContainer.classList.add("bg-active");
+        // } else {
+        //     headerContainer.classList.remove("bg-active");
+        // }
+
     });
 })();

@@ -1,8 +1,10 @@
 <?php
 
 
-include  'includes/templates/header.php';
-// include  'includes/templates/hero.php';
-include  'includes/templates/about-us.php';
-include  'includes/templates/catalog-featured.php';
-include  'includes/templates/footer.php';
+require_once __DIR__ . '/includes/functions.php';
+
+includeTemplate('header');
+includeTemplate('about-us');
+includeTemplate('catalog-std');
+includeTemplate('catalog-featured');
+includeTemplate('footer');

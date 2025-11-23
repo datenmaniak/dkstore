@@ -305,3 +305,87 @@ ol {
 ul {
     list-style-type: disc;
 }
+
+//  M a r g e n e s  - top
+.mt-5 {
+    margin-top: 5rem;
+}
+
+.mt-10 {
+    margin-top: 10rem;
+}
+
+.mt-15 {
+    margin-top: 15rem;
+}
+
+.mt-20 {
+    margin-top: 20rem;
+}
+
+.mt-30 {
+    margin-top: 25rem;
+}
+
+// Definimos un mapa con los tamaños de margen
+$margin-sizes: (
+    5: 5px,
+    10: 10px,
+    15: 15px,
+    20: 20px,
+    30: 30px
+);
+
+// Mixin para generar clases de margen superior
+@mixin margin-top-classes($sizes) {
+    @each $key, $value in $sizes {
+        .m-#{$key} {
+            margin-top: $value;
+        }
+    }
+}
+
+// Lo invocamos con nuestro mapa
+@include margin-top-classes($margin-sizes);
+
+//  Botton
+// Definimos un mapa con los tamaños de margen
+$margin-sizes: (
+    5: 5px,
+    10: 10px,
+    15: 15px,
+    20: 20px,
+    30: 30px
+);
+
+// Mixin para generar clases de margen inferior
+@mixin margin-bottom-classes($sizes) {
+    @each $key, $value in $sizes {
+        .mb-#{$key} {
+            margin-bottom: $value;
+        }
+    }
+}
+
+// Lo invocamos con nuestro mapa
+@include margin-bottom-classes($margin-sizes);
+
+.mb-5 {
+    margin-bottom: 5rem;
+}
+
+.mb-10 {
+    margin-bottom: 10rem;
+}
+
+.mb-15 {
+    margin-bottom: 15rem;
+}
+
+.mb-20 {
+    margin-bottom: 20rem;
+}
+
+.mb-30 {
+    margin-bottom: 25px;
+}

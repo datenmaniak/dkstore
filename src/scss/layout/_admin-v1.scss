@@ -1,0 +1,80 @@
+@use "sass:color";
+@use "../core/" as core;
+@use "../config/" as *;
+
+
+
+
+.admin-layout {
+    position: absolute;
+    top: 8rem;
+    @include container($container-widths);
+    background-color: lightblue;
+
+
+    .admin-grid {
+
+        @include grid(2, 1.8rem);
+    }
+
+
+    .sidebar {
+
+
+        // h2 {
+        //     // border-top: 1px solid core.$brand-light-color;
+        //     @include responsive-font($h2-sizes);
+        //     // border-bottom: 1px solid core.$brand-light-color;
+        // }
+
+        background-color: magenta;
+
+        margin-left: 0;
+
+        // position: absolute;
+        // top: 8rem;
+        width: 250px;
+        // background-color: core.$brand-dark-color;
+        background-color: color.scale(core.$brand-dark-color, $lightness: -20%, $saturation: +10%);
+
+        color: whitesmoke;
+        // height: auto;
+        padding: 20px;
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: aqua;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                a {
+                    color: yellow;
+                }
+
+                .submenu {
+                    margin-left: 15px;
+                    margin-top: 5px;
+
+                    li a {
+                        font-size: 14px;
+                        // @include link-style($color-subtext, $color-text);
+                        color: white;
+
+                    }
+                }
+            }
+        }
+    }
+
+    main {
+        flex: 1;
+        padding: 20px;
+    }
+}
