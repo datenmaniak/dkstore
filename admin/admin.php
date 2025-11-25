@@ -10,7 +10,7 @@ includeTemplate('header');
         <nav class="mt-10">
             <h3>Dashboard</h3>
             <ul>
-                <li><button data-section="proveedores">Proveedores</button></li>
+                <li><button class="btn" data-section="proveedores">Proveedores</button></li>
                 <li><button data-section="categorias">Categorías</button></li>
                 <li><button data-section="productos">Productos</button></li>
             </ul>

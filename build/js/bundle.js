@@ -79,15 +79,18 @@ toggleMenu
     const menuToggle = document.querySelector('.menuToggle');
     const navbar = document.querySelector('.nav__options');
     const overlay = document.querySelector('.overlay');
+    const mobileMenu = document.querySelector('.mobileMenu');
     /*  Login Button  */
     const navLogin = document.querySelector('.nav__login');
 
 
     if (!menuToggle || !navbar) return;
 
+
     const toggleMenu = () => {
       const isOpen = navbar.classList.toggle('active');
       menuToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
       overlay?.classList.toggle('active');
 
       // Mostrar u ocultar login según estado
@@ -100,6 +103,7 @@ toggleMenu
     const closeMenu = () => {
       navbar.classList.remove('active');
       menuToggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
       overlay?.classList.remove('active');
       menuToggle.setAttribute('aria-expanded', false);
       navbar.setAttribute('aria-hidden', true);
@@ -107,7 +111,9 @@ toggleMenu
     };
 
     menuToggle.addEventListener('click', toggleMenu);
+    mobileMenu.addEventListener('click', closeMenu);
     overlay?.addEventListener('click', closeMenu);
+    // mobileMenu.addEventListener('click', mobileMenu);
 
     // Opcional: cerrar con ESC
     document.addEventListener('keydown', (e) => {

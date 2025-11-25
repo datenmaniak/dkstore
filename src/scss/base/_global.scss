@@ -1,6 +1,6 @@
-@use '../core' as core;
 @use "sass:map";
 @use "sass:math";
+@use '../core' as core;
 @use "../config/" as *;
 // @import "~@fortawesome/fontawesome-free/css/all.css";
 
@@ -22,7 +22,7 @@ html {
 }
 
 body {
-    font-family: core.$primary-font;
+    font-family: core.$brand-secondary-font;
     font-size: 1.6rem;
     line-height: 1.5;
 }
@@ -47,7 +47,7 @@ picture {
 h1,
 h2,
 h3 {
-    font-family: core.$secondary-font;
+    // font-family: core.$secondary-font;
     font-weight: 300;
     text-align: center;
 
@@ -126,9 +126,10 @@ $font-sizes: (
 
 // Uso en elementos base
 body {
-    @include font-size(body);
-    background: core.$bg-primary;
-    padding-top: 100px; // reserva espacio para el header
+    // @include font-size(body);
+    background: core.$brand-primary-font;
+    font-weight: 400;
+    padding-top: 80px; // reserva espacio para el header
 }
 
 p {

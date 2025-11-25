@@ -20,7 +20,7 @@
 
   h2 {
     text-align: center;
-    font-family: core.$secondary-font;
+    font-family: core.$brand-secondary-font;
     font-weight: 400;
     @include responsive-font($section-titles-sizes);
 

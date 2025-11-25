@@ -5,33 +5,31 @@
 // Change de global styles by clicking the icon dark mode
 
 .dark-mode {
+    background-color: color.scale(core.$brand-dark-color, $lightness: -60%, $saturation: +20%);
 
-    background-color: color.scale(core.$brown, $lightness: -80%, $saturation: +20%);
-    ;
-
+    header,
     .header__container.bg-active,
     header.scrolled {
-        background-color: #4f3767;
+        background-color: color.scale(core.$brand-dark-color, $lightness: -80%, $saturation: -10%);
 
         .nav__options li a {
-            color: #fff;
-            color: #8f7e7e;
             color: #f1eaea;
-
 
         }
     }
 
     .nav__options.active {
-        background-color: color.scale(core.$brown, $lightness: -80%, $saturation: +40%);
+        background-color: color.scale(core.$brand-dark-color, $lightness: -80%, $saturation: +40%);
 
     }
 
     a,
+    h2,
     li {
         color: #f1eaea;
     }
 
+    .catalog h2,
     h1,
     h2,
     h3,
@@ -40,40 +38,23 @@
         color: #dfcaca;
     }
 
-
-    // TODO:
-    .catalog__grid>article.card {
-        background-color: color.scale(core.$brand-dark-color, $lightness: +85%, $saturation: -20%);
-        // color: color.scale(core.$brand-light-color, $lightness: +5%);
-        color: yellow;
-    }
-
     .about-us,
     .ads,
     .catalog {
         background-color: #211b27;
-
-
     }
 
     .footer,
     .footer-container {
         color: #fff; // texto en blanco para contraste
+        color: color.scale(core.$brand-alternate-color, $lightness: +90%, $saturation: -65%);
         background-color: #18131e;
-
     }
 
-    // article .card,
-    // article .card--split,
-    // article .card--minimal,
-    // article .card--standard,
-    // article .card--featured {
-    //     background-color: #1a1a1a;
-    //     background-color: rgb(188, 183, 183);
-    //     color: #f5f5f5;
-    //     color: #8f7e7e;
-
-    // }
+    .catalog__grid .card {
+        background-color: color.scale(core.$brand-alternate-color, $lightness: +90%, $saturation: -65%);
+        color: #8f7e7e;
+    }
 
     html,
     body {

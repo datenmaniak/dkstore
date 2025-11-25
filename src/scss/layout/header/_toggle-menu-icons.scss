@@ -1,0 +1,97 @@
+@use '../../config/' as mix;
+@use '../../core/' as core;
+
+.menuToggle {
+  cursor: pointer;
+  right: 20px;
+  padding: 0.2rem;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  // TODO: Comentado mientras se comprueba el svg
+  -webkit-mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  mask-size: cover;
+  background-color: core.$brand-light-color;
+
+
+  // transition: background-color 0.3s ease;
+
+  // Only show when mobile
+  @include mix.respond(tablet) {
+    display: none;
+
+    nav {
+      align-items: end;
+      background-color: greenyellow;
+    }
+  }
+}
+
+
+//  Reemplazado por el icono .mobileMenu.active
+// .menuToggle.active {
+//   position: absolute;
+//   z-index: 1200;
+//   top: 2%;
+//   right: 60%;
+//   padding: 0.2rem;
+//   width: 45px;
+//   height: 45px;
+//   // margin-right: 20px;
+//   // margin-top: 20px;
+//   // margin-left: 10px;
+
+//   -webkit-mask: url("./../../../../assets/icons/close-sharp.svg") no-repeat center;
+//   -webkit-mask-size: cover;
+//   mask: url("./../../../../assets/icons/close-sharp.svg") no-repeat center;
+//   mask-size: cover;
+//   background-color: core.$brand-light-color;
+
+
+//   // // background-image: url("icons/close.svg");
+//   // background-image: url("./../../../../assets/icons/close-circle-line.svg");
+//   // background-size: cover;
+//   // background-repeat: no-repeat;
+//   // filter: invert(70%);
+//   cursor: pointer;
+//   padding: 0.5rem;
+// }
+
+
+
+// .menuToggle.menuToggle.active:hover {
+//   transform: scale(1.20);
+// }
+
+
+// .menuToggle.active:hover {
+//   border-radius: 5px;
+//   text-decoration: none;
+// }
+
+.mobileMenu.active {
+  position: absolute;
+  left: 85%;
+  top: 0%;
+  z-index: 1300;
+  padding: 0.2rem;
+  width: 35px;
+  height: 35px;
+  -webkit-mask: url("./../../../../assets/icons/logout-box-fill.svg") no-repeat center;
+  -webkit-mask-size: cover;
+  mask: url("./../../../../assets/icons/logout-box-fill.svg") no-repeat center;
+  mask-size: cover;
+  background-color: core.$brand-secondary-color;
+  // cursor: pointer;
+  margin-right: 30px;
+  margin-top: 20px;
+  // @include mix.respond(tablet) {
+  //   display: none;
+  // }
+}
+
+// .menuToggle.menuToggle:hover {
+//   transform: scale(1.20);
+// }

@@ -3,18 +3,45 @@
 @use '../../config/mixins' as *;
 @use "../../ui/" as ui;
 
-nav {
-  flex: 1; // nav ocupa el resto del ancho
+/* 
+-- Navigation bar  
+ */
+// nav {
+//   flex: 0.6; // nav ocupa el resto del ancho
+//   // flex-grow: 0.35; // crece la mitad que un hermano con flex-grow: 1
+//   // flex-shrink: 1;
+//   // flex-basis: 0;
+// }
+
+// .branding {
+//   // flex: 0;
+//   flex-grow: 0.35; // crece la mitad que un hermano con flex-grow: 1
+//   flex-shrink: 1;
+//   flex-basis: 0;
+// }
+
+// .nav__options {
+//   flex-grow: 0.7;
+//   flex-shrink: 1;
+//   flex-basis: 0;
+
+// }
+
+.dark-mode-button {
+  flex: 0;
+  margin-left: auto;
+
 }
 
-.header_container.bg-active,
+/* 
+-- Control the background color behaviour at header
 
+*/
 // oscurece las fuentes al bajar
+.header_container.bg-active,
 .header.scrolled .nav__options li a {
   color: black; // estado al hacer scroll: color base
-
 }
-
 
 // TODO: descomentar
 // .header.scrolled .nav__login a {
@@ -33,40 +60,32 @@ nav {
 
 .header.scrolled .dark-mode-button {
   background-color: rgb(17, 4, 211);
-
-
 }
 
 .header.scrolled .dark-mode-button.active {
   background-color: orangered;
 }
 
+.menuMobile.active {
+  background: red;
+  border: 5px solid red;
+}
 
+
+/* 
+--  options menu list 
+*/
 .nav__options {
+
   @include container($container-widths);
 
+  /* --  Set the container --  */
 
   // BEGIN - por defecto Mobile First. 
   display: none;
   opacity: 0;
-  // transform: translateY(-10px);
   transform: translateX(-100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
-
-
-
-
-  // Responsivo
-  @include respond(tablet) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 0.435rem;
-    opacity: 1;
-    transform: none;
-
-  }
 
   // /* From here, Mobile size */
   &.active {
@@ -75,14 +94,15 @@ nav {
     flex-direction: column;
     top: -1.585rem;
     left: 0;
-    width: 80%;
+    // Ajusta el ancho que ocupará la ventana mobile
+    width: 100vh;
     height: 90vh;
     overflow: hidden;
-    background: white;
+    background-color: color.scale(core.$brand-light-color, $lightness: +80%, $saturation: -90%);
     padding: 2rem 1rem;
     gap: 1.5rem;
     z-index: 999;
-    transition: max-height 0.3s ease;
+    transition: max-width 0.3s ease;
     transition: all 0.3s ease;
     transform: translateX(0);
 
@@ -95,9 +115,11 @@ nav {
     border-bottom-right-radius: 1rem;
 
     // Sombra suave con tu color primario
-    box-shadow: 0 6px 12px rgba(119, 0, 240, 0.25);
-
+    // box-shadow: 0 6px 12px rgba(119, 0, 240, 0.25);
+    box-shadow: 0 6px 12px color.scale(core.$brand-primary-color, $lightness: -50%);
     transition: all 0.3s ease;
+
+
 
     .nav__branding {
       display: flex;
@@ -127,20 +149,16 @@ nav {
 
     }
 
-
     .nav__login a {
       position: absolute;
       bottom: 30%;
       margin-left: auto;
-      margin-right: auto;
       left: 15%;
-
-
+      margin-right: auto;
       // display: block;
       // border-top: 1px solid rgba(0, 0, 0, 0.1); // línea muy delgada y suave
       // text-align: center;
       // margin: 0 auto;
-
       @include ui.button(core.$primary, white, block, 70%);
     }
 
@@ -152,20 +170,41 @@ nav {
       bottom: 3%;
     }
 
+    // Mostrar el boton de cierre / Ventana activa / Mobile menu
+    // .menuToggle.active {
+    // .menuMobile.active {
+    //   position: absolute;
+    //   z-index: 1200;
+    //   background-color: rgb(255, 140, 0);
+
+    //   top: 5%;
+    //   width: 80px;
+    //   height: 80px;
+    //   bottom: 10%;
+
+    // }
     .menuToggle.active {
-      position: absolute;
-      top: 5%;
-      width: 40px;
-      height: 40px;
+      display: none;
     }
 
-
-
-    // END - Everything when mobile responsive is active
+    // END - this block when mobile responsive is active
   }
 
 
-  // /* From here: Regular size Tablet to desktops */
+
+  //* From here: Regular size Tablet to desktops */
+  // TODO:  Para que 
+  @include respond(tablet) {
+    /*  --->  Responsivo antes de llegar al viewport de Mobile */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.435rem;
+    align-items: center;
+    opacity: 1;
+    transform: none;
+  }
+
   .nav__branding {
     display: none;
     align-items: center;
@@ -184,44 +223,24 @@ nav {
     }
   }
 
-  // TODO: Revisar si acaso es necesario
-  // .nav__options li:last-child {
-  //   margin-top: 12px;
-  //   padding-left: 15px;
-  // }
-
-
   // /* Default font menu */
   li a {
-    // REMOVE -- trabajando aqui
     color: #fff;
     @include responsive-font($list-sizes);
     font-weight: 500;
-    // font-size: core.$alt-font;
     border-radius: 5px;
     padding: 0.5em 0.7rem;
   }
 
-  // li:nth-child(6) {
-  //   @include ui.button-ghost(core.$primary, white);
-  // }
-
-  // excluir el subrayado para el login button
-  li:nth-child(6) a:hover {
-    text-decoration: none;
-  }
-
-  li a:hover {
-    // /* Hover menu/nav - Elija cualquiera: subrayado o fondo  */
+  /* Aplica el hover a todos los <li> excepto el que tenga la clase nav__login */
+  li:not(.nav__login) a:hover {
     text-decoration: underline;
-    /* Aquí defines el grosor */
     text-decoration-thickness: 2px;
-    text-underline-offset: 5px
+    text-underline-offset: 5px;
   }
 
   .nav__login a {
     // /* evita que el contenido del boton se parta en varias líneas */
-
     white-space: nowrap;
     text-align: left;
     font-size: 1.5rem;
@@ -229,7 +248,6 @@ nav {
     font-family: core.$secondary-font;
     @include ui.button-ghost;
     color: #fff;
-
 
     .btn-account {
       // @include responsive-font($list-sizes);
@@ -252,36 +270,37 @@ nav {
   }
 
   // /* Impide que se desborde el enlace/boton de login en el nav */
-  @include respond(tablet) {
+  // TODO: Revisar esto
+  // @include respond(tablet) {
 
-    .nav__login {
+  // .nav__login {
+  //   /* Otro responsivo --- TODO. Revisar si es necesario */
 
-      // TODO: Revisar esto
-      // padding: 1.2rem 1.2rem; // más compacto
-      // font-size: 1.2rem;
-      @include responsive-font($list-sizes);
-      // margin-right: 2rem;
-      color: #fff;
-    }
+  //   // padding: 1.2rem 1.2rem; // más compacto
+  //   // font-size: 1.2rem;
+  //   @include responsive-font($list-sizes);
+  //   // margin-right: 2rem;
+  //   color: #fff;
+  // }
 
-    //   .dark-mode-button {
-    //     color: yellow
-    //   }
-    // }
+  //   .dark-mode-button {
+  //     color: yellow
+  //   }
+  // }
 
 
-    // Mobile menu
-    // & li a {
-    //   color: white;
-    //   margin: 0;
+  // Mobile menu
+  // & li a {
+  //   color: white;
+  //   margin: 0;
 
-    //   &:hover {
-    //     color: core.$primary;
-    //   }
-    // }
+  //   &:hover {
+  //     color: core.$primary;
+  //   }
+  // }
 
-    // /* END .nav__options */
-  }
+  // /* END .nav__options */
+  // }
 
 
 
@@ -317,7 +336,6 @@ nav {
       gap: 1rem;
     }
 
-
   }
 
   // Overlay con fade
@@ -338,4 +356,16 @@ nav {
       pointer-events: auto;
     }
   }
+
+  // // Mostrar el boton de cierre / Ventana activa / Mobile menu
+  // @include respond(tablet) {
+
+  //   .menuToggle {
+  //     position: absolute;
+  //     top: 5%;
+  //     width: 30px;
+  //     height: 30px;
+  //     background-color: chartreuse;
+  //   }
+  // }
 }

@@ -8,7 +8,8 @@
     position: fixed;
     top: 0;
     min-height: 6.476rem;
-    height: 100px;
+    // altura del hear
+    height: 70px;
     // left: 0;
     z-index: 1000;
 
@@ -31,9 +32,8 @@
     // }
 }
 
-// BEGIN header container
 .header__container {
-
+    @include container($container-widths);
 
     &.bg-active {
         background-color: rgba(255, 255, 255, 0.9); // casi sólido, ajusta opacidad
@@ -42,15 +42,10 @@
         // background-color: rgba(13, 0, 255, 0.553);
     }
 
-
-
-
     // // transparente para que se vea la imagen detrás
     // background-color: transparent;
-
     // background: core.$bg-primary;
     // Setup container y se adapta segun una lista de breakpoints
-    @include container($container-widths);
 
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     display: flex;
@@ -58,7 +53,7 @@
     justify-content: space-between;
     gap: 0.5rem;
 
-    // ❌ elimina fondo sólido
+    /* //--- Activa fondo sólido para exponer el hover encima */
     background: none;
     background-color: transparent;
     box-shadow: none;
@@ -70,19 +65,8 @@
     .header__container {
         position: sticky;
         gap: 0.5rem;
-
     }
 
-    // TODO: Revisar si es necesario este bloque
-    // .nav__options {
-    //     justify-content: flex-end; // empuja los enlaces a la derecha
-
-    //     li {
-    //         padding: 0 10px; // menos padding en tablet
-    //     }
-    // }
-    // REMOVE: En caso que comentar este bloque haya  sido la solución
-    //  REMOVE: para el boton Dark mode
 }
 
 
