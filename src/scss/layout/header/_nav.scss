@@ -149,9 +149,10 @@
 
     }
 
-    .nav__login a {
+    .nav__login.active a {
+      margin-bottom: 10px;
       position: absolute;
-      bottom: 30%;
+      bottom: 15%;
       margin-left: auto;
       left: 15%;
       margin-right: auto;
@@ -159,7 +160,7 @@
       // border-top: 1px solid rgba(0, 0, 0, 0.1); // línea muy delgada y suave
       // text-align: center;
       // margin: 0 auto;
-      @include ui.button(core.$primary, white, block, 70%);
+      @include ui.button(core.$brand-primary-color, white, block, 70%);
     }
 
     .dark-mode-button {

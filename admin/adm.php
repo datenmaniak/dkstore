@@ -38,10 +38,10 @@ includeTemplate('header');
                     <li>
                         <a href="#">Productos</a>
                         <ul class="submenu">
-                            <li><a href="/admin/products/create.php">Crear</a></li>
-                            <li><a href="/admin/products/read.php">Listar</a></li>
-                            <li><a href="/admin/products/update.php">Actualizar</a></li>
-                            <li><a href="/admin/products/delete.php">Eliminar</a></li>
+                            <li><a href="/admin/productos/create.php">Crear</a></li>
+                            <li><a href="/admin/productos/read.php">Listar</a></li>
+                            <li><a href="/admin/productos/update.php">Actualizar</a></li>
+                            <li><a href="/admin/productos/delete.php">Eliminar</a></li>
                         </ul>
                     </li>
                 </ul>

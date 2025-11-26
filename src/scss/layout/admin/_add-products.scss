@@ -1,0 +1,77 @@
+@use "sass:color";
+@use "../../core/" as core;
+@use '../../config/mixins' as *;
+@use "../../ui/" as ui;
+
+
+.add-products-container {
+    @include container($container-widths);
+
+}
+
+
+$primary-color: #7700F0;
+$border-color: #ccc;
+$bg-color: #fff;
+
+.form-productos {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: core.$brand-light-color;
+    border: 1px solid core.$brand-primary-color;
+    display: grid;
+    grid-template-columns: 1fr 1fr; // dos columnas iguales
+    gap: 1.5rem;
+
+    h2 {
+        grid-column: 1 / -1; // título ocupa todo el ancho
+        color: core.$brand-primary-color;
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+
+        input,
+        textarea,
+        select {
+            margin-top: 0.5rem;
+            padding: 0.6rem;
+            border: 1px solid core.$brand-primary-color;
+            border-radius: 4px;
+        }
+    }
+
+    button {
+
+        grid-column: 1 / 2; // botón ocupa todo el ancho
+        background: $primary-color;
+        color: #fff;
+        border: none;
+        padding: 0.8rem;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background-color: color.mix(core.$brown, core.$primary, 40%);
+            transform: scale(1.02);
+        }
+
+    }
+}
+
+// mensajes de feedback
+.success {
+    color: green;
+    grid-column: 1 / -1;
+}
+
+.error {
+    color: red;
+    grid-column: 1 / -1;
+}

@@ -12,7 +12,9 @@ includeTemplate('header');
             <ul>
                 <li><button class="btn" data-section="proveedores">Proveedores</button></li>
                 <li><button data-section="categorias">Categorías</button></li>
-                <li><button data-section="productos">Productos</button></li>
+                <li><button data-section="productos">Productos</button>
+                    <a href="/admin/productos/create.php"></a>
+                </li>
             </ul>
         </nav>
     </aside>

@@ -8,10 +8,9 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  // TODO: Comentado mientras se comprueba el svg
-  -webkit-mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  -webkit-mask: url("./../../../../assets/icons/menu-outline.svg") no-repeat center;
   -webkit-mask-size: cover;
-  mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  mask: url("./../../../../assets/icons/menu-outline.svg") no-repeat center;
   mask-size: cover;
   background-color: core.$brand-light-color;
 
@@ -22,10 +21,6 @@
   @include mix.respond(tablet) {
     display: none;
 
-    nav {
-      align-items: end;
-      background-color: greenyellow;
-    }
   }
 }
 
@@ -84,7 +79,7 @@
   mask: url("./../../../../assets/icons/logout-box-fill.svg") no-repeat center;
   mask-size: cover;
   background-color: core.$brand-secondary-color;
-  // cursor: pointer;
+  cursor: pointer;
   margin-right: 30px;
   margin-top: 20px;
   // @include mix.respond(tablet) {

@@ -1053,14 +1053,15 @@ button:disabled {
   color: #fff;
   text-decoration: none;
 }
-.nav__options.active .nav__login a {
+.nav__options.active .nav__login.active a {
+  margin-bottom: 10px;
   position: absolute;
-  bottom: 30%;
+  bottom: 15%;
   margin-left: auto;
   left: 15%;
   margin-right: auto;
   display: block;
-  background-color: #ff0000;
+  background-color: #7700F0;
   color: white;
   border: none;
   border-radius: 6px;
@@ -1073,14 +1074,14 @@ button:disabled {
   margin-left: auto;
   margin-right: auto;
 }
-.nav__options.active .nav__login a:hover {
-  background-color: rgb(178.5, 0, 0);
+.nav__options.active .nav__login.active a:hover {
+  background-color: rgb(83.3, 0, 168);
 }
-.nav__options.active .nav__login a:active {
-  background-color: #cc0000;
+.nav__options.active .nav__login.active a:active {
+  background-color: rgb(95.2, 0, 192);
 }
-.nav__options.active .nav__login a:disabled {
-  background-color: rgb(228.225, 103.275, 103.275);
+.nav__options.active .nav__login.active a:disabled {
+  background-color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
 .nav__options.active .dark-mode-button {
@@ -1534,20 +1535,16 @@ nav .top-bar p {
   width: 30px;
   height: 30px;
   cursor: pointer;
-  -webkit-mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  -webkit-mask: url("./../../../../assets/icons/menu-outline.svg") no-repeat center;
   -webkit-mask-size: cover;
-  -webkit-mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
-          mask: url("./../../../../assets/icons/menu.svg") no-repeat center;
+  -webkit-mask: url("./../../../../assets/icons/menu-outline.svg") no-repeat center;
+          mask: url("./../../../../assets/icons/menu-outline.svg") no-repeat center;
   mask-size: cover;
   background-color: #B4CAD7;
 }
 @media (min-width: 768px) {
   .menuToggle {
     display: none;
-  }
-  .menuToggle nav {
-    align-items: end;
-    background-color: greenyellow;
   }
 }
 
@@ -1565,6 +1562,7 @@ nav .top-bar p {
           mask: url("./../../../../assets/icons/logout-box-fill.svg") no-repeat center;
   mask-size: cover;
   background-color: #3e89ac;
+  cursor: pointer;
   margin-right: 30px;
   margin-top: 20px;
 }
@@ -2589,4 +2587,93 @@ nav .top-bar p {
 .crud-list ul li {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
+}
+
+.add-products-container {
+  margin: 0 auto;
+  padding: 0 15px;
+}
+@media (min-width: 250px) {
+  .add-products-container {
+    max-width: 237px;
+  }
+}
+@media (min-width: 320px) {
+  .add-products-container {
+    max-width: 304px;
+  }
+}
+@media (min-width: 576px) {
+  .add-products-container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .add-products-container {
+    max-width: 729px;
+  }
+}
+@media (min-width: 992px) {
+  .add-products-container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .add-products-container {
+    max-width: 1140px;
+  }
+}
+
+.form-productos {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #B4CAD7;
+  border: 1px solid #7700F0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.form-productos h2 {
+  grid-column: 1/-1;
+  color: #7700F0;
+  margin-bottom: 1rem;
+}
+.form-productos label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+.form-productos label input,
+.form-productos label textarea,
+.form-productos label select {
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border: 1px solid #7700F0;
+  border-radius: 4px;
+}
+.form-productos button {
+  grid-column: 1/2;
+  background: #7700F0;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+.form-productos button:hover {
+  background-color: rgb(175.8, 16.8, 28);
+  transform: scale(1.02);
+}
+
+.success {
+  color: green;
+  grid-column: 1/-1;
+}
+
+.error {
+  color: red;
+  grid-column: 1/-1;
 }
