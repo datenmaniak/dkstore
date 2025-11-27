@@ -84,6 +84,7 @@ $container-narrow-widths: (
 }
 
 .basic-container {
+    width: 1200px;
     margin: 0 auto;
     width: 100%;
 }
@@ -307,6 +308,10 @@ ul {
 }
 
 //  M a r g e n e s  - top
+.mt-2 {
+    margin-top: 2rem;
+}
+
 .mt-5 {
     margin-top: 5rem;
 }
@@ -370,9 +375,14 @@ $margin-sizes: (
 // Lo invocamos con nuestro mapa
 @include margin-bottom-classes($margin-sizes);
 
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
 .mb-5 {
     margin-bottom: 5rem;
 }
+
 
 .mb-10 {
     margin-bottom: 10rem;

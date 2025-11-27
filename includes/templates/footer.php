@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer radius-t">
     <div class="footer-container">
         <!-- Branding -->
         <div class="footer-column footer-branding">

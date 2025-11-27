@@ -6,7 +6,7 @@
 .about-us {
 
   @include container($container-widths);
-  border-radius: 8px;
+  border-radius: core.$base-border-radius;
   background-color: color.scale(core.$brand-color-one, $lightness: +90%, $saturation: -65%);
 
   &__container {

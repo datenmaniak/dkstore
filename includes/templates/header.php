@@ -44,7 +44,7 @@
                     </div>
 
                     <li><a href="/">Inicio </a></li>
-                    <li><a href="/admin/admin.php">Admin</a></li>
+                    <li><a href="/admin/index.php">Admin</a></li>
                     <li><a href="/productos.php">Productos</a></li>
                     <li><a href="">Blog</a></li>
                     <li><a href="">Contacto</a></li>

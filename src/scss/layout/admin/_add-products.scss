@@ -4,11 +4,15 @@
 @use "../../ui/" as ui;
 
 
+// --- se establece el contenedor directamente en el HTML
+// .add-products-container {
+//     @include container($container-widths);
+
+// }
+
 .add-products-container {
-    @include container($container-widths);
-
+    margin-top: 10rem;
 }
-
 
 $primary-color: #7700F0;
 $border-color: #ccc;
@@ -66,12 +70,34 @@ $bg-color: #fff;
 }
 
 // mensajes de feedback
-.success {
-    color: green;
-    grid-column: 1 / -1;
+.alerta {
+    padding: .125rem;
+    text-align: center;
+    color: whitesmoke;
+    font-weight: bold;
+    // text-transform: uppercase;
+    margin: 1rem 0;
+    background-color: core.$brand-light-color;
+
+
+    &.success {
+        background-color: green;
+        color: white;
+        // grid-column: 1 / -1;
+    }
+
+    &.error {
+        background-color: red;
+        color: white;
+        grid-column: 2 / 2;
+    }
 }
 
-.error {
-    color: red;
-    grid-column: 1 / -1;
+textarea {
+    width: 350px;
+    /* Ancho fijo en píxeles */
+    height: 100px;
+    /* Alto fijo en píxeles */
+    resize: none;
+    /* Desactiva el redimensionamiento */
 }

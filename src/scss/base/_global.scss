@@ -185,10 +185,23 @@ header {
     padding: 0;
 }
 
-section {
-    // margin-top: math.div(core.$margin-vertical-spacing, 2);
-    // margin-bottom: math.div(core.$margin-vertical-spacing,2);
-    margin-bottom: core.$margin-vertical-spacing;
-    margin-top: core.$margin-vertical-spacing;
 
+
+.mt {
+    margin-top: core.$margin-vertical-spacing;
+}
+
+.mb {
+
+    margin-bottom: core.$margin-vertical-spacing;
+}
+
+.radius-t {
+    border-top-left-radius: core.$base-border-radius;
+    border-top-right-radius: core.$base-border-radius;
+}
+
+.radius-b {
+    border-bottom-left-radius: core.$base-border-radius;
+    border-bottom-right-radius: core.$base-border-radius;
 }
