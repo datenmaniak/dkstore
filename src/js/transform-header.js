@@ -9,7 +9,7 @@
         const currentPage = window.location.pathname.split("/").pop();
 
         // Aplica la clase 'home' solo en index.php o raíz
-        if (currentPage === "index.php" || currentPage === "") {
+        if (currentPage === "index.html" || currentPage === "") {
             headerContainer.classList.remove("bg-active");
         } else {
             headerContainer.classList.add("bg-active");
