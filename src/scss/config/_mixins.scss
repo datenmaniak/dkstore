@@ -6,8 +6,9 @@
 
 //  B r e a k p o i n t s    B a s e
 $breakpoints: (
-    // Teléfonos muy pequeños (modo retrato)
+    // very old phone
     obsolete-phone: 250px,
+    // Teléfonos muy pequeños (modo retrato)
     small-phone: 320px,
     // Teléfonos estándar
     phone: 576px,
@@ -16,7 +17,9 @@ $breakpoints: (
     // laptop: 992px,
     laptop: 992px,
     // Laptops y tablets horizontales
-    desktop: 1200px // Escritorios grandes
+    desktop: 1200px,
+    // Escritorios grandes
+    wide-desktop: 1400px
 );
 
 // Mixin para responder a breakpoints
@@ -44,16 +47,20 @@ $container-widths: (
     phone: 540px,
     tablet: 729px,
     laptop: 960px,
-    desktop: 1140px
+    desktop: 1140px,
+    wide-desktop: 1330px
 );
 
 
 // Anchos máximos del container narrow
 $container-narrow-widths: (
+    obsolete-phone: 200px,
+    small-phone: 290px,
     phone: 400px,
     tablet: 600px,
     laptop: 800px,
-    desktop: 960px
+    desktop: 960px,
+    wide-desktop: 1278px
 );
 
 
@@ -118,6 +125,20 @@ $container-narrow-widths: (
     padding: 0 40px;
 }
 
+// Mixin para grid de dos columnas con separación configurable
+@mixin grid-two-columns($col1, $col2: 1fr, $gap: 1rem) {
+    display: grid;
+    grid-template-columns: #{$col1} #{$col2};
+    gap: $gap; // separación entre columnas
+
+    // Ejemplo de uso
+    //     @include grid-two-columns(3fr, 1fr, 1.2rem);
+    //  @include grid-two-columns(250px, 1fr, 1.2rem);
+
+
+}
+
+
 //   B o t o n e s 
 @mixin button-style($bg: core.$primary,
     $color: white,
@@ -154,7 +175,8 @@ $list-sizes: (
     phone: 1.9rem,
     tablet: 1.3rem,
     laptop: 1.2rem,
-    desktop: 1.6rem
+    desktop: 1.6rem,
+    wide-desktop: 1.8rem
 );
 // Tamaños para listas anidadas (un poco más pequeñas)
 $nested-list-sizes: (
@@ -163,7 +185,8 @@ $nested-list-sizes: (
     phone: 1.8rem,
     tablet: 1.2rem,
     laptop: 1.1rem,
-    desktop: 1.5rem
+    desktop: 1.5rem,
+    wide-desktop: 1.7rem
 );
 // Definimos los tamaños para h1
 $h1-sizes: (
@@ -172,7 +195,8 @@ $h1-sizes: (
     phone: 1.8rem,
     tablet: 2.8rem,
     laptop: 3.8rem,
-    desktop: 4.7rem
+    desktop: 4.7rem,
+    wide-desktop: 4.9rem
 );
 // Definimos los tamaños para h2
 $h2-sizes: (
@@ -181,7 +205,8 @@ $h2-sizes: (
     phone: 1.9rem,
     tablet: 2rem,
     laptop: 2.7rem,
-    desktop: 3.1rem
+    desktop: 3.1rem,
+    wide-desktop: 3.3rem
 );
 // Definimos los tamaños para h3
 $h3-sizes: (
@@ -190,7 +215,8 @@ $h3-sizes: (
     phone: 1.885rem,
     tablet: 1.825rem,
     laptop: 1.735rem,
-    desktop: 1.875rem
+    desktop: 1.875rem,
+    wide-desktop: 1.985rem
 );
 // Definimos los tamaños para Título de secciones
 $section-titles-sizes: (
@@ -199,7 +225,8 @@ $section-titles-sizes: (
     phone: 3.4rem,
     tablet: 3.8rem,
     laptop: 4rem,
-    desktop: 5rem
+    desktop: 5rem,
+    wide-desktop: 5.5rem
 );
 
 
@@ -210,7 +237,8 @@ $p-sizes: (
     phone: 1.595rem,
     tablet: 1.445rem,
     laptop: 1.410rem,
-    desktop: 1.395rem
+    desktop: 1.395rem,
+    wide-desktop: 1.55rem
 );
 
 /* / Tamaños de fuente para los enlaces del nav */
@@ -220,7 +248,8 @@ $nav-font-sizes: (
     phone: 1.1rem,
     tablet: 1.2rem,
     laptop: 1.3rem,
-    desktop: 1.4rem
+    desktop: 1.4rem,
+    wide-desktop: 1.5rem
 );
 // Tamaños responsivos para <span>
 $span-sizes: (
@@ -232,7 +261,8 @@ $span-sizes: (
     // -0.1rem
     laptop: 1.7rem,
     // -0.1rem
-    desktop: 1.555rem
+    desktop: 1.555rem,
+    wide-desktop: 1.75rem
 );
 // Tamaños responsivos para <span> usado en branding/header
 $span-brand-sizes: (
@@ -242,7 +272,8 @@ $span-brand-sizes: (
     phone: 1.6rem,
     tablet: 1.50rem,
     laptop: 1.70rem,
-    desktop: 1.7rem
+    desktop: 1.7rem,
+    wide-desktop: 1.85rem
 );
 // Tamaños responsivos para <small> utilizable en branding, header, footer. etc...
 $small-font-sizes: (
@@ -251,7 +282,8 @@ $small-font-sizes: (
     phone: 0.995rem,
     tablet: 1.5rem,
     laptop: 1.2rem,
-    desktop: 1.375rem
+    desktop: 1.375rem,
+    wide-desktop: 1.575rem
 );
 
 
