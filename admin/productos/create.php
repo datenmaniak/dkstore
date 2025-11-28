@@ -141,11 +141,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         if ($validacion['valida']) {
-            $nombreNuevo = generarNombreUnico($_FILES['imagen']['name']);
+            $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
 
             $images_folder = '../../uploads/';
 
-            move_uploaded_file($imagen['tmp_name'], $images_folder . $nombreNuevo);
+            move_uploaded_file($imagen['tmp_name'], $images_folder . $imgNewName);
 
             // move_uploaded_file(...)
         } else {
@@ -153,35 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
-        //subida de archivos
-        // $images_folder = '../../imagenes';
-
-        // if (!is_dir($imagen_folder)) {
-        //     mkdir($imagen_folder);
-        // }
-
-        // $resultado = subirImagen($imagen);
-        // if (isset($resultado['success'])) {
-        //     echo "Imagen subida: " . $resultado['nombre'];
-        //     // Guardar $resultado['nombre'] en BD
-        // } else {
-        //     echo "Error: " . $resultado['error'];
-        // }
-
-        // // asigna un nombre unico a la imagen
-
-        // // sube la imagen
-        // move_uploaded_file($imagen['tmp_name'], $images_folder . "/primera-imagen.jpg");
-
-        // exit;
-
-
         // insertar en la DB
         $query = "INSERT INTO productos (codigo_sku, nombre_producto, 
-    precio, descripcion, existencia, stock_minimo, 
+    precio, imagen, descripcion, existencia, stock_minimo, 
     proveedor_id, categoria_id ) 
     VALUES ('$codigo_sku', '$nombre_producto', 
-    '$precio', '$descripcion', '$existencia',
+    '$precio', '$imgNewName', '$descripcion', '$existencia',
      $stock_minimo,  
     '$proveedor_id', '$categoria_id' )";
 
@@ -193,7 +170,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // redireccionar a otra página para evitar repetidos registro duplicados 
             // al 'enviar datos'
-            header('Location: /admin');
+
+            // Query string
+            header('Location: /admin?result=true');
         }
     }
 

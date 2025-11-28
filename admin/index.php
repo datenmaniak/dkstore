@@ -1,6 +1,13 @@
 <?php
 /* index.php   - Administrador  */
 
+// echo "<pre>";
+// var_dump($_GET);
+// echo "</pre>";
+
+
+$result = $_GET['result'] ?? false;
+
 require '../includes/functions.php';
 includeTemplate('header');
 
@@ -11,63 +18,34 @@ includeTemplate('header');
 
 
 <main class="admin-layout">
+    <h3>Menú de Administración</h3>
+    <?php if ($result): ?>
+        <p class="alerta success">Producto registrado correctamente</p>
+    <?php endif; ?>
 
-    <div class="admin-grid">
+    <div class="admin-container">
+
         <aside class="sidebar">
-            <h3>Menú de Administración</h3>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="#">Categorías de Productos</a>
-                        <ul class="submenu">
-                            <li><a href="/admin/categorias/create.php">Crear</a></li>
-                            <li><a href="/admin/categorias/read.php">Listar</a></li>
-                            <li><a href="/admin/categorias/update.php">Actualizar</a></li>
-                            <li><a href="/admin/categorias/delete.php">Eliminar</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Proveedores</a>
-                        <ul class="submenu">
-                            <li><a href="/admin/proveedores/create.php">Crear</a></li>
-                            <li><a href="/admin/proveedores/read.php">Listar</a></li>
-                            <li><a href="/admin/proveedores/update.php">Actualizar</a></li>
-                            <li><a href="/admin/proveedores/delete.php">Eliminar</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Productos</a>
-                        <ul class="submenu">
-                            <li><a href="/admin/productos/create.php">Crear</a></li>
-                            <li><a href="/admin/productos/read.php">Listar</a></li>
-                            <li><a href="/admin/productos/update.php">Actualizar</a></li>
-                            <li><a href="/admin/productos/delete.php">Eliminar</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+            <h3>Dashboard</h3>
+            <ul>
+                <li><a href="/admin/productos/create.php">Crear</a></li>
+                <li><a href="/admin/productos/read.php">Listar</a></li>
+                <li><a href="/admin/productos/delete.php">Eliminar</a></li>
+            </ul>
+
         </aside>
+
+        <div class="admin-content">
+            <h3>Resultados</h3>
+            <!-- // Aqui los resultados -->
+        </div>
+
+        <!-- // END: Container -->
     </div>
-    <h2>Procesamiento de datos</h2>
-    <div class="">
-    </div>data-process
-
 </main>
-<div class="return-home mb-10">
-    <!-- <a href="/admin/" class="btn btn-secondary">Volver</a> -->
 
-</div>
 
-<!-- </div>  REVISAR -->
-<!-- 
-<main class="narrow-container mt-10">
-    <h2>Administrador de la tienda</h2>
 
-    <div class="return-home mb-10"></div>
-    <a href="/admin/products/create.php"
-        class="btn btn-secondary">Agregar Producto</a>
-</main>
- -->
 <script src="/build/js/bundle.js"></script>
 
 <?php
