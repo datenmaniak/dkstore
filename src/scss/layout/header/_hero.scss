@@ -6,7 +6,7 @@
 .hero {
   position: relative;
   width: 100%;
-  margin-top: -3rem;
+  margin-top: -5.625rem;
   z-index: 1;
 
   &__container {
@@ -14,7 +14,6 @@
     height: 100vh;
     // importante para que invitation se posicione bien
     position: relative;
-    padding: 1.2rem;
 
     // display: flex;
     // flex-direction: column;

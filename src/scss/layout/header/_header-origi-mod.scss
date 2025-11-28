@@ -8,12 +8,11 @@
     position: fixed;
     top: 0;
     // altura del header
-    height: 5.625rem; // equivalente a 90px si 1rem=16px
+    height: 5.625rem; // equivalente a 70px si 1rem=16px
     z-index: 9999;
 
     // Default when currentPage is home
     // color: #fff; // texto en blanco para contraste
-    background-color: transparent;
     transition: background-color 0.3s ease;
 
     // opcional: al hacer scroll, darle fondo sólido
@@ -21,11 +20,10 @@
 
         // Fondo sólido o semitransparente al hacer scroll
         background-color: rgba(255, 255, 255, 0.9); // casi sólido, ajusta opacidad
-        background-color: core.$bg-primary;
-        background-color: white;
         // background-color: core.$brand-secondary-color;
-        color: core.$brand-primary-color;
+        background-color: white;
 
+        color: core.$brand-primary-color;
         // sombras en el header
         // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
@@ -33,24 +31,32 @@
     // .header.scrolled .nav__options li a {
     //     color: core.$brown; // estado al hacer scroll: color base
     // }
+    // &.bg-active {
+    //     background-color: rgba(255, 255, 255, 0.9); // casi sólido, ajusta opacidad
+    //     background-color: core.$bg-primary;
+    //     background-color: core.$brand-secondary-color;
+    //     border-radius: core.$base-border-radius - 5px;
+    // }
+
+
 }
 
 .header__container {
     @include container($container-widths);
 
+
     &.bg-active {
         background-color: rgba(255, 255, 255, 0.9); // casi sólido, ajusta opacidad
-        // background-color: core.$bg-primary;
-
-        // Border, cuando se desplaza la barra
-        //  hacia abajo para lograr el efecto flotante
-        // border-radius: core.$base-border-radius - 5px;
-
-        // sombras para resaltar ligeramente
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-
-
+        background-color: core.$bg-primary;
+        background-color: core.$brand-secondary-color;
+        border-radius: core.$base-border-radius - 5px;
     }
+
+
+    // // transparente para que se vea la imagen detrás
+    // background-color: transparent;
+    // background: core.$bg-primary;
+    // Setup container y se adapta segun una lista de breakpoints
 
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     display: flex;

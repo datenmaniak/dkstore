@@ -129,7 +129,6 @@ body {
     // @include font-size(body);
     background: core.$brand-primary-font;
     font-weight: 400;
-    padding-top: 80px; // reserva espacio para el header
 }
 
 p {
@@ -179,11 +178,24 @@ h6 {
     @include font-size(h6);
 }
 
+
+///   global.scss
 body,
 header {
     margin: 0;
     padding: 0;
 }
+
+header {
+    // height: 5.625rem; // equivalente a 80px si 1rem=16px
+    left: 0;
+    right: 0;
+
+    // Si quiero mover la barra de navegacion
+    // padding-top: 5.625rem; // igual a la altura del header
+
+}
+
 
 
 
