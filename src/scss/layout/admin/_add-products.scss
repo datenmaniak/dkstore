@@ -20,26 +20,65 @@
     height: auto;
 }
 
+.panel-options {
+    display: flex;
+    justify-content: space-between; // distribuye los botones en extremos
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    // background-color: #f9f9f9;
+    border-radius: 4px;
+
+}
+
 .admin-container {
 
     // Sidebar de 250px + contenido flexible, con separación de 2rem
-    @include grid-two-columns(200px, 1fr, 1.2rem);
+    // @include grid-two-columns(150px, 1fr, 1.2rem);
     min-height: 50vh;
-
 
 }
 
 .sidebar {
 
+    h3 {
+        border-bottom: 2px solid core.$brand-light-color;
+        font-size: 2.4rem;
+    }
+
     background-color: core.$brand-dark-color;
     color: wheat;
     padding: 1rem;
+
+    ul {
+        list-style: none;
+
+        a {
+            // background-color: red;
+            padding: 7px 10px;
+            border-radius: core.$card-border-radius;
+            text-decoration: none;
+            color: core.$brand-light-color;
+
+            &:hover {
+                background-color:
+                    color.scale(core.$brand-dark-color, $lightness: +15%);
+            }
+
+        }
+    }
 }
 
 .admin-content {
     // @include grid(2, 0.875rem);
     background-color: core.$brand-light-color;
     color: black;
+    // padding-bottom: 2rem;
+
+    h3 {
+        font-size: 2.5rem;
+
+    }
 
 }
 
@@ -74,24 +113,24 @@
         }
     }
 
-    button {
+    // button {
 
-        grid-column: 1 / 2; // botón ocupa todo el ancho
-        background: core.$brand-primary-color;
-        color: #fff;
-        border: none;
-        padding: 0.8rem;
-        cursor: pointer;
-        border-radius: 4px;
-        font-size: 1rem;
-        transition: background 0.3s ease;
+    //     // grid-column: 1 / 2; // botón ocupa todo el ancho
+    //     background: core.$brand-primary-color;
+    //     color: #fff;
+    //     border: none;
+    //     padding: 0.8rem;
+    //     cursor: pointer;
+    //     border-radius: 4px;
+    //     font-size: 1rem;
+    //     transition: background 0.3s ease;
 
-        &:hover {
-            background-color: color.mix(core.$brown, core.$primary, 40%);
-            transform: scale(1.02);
-        }
+    //     &:hover {
+    //         background-color: color.mix(core.$brown, core.$primary, 40%);
+    //         transform: scale(1.02);
+    //     }
 
-    }
+    // }
 }
 
 // mensajes de feedback
@@ -127,7 +166,80 @@ textarea {
     /* Desactiva el redimensionamiento */
 }
 
+.img-table {
+    width: 60px;
+    height: 60px;
+}
 
-.nav {
-    background-color: core.$brand-dark-color;
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    overflow: hidden;
+
+    thead {
+        background-color: #7700F0; // tu color branding
+        color: #fff;
+
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-size: 1.2rem;
+        }
+    }
+
+    tbody {
+        tr {
+            border-bottom: 1px solid #e5e5e5;
+
+            &:nth-child(even) {
+                background-color: #f9f9f9; // alterna filas
+            }
+
+            &:hover {
+                background-color: rgba(119, 0, 240, 0.05); // hover con tu branding
+            }
+
+            td {
+                padding: 0.75rem 1rem;
+                vertical-align: middle;
+
+                &.actions-p {
+                    text-align: center;
+
+                    a {
+                        margin: 0 0.25rem;
+                        color: #7700F0;
+                        transition: color 0.2s ease;
+
+                        &:hover {
+                            color: color.scale(core.$brand-primary-color, $lightness: -60%, $saturation: 20%);
+                            transform: scale(1.30);
+                        }
+
+                        svg {
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.img-table {
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.ri-checkbox-line,
+.ri-close-circle-line {
+    font-size: 2rem; // agranda el icono
+    color: #7700F0; // tu color branding
 }

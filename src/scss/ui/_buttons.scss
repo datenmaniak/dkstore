@@ -90,15 +90,21 @@ button {
 
 .btn {
     @include button(core.$brand-primary-color, #fff);
+    cursor: pointer;
 }
 
 .btn-secondary {
     @include button(core.$brand-secondary-color, #fff);
 }
 
-.btn-block {
-    @include button(core.$brand-primary-color, #fff, block, 80%);
+.btn-block-75 {
+    @include button(core.$brand-primary-color, #fff, block, 75%);
 }
+
+.btn-block-50 {
+    @include button(core.$brand-primary-color, #fff, block, 50%);
+}
+
 
 .btn-ghost {
     @include button-ghost(core.$brand-primary-color);
