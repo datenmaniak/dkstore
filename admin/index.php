@@ -7,7 +7,7 @@
 
 // Importar la conexion a la DB
 
-use Pdo\Mysql;
+// use Pdo\Mysql;
 
 require '../includes/config/database.php';
 // require  '../includes/functions.php';
@@ -22,7 +22,7 @@ $query = "SELECT * FROM productos";
 $sqlquery = mysqli_query($db, $query);
 
 
-$result = $_GET['result'] ?? false;
+$result = $_GET['result'] ?? null;
 
 require '../includes/functions.php';
 includeTemplate('header');
@@ -38,8 +38,11 @@ includeTemplate('header');
         <a href="/" class="btn btn-secondary">Volver</a>
         <a href="/admin/productos/create.php" class="btn btn-primary">Agregar</a>
     </div>
-    <?php if ($result): ?>
+    <?php if (intval($result) === 1): ?>
         <p class="alerta success">Producto registrado correctamente</p>
+    <?php elseif (intval($result) === 2): ?>
+        <p class="alerta success">Producto actualizado correctamente</p>
+
     <?php endif; ?>
 
 
