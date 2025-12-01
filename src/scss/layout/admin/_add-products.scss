@@ -241,10 +241,130 @@ textarea {
 .ri-checkbox-line,
 .ri-close-circle-line {
     font-size: 2rem; // agranda el icono
-    color: #7700F0; // tu color branding
+    color: core.$brand-primary-color; // tu color branding
 }
 
 .img-prod {
     width: 15rem;
     // height: 150px;
 }
+
+/* Estilos generales para el badge (listado) */
+.status-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.7rem;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    color: white;
+    user-select: none;
+}
+
+.status-badge.active {
+    background-color: #28a745;
+    /* verde */
+}
+
+.status-badge.inactive {
+    background-color: #dc3545;
+    /* rojo */
+}
+
+/* Iconos legibles */
+.status-badge i {
+    font-size: 1.2em;
+}
+
+/* Estilos para checkbox personalizado en formulario */
+
+/* Ocultar checkbox por defecto */
+.form-check-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Crear el toggle personalizado */
+.form-check-label {
+    position: relative;
+    padding-left: 2.5rem;
+    cursor: pointer;
+    color: #272525;
+    font-weight: 600;
+    user-select: none;
+}
+
+/* Estilo del control visible */
+.form-check-label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.8rem;
+    height: 1.0rem;
+    background-color: #ccc;
+    border-radius: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Círculo interior */
+.form-check-label::after {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+}
+
+/* Estado checked */
+.form-check-input:checked+.form-check-label::before {
+    background-color: #28a745;
+}
+
+.form-check-input:checked+.form-check-label::after {
+    left: 1.1rem;
+}
+
+/* Enfoque para accesibilidad */
+.form-check-input:focus+.form-check-label::before {
+    box-shadow: 0 0 2px 3px #80bdff;
+}
+
+
+// estilo para el boton 'Enviar' del formulario
+.submit-block {
+    display: flex;
+    align-items: center;
+}
+
+.btn-block-size {
+    @include ui.btn-block-size(core.$brand-primary-color, white, block, 45%);
+    font-weight: 600;
+    font-size: 1.7rem;
+}
+
+.form-check-label {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#estado-texto {
+    margin-left: 0.875rem;
+    font-size: 1.4rem;
+    color: #28a745;
+    /* verde por defecto para activo */
+}
+
+// input#activo:not(:checked)+label #estado-texto {
+//     color: #dc3545;
+//     /* rojo para inactivo */
+// }

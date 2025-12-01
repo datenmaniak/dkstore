@@ -14,10 +14,10 @@ if (!$id) {
 
 // var_dump($id);
 
-
-
 require '../../includes/config/database.php';
-require  '../../includes/functions.php';
+require '../../includes/functions.php';
+includeTemplate('header');
+
 
 $images_folder = '../../uploads/';
 $no_image = '../../assets/img/no-image.jpg';
@@ -36,21 +36,19 @@ $prod = mysqli_fetch_assoc($productquery);
 // var_dump($prod);
 // echo "</pre>";
 
-
 // Proveedores
-$sellers = "SELECT * FROM proveedores";
+$sellers = 'SELECT * FROM proveedores';
 $sellers_list = mysqli_query($db, $sellers);
 
 // Categorias
-$categories = "SELECT * FROM categorias";
+$categories = 'SELECT * FROM categorias';
 $categories_list = mysqli_query($db, $categories);
 
 // Arreglo con mensajes de errores
 $errores = [];
 
-
 /* --- Este bloque, así lo explicó/codificó el profesor --- */
-// BEGIN 
+// BEGIN
 // leer variables / mantiene, para evitar repetir la entrada de campos
 // en caso de errores
 // $codigo_sku = $prod['codigo_sku'];
@@ -87,11 +85,8 @@ $producto = [
 
 // exit();
 
-
 // Ejecutar despues que se envia el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
     /* --- Este bloque corresponde a la clase del profesor --- */
     // BEGIN
     /* // --- sanitizar / saneamiento de los campos antes de procesarlos --- */
@@ -114,33 +109,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $producto = [
         'codigo_sku' => trim($_POST['codigo_sku'] ?? '') ?: $producto['codigo_sku'],
         'nombre_producto' => htmlspecialchars(trim($_POST['nombre_producto'] ?? '')),
-        'precio' => (float)($_POST['precio'] ?? 0),
+        'precio' => (float) ($_POST['precio'] ?? 0),
         'descripcion' => htmlspecialchars(trim($_POST['descripcion'] ?? '')),
-        'existencia' => (int)($_POST['existencia'] ?? 0),
-        'stock_minimo' => (int)($_POST['stock_minimo'] ?? 0),
-        'activo' => (int)($_POST['activo'] ?? 0),
-        'proveedor_id' => (int)($_POST['proveedor_id'] ?? 0),
-        'categoria_id' => (int)($_POST['categoria_id'] ?? 0)
+        'existencia' => (int) ($_POST['existencia'] ?? 0),
+        'stock_minimo' => (int) ($_POST['stock_minimo'] ?? 0),
+        'activo' => (int) ($_POST['activo'] ?? 0),
+        'proveedor_id' => (int) ($_POST['proveedor_id'] ?? 0),
+        'categoria_id' => (int) ($_POST['categoria_id'] ?? 0)
+
     ];
 
     // 2. Validaciones de negocio
     if (strlen($producto['codigo_sku']) > 32) {
-        $errores[] = "SKU muy largo";
+        $errores[] = 'SKU muy largo';
     }
     if (strlen($producto['nombre_producto']) < 3) {
         $errores[] = 'Es necesario asignar un nombre al menos de 16 caracteres';
     }
     if ($producto['precio'] < 0) {
-        $errores[] = "Precio inválido";
+        $errores[] = 'Precio inválido';
     }
     if (strlen($producto['descripcion']) < 32) {
         $errores[] = 'La descripción debe contener al menos 32 caracteres';
     }
     if ($producto['existencia'] < 1) {
-        $errores[] = "Se recomienda asignar al menos 1 para la cantidad de existencia";
+        $errores[] = 'Se recomienda asignar al menos 1 para la cantidad de existencia';
     }
     if ($producto['stock_minimo'] < 1) {
-        $errores[] = "Se recomienda asignar al menos 1 para el stock mínimo";
+        $errores[] = 'Se recomienda asignar al menos 1 para el stock mínimo';
     }
 
     if (!$producto['proveedor_id']) {
@@ -150,52 +146,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = 'Es obligatorio incluir el código de la categoría';
     }
 
-
-    // Detectar si realmente se subió una imagen nueva
-    $hay_nueva_imagen = !empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
-
-    // $imgNewName = '';
-    if ($hay_nueva_imagen) {
-
-        $validacion = validarImagen($_FILES['imagen']);
-
-        if (!$validacion['valida']) {
-            $errores[] = "Error: " . $validacion['error'];
-        } else {
-
-            // Solo aquí procesamos la imagen NUEVA y eliminamos la anterior
-            $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
-
-            // mover archivo temporal a directorio de 'uploads'
-            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $images_folder . $imgNewName)) {
-
-                // Eliminar imagen anterior SOLO si existe
-                $ruta_imagen_anterior = $images_folder . $producto['imagen'];
-                if (!empty($producto['imagen']) && file_exists($ruta_imagen_anterior)) {
-                    unlink($ruta_imagen_anterior);
-                }
-
-                // Aquí actualizarías SQL con: imagen = '$imgNewName'
-                $update_imagen = true;
-                $producto['imagen'] = $imgNewName;  // aqui se guarda para SQL
-
-            } else {
-                $errores[] = "Error al mover la imagen al servidor";
-            }
-        }
-    }
-
-
+    // TODO: Evaluar porque se repite y si es necesario este bloque
     // Determinar qué imagen mostrar (siempre al final)
-    $imagen_mostrar = '';
-    if (isset($imgNewName)) {
-        $imagen_mostrar = $images_folder . $imgNewName;
-    } elseif (!empty($prod['imagen'])) {
-        $imagen_mostrar = $images_folder . $prod['imagen'];
-    } else {
-        $imagen_mostrar = $no_image;
-    }
-
+    // $imagen_mostrar = '';
+    // if (isset($imgNewName)) {
+    //     $imagen_mostrar = $images_folder . $imgNewName;
+    // } elseif (!empty($prod['imagen'])) {
+    //     $imagen_mostrar = $images_folder . $prod['imagen'];
+    // } else {
+    //     $imagen_mostrar = $no_image;
+    // }
 
     // var_dump(' hay nueva imagen: ', $hay_nueva_imagen);
     // echo "<br>";
@@ -217,35 +177,101 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // exit();
 
+    /* // TODO: aqui procesa la imagen del producto */
+    // Detectar si realmente se subió una imagen nueva
+    $hay_nueva_imagen = !empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
+
+    // $imgNewName = '';
+    if ($hay_nueva_imagen) {
+        $validacion = validarImagen($_FILES['imagen']);
+
+        if (!$validacion['valida']) {
+            $errores[] = 'Error: ' . $validacion['error'];
+        } else {
+            // Solo aquí procesamos la imagen NUEVA y eliminamos la anterior
+            $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
+
+            // Guardar imagen anterior
+            $imagen_anterior = $prod['imagen'];
+
+            // Ruta para eliminar imagen anterior SOLO si existe
+            $ruta_imagen_anterior = $images_folder . $imagen_anterior;
+
+
+            // mover archivo temporal a directorio de 'uploads'
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $images_folder . $imgNewName)) {
+
+
+                // if (!empty($producto['imagen']) && file_exists($ruta_imagen_anterior)) {
+                //     unlink($ruta_imagen_anterior);
+                // }
+
+                if (
+                    !empty($imagen_anterior) &&
+                    $imagen_anterior !== $imgNewName && file_exists($ruta_imagen_anterior)
+                ) {
+                    unlink($ruta_imagen_anterior);
+                }
+
+                // Aquí actualizarías SQL con: imagen = '$imgNewName'
+                $update_imagen = true;
+                $producto['imagen'] = $imgNewName;  // aqui se guarda para SQL
+
+                // Ahora recalculamos la ruta para mostrar en el formulario
+                $imagen_mostrar = $images_folder . $producto['imagen'];
+            } else {
+                $errores[] = 'Error al mover la imagen al servidor';
+            }
+        }
+    }
+
+
+
     if (empty($errores)) {
 
 
-        // // Agregar imagen SOLO si hay nueva imagen válida
-        // if ($hay_nueva_imagen && $validacion['valida']) {
-        //     $producto['imagen'] = $imgNewName;
-        // }
-
-
         $set_parts = [];
-        foreach ($producto as  $campo => $valor) {
+        foreach ($producto as $campo => $valor) {
             $set_parts[] = "$campo = '" . mysqli_real_escape_string($db, $valor) . "'";
         }
 
-
-        $query = "UPDATE productos SET " . implode(', ', $set_parts) . " WHERE id = " . (int)$id;
-
-
-
-        // update record 
-        // $query = "UPDATE productos SET codigo_sku = '$codigo_sku', imagen = '$imgNewName'  ,nombre_producto = '$nombre_producto', precio = $precio , descripcion =  '$descripcion', existencia = $existencia , stock_minimo = $stock_minimo, proveedor_id = $proveedor_id, categoria_id = $categoria_id WHERE id = $id ";
-
+        $query = 'UPDATE productos SET ' . implode(', ', $set_parts) . ' WHERE id = ' . (int) $id;
 
         $res = mysqli_query($db, $query);
+
+        // var_dump('  $hay_nueva_imagen): ', $hay_nueva_imagen);
+        // echo "<br>";
+        // var_dump(' $validacion ', $validacion);
+        // echo "<br>";
+        // var_dump(' $imgNewName ', $imgNewName);
+        // echo "<br>";
+        // var_dump(' isset(imgNewName) ', isset($imgNewName));
+        // echo "<br>";
+        // var_dump('$imagen_mostrar ', $imagen_mostrar);
+        // echo "<br>";
+        // var_dump(' $ruta_imagen_anterior ', $ruta_imagen_anterior);
+        // echo "<br>";
+
+        // var_dump('$_FILES: ', $_FILES['imagen']);
+        // echo "<br>";
+        // var_dump('$imgNewName: ', $imgNewName);
+        // echo "<br>";
+        // var_dump('$producto[imagen]:', $producto['imagen']);
+        // echo "<br>";
+        // var_dump('$query:', $query);  // Ver SQL generado
+        // echo "<br>";
+        // var_dump('$images_folder ', $images_folder);
+        // echo "<br>";
+        // var_dump('$no_image', $no_image);
+        // echo "<br>";
+        // var_dump('$imagen_mostrar ', $imagen_mostrar);
+
+
 
         if ($res) {
             // echo "Insertado correcto en la DB";
 
-            // redireccionar a otra página para evitar repetidos registro duplicados 
+            // redireccionar a otra página para evitar repetidos registro duplicados
             // al 'enviar datos'
 
             // Query string
@@ -253,21 +279,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     }
-
-    // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
-    $imagen_mostrar = $no_image; // Por defecto
-
-    if (!empty($producto['imagen'])) {
-        $imagen_mostrar = $images_folder . $producto['imagen'];
-    } elseif (!empty($prod['imagen'])) {
-        $imagen_mostrar = $images_folder . $prod['imagen'];
-    }
-
-    // END - Form processing
 }
-includeTemplate('header');
 
+// 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
+$imagen_mostrar = $no_image;  // Por defecto
+if (!empty($producto['imagen'])) {
+    $imagen_mostrar = $images_folder . $producto['imagen'];
+} elseif (!empty($prod['imagen'])) {
+    $imagen_mostrar = $images_folder . $prod['imagen'];
+}
+// if (!$_FILES['imagen']) {
+//     $imagen_mostrar = $no_image;
+// }
+
+// var_dump('  $hay_nueva_imagen): ', $hay_nueva_imagen);
+// echo "<br>";
+// var_dump(' $validacion ', $validacion);
+// echo "<br>";
+// var_dump(' $imgNewName ', $imgNewName);
+// echo "<br>";
+// var_dump(' isset(imgNewName) ', isset($imgNewName));
+// echo "<br>";
+// var_dump('$imagen_mostrar ', $imagen_mostrar);
+// echo "<br>";
+// var_dump(' $ruta_imagen_anterior ', $ruta_imagen_anterior);
+// echo "<br>";
+
+// var_dump('$_FILES: ', $_FILES['imagen']);
+// echo "<br>";
+// var_dump('$imgNewName: ', $imgNewName);
+// echo "<br>";
+// var_dump('$producto[imagen]:', $producto['imagen']);
+// echo "<br>";
+// var_dump('$query:', $query);  // Ver SQL generado
+// echo "<br>";
+// var_dump('$images_folder ', $images_folder);
+// echo "<br>";
+// var_dump('$no_image', $no_image);
+// echo "<br>";
+// var_dump('$imagen_mostrar ', $imagen_mostrar);
+// exit();
+
+// END - Form processing
 ?>
+
 
 <main class="admin-layout  mt-15">
     <!-- <main class="add-products-container mt-15 basic-container"> -->
@@ -277,81 +332,53 @@ includeTemplate('header');
 
 
     <?php foreach ($errores as $error): ?>
-        <div class="alerta error">
-            <?php echo $error; ?>
-        </div>
+    <div class="alerta error">
+        <?php echo $error; ?>
+    </div>
     <?php endforeach; ?>
 
 
     <!-- action="/admin/productos/update.php"> -->
 
-    <form method="POST" class="form-productos" enctype="multipart/form-data">
+    <form method="POST" class="form-productos radius-t radius-b" enctype="multipart/form-data">
         <label>Código (SKU):
-            <input
-                type="text"
-                name="codigo_sku"
-                value="<?php echo $producto['codigo_sku']; ?>">
-            <!-- value="<?php echo $codigo_sku; ?>"> -->
+            <input type="text" name="codigo_sku" value="<?php echo $producto['codigo_sku']; ?>">
         </label>
         <label>Nombre del producto:
-            <input type="text"
-                name="nombre_producto"
-                value="<?php echo $producto['nombre_producto']; ?>">
-            <!-- value="<?php echo $nombre_producto; ?>"> -->
+            <input type="text" name="nombre_producto" value="<?php echo $producto['nombre_producto']; ?>">
         </label>
         <label>Precio:
-            <input type="number"
-                step="0.01"
-                name="precio"
-                value="<?php echo $producto['precio']; ?>">
-            <!-- value="<?php echo $precio; ?>"> -->
+            <input type="number" step="0.01" name="precio" value="<?php echo $producto['precio']; ?>">
         </label>
         <label>Imagen (100 kb. max):
-            <input type="file"
-                name="imagen"
-                accept="image/*">
+            <input type="file" name="imagen" accept="image/*">
         </label>
 
         <!-- imagen -->
-        <img src="<?php echo $producto['imagen']; ?>" class="img-prod" alt="">
+        <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="">
 
 
         <label>Descripción:
-            <textarea
-                name="descripcion"><?php echo $producto['descripcion']; ?></textarea>
-            <!-- name="descripcion"><?php echo $descripcion; ?></textarea> -->
+            <textarea name="descripcion"><?php echo $producto['descripcion']; ?></textarea>
         </label>
         <label>Existencia:
-            <input
-                type="number"
-                name="existencia"
-                value="<?php echo $producto['existencia']; ?>">
-            <!-- value="<?php echo $existencia; ?>"> -->
+            <input type="number" name="existencia" value="<?php echo $producto['existencia']; ?>">
         </label>
         <label>Stock mínimo:
-            <input type="number"
-                name="stock_minimo"
-                value="<?php echo $producto['stock_minimo']; ?>">
-            <!-- value="<?php echo $stock_minimo; ?>"> -->
+            <input type="number" name="stock_minimo" value="<?php echo $producto['stock_minimo']; ?>">
         </label>
-        <label>Activo:
-            <input
-                type="checkbox"
-                name="activo" checked
-                value="<?php echo $producto['activo']; ?>">
-            <!-- value="<?php echo $activo; ?>"> -->
-        </label>
-        <!-- <label>ID Proveedor: <input type="number" name="proveedor_id"></label> -->
+        <!-- // BEGIN -->
+
+        <!-- //END  -->
         <fieldset>
             <legend>Proveedor:</legend>
             <select name="proveedor_id" id="">
                 <option value="">- Elija el proveedor - </option>
                 <?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
-                    <!-- <option <?php echo $proveedor_id === $seller['id'] ? 'selected' : ''; ?> -->
-                    <option <?php echo $producto['proveedor_id'] === $seller['id'] ? 'selected' : ''; ?>
-                        value="<?php echo $seller['id']; ?>">
-                        <?php echo $seller['empresa'] . " - " . $seller['contact_name']; ?>
-                    </option>
+                <option <?php echo $producto['proveedor_id'] === $seller['id'] ? 'selected' : ''; ?>
+                    value="<?php echo $seller['id']; ?>">
+                    <?php echo $seller['empresa'] . ' - ' . $seller['contact_name']; ?>
+                </option>
                 <?php endwhile; ?>
                 <!-- <option value="1">Global PC</option>
                 <option value="2">datenmaniak</option> -->
@@ -362,17 +389,29 @@ includeTemplate('header');
             <select name="categoria_id" id="">
                 <option value="">- Elija categoría -</option>
                 <?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
-                    <!-- <option <?php echo $categoria_id === $category['id'] ? 'selected' : ''; ?> -->
-                    <option <?php echo $producto['categoria_id'] === $category['id'] ? 'selected' : ''; ?>
-                        value="<?php echo $category['id']; ?>">
-                        <?php echo $category['categoria'] . " - " . $category['descripcion']; ?>
-                    </option>
+                <option <?php echo $producto['categoria_id'] === $category['id'] ? 'selected' : ''; ?>
+                    value="<?php echo $category['id']; ?>">
+                    <?php echo $category['categoria'] . ' - ' . $category['descripcion']; ?>
+                </option>
                 <?php endwhile; ?>
             </select>
         </fieldset>
+        <fieldset>
+            <legend>Visible en el catálogo </legend>
+            <label for="activo" class="form-check form-switch">
+                <input type="checkbox" id="activo" name="activo" class="form-check-input" value="1"
+                    <?php echo ($producto['activo'] == 1) ? 'checked' : ''; ?>>
+                <span id="estado-texto" class="form-check-label">
+                    <?php echo ($producto['activo'] == 1) ? ' activo' : ' inactivo'; ?>
+                </span>
+            </label>
 
+        </fieldset>
 
-        <button type="submit" class="btn btn-block-50 ">Enviar los cambios</button>
+        <div class="submit-block">
+
+            <button type="submit" class="btn-block-size  ">Enviar los cambios</button>
+        </div>
     </form>
     <div class="warning-bar"></div>
 

@@ -17,6 +17,11 @@ $sellers_list = mysqli_query($db, $sellers);
 $categories = "SELECT * FROM categorias";
 $categories_list = mysqli_query($db, $categories);
 
+// ubicacion de la imagenes
+$images_folder = '../../uploads/';
+$no_image = '../../assets/img/no-image.jpg';
+$imagen_mostrar = $no_image; // Por defecto
+
 // Arreglo con mensajes de errores
 $errores = [];
 
@@ -75,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$precio) {
         $errores[] = 'Es necesario establecer un precio';
     }
-    if (strlen($descripcion) < 50) {
-        $errores[] = 'La descripción debe contener al menos 50 caracteres';
+    if (strlen($descripcion) < 24) {
+        $errores[] = 'La descripción debe contener al menos 24 caracteres';
     }
     if (!$existencia) {
         $errores[] = 'Es necesario incluir un existencia';
@@ -143,8 +148,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($validacion['valida']) {
             $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
 
-            $images_folder = '../../uploads/';
-
             move_uploaded_file($imagen['tmp_name'], $images_folder . $imgNewName);
 
             // move_uploaded_file(...)
@@ -180,9 +183,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 includeTemplate('header');
 
+
+
+// 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
+$imagen_mostrar = $no_image; // Por defecto
+
+/* if (!empty($producto['imagen']) || !empty($imagen)) { */
+if (!empty($imagen)) {
+    $imagen_mostrar = $images_folder . $imagen;
+} elseif (!empty($prod['imagen'])) {
+    $imagen_mostrar = $images_folder . $prod['imagen'];
+}
+
+
 ?>
 
-<main class="add-products-container mt-15 basic-container">
+<!-- <main class="add-products-container mt-15 basic-container"> -->
+<main class="admin-layout mt-15">
     <h2>Registrar Producto</h2>
 
     <a href="/admin/" class="btn btn-secondary mt-2">Volver</a>
@@ -215,11 +232,15 @@ includeTemplate('header');
                 name="precio"
                 value="<?php echo $precio; ?>">
         </label>
-        <label>Imagen (100 kb. max):
-            <input type="file"
-                name="imagen"
-                accept="image/*">
-        </label>
+        <div class="product-image">
+
+            <label>Imagen (100 kb. max):
+                <input type="file"
+                    name="imagen"
+                    accept="image/*">
+            </label>
+        </div>
+        <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="">
         <label>Descripción:
             <textarea
                 name="descripcion"><?php echo $descripcion; ?></textarea>
@@ -235,12 +256,8 @@ includeTemplate('header');
                 name="stock_minimo"
                 value="<?php echo $stock_minimo; ?>">
         </label>
-        <label>Activo:
-            <input
-                type="checkbox"
-                name="activo" checked
-                value="<?php echo $activo; ?>">
-        </label>
+        <!-- TODO: aqui estuvo  el campo de activo  -->
+
         <!-- <label>ID Proveedor: <input type="number" name="proveedor_id"></label> -->
         <fieldset>
             <legend>Proveedor:</legend>
@@ -268,18 +285,38 @@ includeTemplate('header');
                 <?php endwhile; ?>
             </select>
         </fieldset>
+        <fieldset>
+            <legend>Visible en el catálogo </legend>
+            <label for="activo" class="form-check form-switch">
+                <input
+                    type="checkbox"
+                    id="activo"
+                    name="activo"
+                    class="form-check-input"
+                    value="1"
+                    <?php echo ($activo === 1) ? 'checked' : ''; ?>>
+                <span id="estado-texto" class="form-check-label">
+                    <?php echo ($activo === 1) ? ' activo' : ' inactivo'; ?>
+                </span>
+            </label>
+
+        </fieldset>
 
 
-        <button type="submit">Guardar Producto</button>
+
+        <div class="submit-block">
+
+            <button type="submit" class="btn-block-size  ">Enviar</button>
+        </div>
     </form>
     <div class="warning-bar"></div>
 
 
-
-    <div class="return-home mb-2"></div>
 </main>
+<script src="/build/js/bundle.js"></script>
+
 
 <?php
-includeTemplate('footer');
+/* includeTemplate('footer'); */
 
 ?>
