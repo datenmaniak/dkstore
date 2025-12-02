@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // al 'enviar datos'
 
             // Query string
-            header('Location: /admin?result=true');
+            header('Location: /admin?result=1');
         }
     }
 
@@ -213,48 +213,31 @@ if (!empty($imagen)) {
 
 
 
-    <form method="POST" class="form-productos" enctype="multipart/form-data"
-        action="/admin/productos/create.php">
+    <form method="POST" class="form-productos" enctype="multipart/form-data" action="/admin/productos/create.php">
         <label>Código (SKU):
-            <input
-                type="text"
-                name="codigo_sku"
-                value="<?php echo $codigo_sku; ?>">
+            <input type="text" name="codigo_sku" value="<?php echo $codigo_sku; ?>">
         </label>
         <label>Nombre del producto:
-            <input type="text"
-                name="nombre_producto"
-                value="<?php echo $nombre_producto; ?>">
+            <input type="text" name="nombre_producto" value="<?php echo $nombre_producto; ?>">
         </label>
         <label>Precio:
-            <input type="number"
-                step="0.01"
-                name="precio"
-                value="<?php echo $precio; ?>">
+            <input type="number" step="0.01" name="precio" value="<?php echo $precio; ?>">
         </label>
         <div class="product-image">
 
             <label>Imagen (100 kb. max):
-                <input type="file"
-                    name="imagen"
-                    accept="image/*">
+                <input type="file" name="imagen" accept="image/*">
             </label>
         </div>
         <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="">
         <label>Descripción:
-            <textarea
-                name="descripcion"><?php echo $descripcion; ?></textarea>
+            <textarea name="descripcion"><?php echo $descripcion; ?></textarea>
         </label>
         <label>Existencia:
-            <input
-                type="number"
-                name="existencia"
-                value="<?php echo $existencia; ?>">
+            <input type="number" name="existencia" value="<?php echo $existencia; ?>">
         </label>
         <label>Stock mínimo:
-            <input type="number"
-                name="stock_minimo"
-                value="<?php echo $stock_minimo; ?>">
+            <input type="number" name="stock_minimo" value="<?php echo $stock_minimo; ?>">
         </label>
         <!-- TODO: aqui estuvo  el campo de activo  -->
 
@@ -288,12 +271,7 @@ if (!empty($imagen)) {
         <fieldset>
             <legend>Visible en el catálogo </legend>
             <label for="activo" class="form-check form-switch">
-                <input
-                    type="checkbox"
-                    id="activo"
-                    name="activo"
-                    class="form-check-input"
-                    value="1"
+                <input type="checkbox" id="activo" name="activo" class="form-check-input" value="1"
                     <?php echo ($activo === 1) ? 'checked' : ''; ?>>
                 <span id="estado-texto" class="form-check-label">
                     <?php echo ($activo === 1) ? ' activo' : ' inactivo'; ?>

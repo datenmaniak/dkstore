@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Detectar si realmente se subió una imagen nueva
     $hay_nueva_imagen = !empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
 
-    // $imgNewName = '';
+    $imgNewName = '';
     if ($hay_nueva_imagen) {
         $validacion = validarImagen($_FILES['imagen']);
 
@@ -287,6 +287,8 @@ if (!empty($producto['imagen'])) {
     $imagen_mostrar = $images_folder . $producto['imagen'];
 } elseif (!empty($prod['imagen'])) {
     $imagen_mostrar = $images_folder . $prod['imagen'];
+} elseif (!$imgNewName !== NULL) {
+    $imagen_mostrar = $imgNewName;
 }
 // if (!$_FILES['imagen']) {
 //     $imagen_mostrar = $no_image;
@@ -367,9 +369,6 @@ if (!empty($producto['imagen'])) {
         <label>Stock mínimo:
             <input type="number" name="stock_minimo" value="<?php echo $producto['stock_minimo']; ?>">
         </label>
-        <!-- // BEGIN -->
-
-        <!-- //END  -->
         <fieldset>
             <legend>Proveedor:</legend>
             <select name="proveedor_id" id="">
