@@ -2,6 +2,9 @@
 
 <?php
 
+/* Functions file */
+
+
 require __DIR__ . '/app.php';
 
 function includeTemplate(string $page)
@@ -17,8 +20,10 @@ function includeTemplate(string $page)
         'catalog-std',
         'catalog-split',
         'color-palette',
+        'catalog-std-db',
         'hero',
-        'home'
+        'home',
+        'end-page'
     ];
 
     if (in_array($page, $allowed)) {

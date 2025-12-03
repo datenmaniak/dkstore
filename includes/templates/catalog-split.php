@@ -1,6 +1,6 @@
 <div id="products"></div>
 <section id="catalog" class="catalog">
-    <h2>Catálogo de productos</h2>
+    <h2>Catálogo de productos - Split</h2>
 
     <div class="catalog__grid">
 

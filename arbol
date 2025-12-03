@@ -1,0 +1,49 @@
+.
+├── admin
+│   ├── admin.php
+│   ├── adm.php
+│   ├── categorias
+│   ├── index copy.php
+│   ├── index.php
+│   ├── productos
+│   └── proveedores
+├── assets
+│   ├── dark-mode
+│   ├── hero
+│   ├── icons
+│   └── logos
+├── backup-header.html
+├── backup-setting.json
+├── build
+│   ├── css
+│   ├── img
+│   └── js
+├── gulpfile.mjs
+├── includes
+│   ├── app.php
+│   ├── config
+│   ├── functions.php
+│   └── templates
+├── index.php
+├── login.php
+├── package.json
+├── package-lock.json
+├── productos.php
+├── README.MD
+└── uploads
+    ├── 04b723838d4f8959692e12a74fd127.43694490.jpg
+    
+
+
+
+    script src="/build/js/bundle.js"></script>
+
+<?php
+
+/* includeTemplate('footer'); */
+/* includeTemplate('end-page'); */
+
+// cerrar la conexion a la DB
+mysqli_close($db);
+
+?>

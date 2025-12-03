@@ -8,6 +8,8 @@
   @include container($container-widths);
   border-radius: core.$base-border-radius;
   background-color: color.scale(core.$brand-color-one, $lightness: +90%, $saturation: -65%);
+  margin-top: 5.625rem; // igual a la altura del header
+
 
   &__container {
 

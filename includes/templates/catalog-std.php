@@ -1,16 +1,17 @@
 <?php
 
 
-include  'includes/templates/color-palette.php' ?>;
+// include  'includes/templates/color-palette.php' 
+?>;
 
 <div id="products"></div>
 <section id="catalog" class="catalog">
-    <h2>Catálogo de productos</h2>
+    <h2>Catálogo de productos - Standard</h2>
 
     <div class="catalog__grid">
 
         <article class="card card--standard">
-            <!-- <div class="card__badge">En oferta</div> -->
+            <div class="card__badge">En oferta</div>
 
             <picture class="card__picture">
                 <!-- WebP único -->
@@ -31,7 +32,8 @@ include  'includes/templates/color-palette.php' ?>;
 
 
             <h3 class="card__title">Producto estándar</h3>
-            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet odio.
+            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet
+                odio.
             </p>
             <a href="/" class="card__link">
                 <button class="btn-ghost">Ver detalles</button>
@@ -55,13 +57,14 @@ include  'includes/templates/color-palette.php' ?>;
            33vw" type="image/jpeg">
 
                 <!-- Fallback por defecto -->
-                <img class="card__img" src="./build/img/fili-santillan-OWfts4TGOlo-unsplash-lg.jpg" alt="Producto destacado"
-                    loading="lazy">
+                <img class="card__img" src="./build/img/fili-santillan-OWfts4TGOlo-unsplash-lg.jpg"
+                    alt="Producto destacado" loading="lazy">
             </picture>
 
 
             <h3 class="card__title">Producto estándar</h3>
-            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet odio.
+            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet
+                odio.
             </p>
             <a href="/" class="card__link">
                 <button class="btn btn--primary">Ver detalles</button>
@@ -90,7 +93,8 @@ include  'includes/templates/color-palette.php' ?>;
 
 
             <h3 class="card__title">Producto estándar</h3>
-            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet odio.
+            <p class="card__description">Praesent vulputate auctor tellus vel gravida. Nam ac commodo nisl, at laoreet
+                odio.
             </p>
             <a href="/" class="card__link">
                 <button class="btn btn--primary">Ver detalles</button>

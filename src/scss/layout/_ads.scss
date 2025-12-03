@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @use '../core/' as core;
 @use "../config/" as *;
 
@@ -5,6 +7,10 @@
   // width: 100%;
   // background-color: core.$primary;
   @include container($container-widths);
+  margin-top: 5.625rem; // igual a la altura del header
+  background-color: color.scale(core.$brand-color-three, $lightness: +90%, $saturation: -65%);
+
+
 
   &__container {
     border-radius: core.$base-border-radius;

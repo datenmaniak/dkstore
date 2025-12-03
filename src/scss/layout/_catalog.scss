@@ -10,10 +10,12 @@
     border-radius: core.$base-border-radius;
     margin: 1rem;
 
-    background-color: color.scale(core.$brand-color-three, $lightness: +90%, $saturation: -65%);
 
     width: 100%;
     @include container($container-widths);
+    margin-top: 5.625rem; // igual a la altura del header
+    background-color: color.scale(core.$brand-secondary-color, $lightness: +90%, $saturation: 65%);
+
 
 
     h2 {
@@ -27,13 +29,16 @@
 
     &__grid {
 
-        @include grid-fluid(250px, 1.5rem);
+        @include grid-fluid(270px, 0.575rem);
+        // @include grid-responsive(1rem);
+        // @include grid(3, 1.2rem);
+
         // fuerza que todas las cards tengan la misma altura
         align-items: stretch;
         padding-bottom: 7rem;
 
         .card {
-            // position: relative;
+            position: relative;
 
             max-width: 350px;
             border: 1px solid core.$bg-secondary;
@@ -89,8 +94,7 @@
 
             // Variantes
             &--standard {
-                background-color: color.scale(core.$brand-alternate-color, $lightness: +90%);
-
+                background-color: color.scale(core.$brand-light-color, $lightness: 95%, $saturation: +80%);
 
                 .card__picture {
                     display: block;
@@ -98,20 +102,17 @@
                     // height: auto;
                     margin: 0;
                     // border-radius: 0;
-                }
-
-                card__img {
-                    width: 100%;
-                    height: auto;
-                    display: block;
-                    border-radius: 8px 8px 0 0; // esquinas redondeadas solo arriba
-                    object-fit: cover;
-                    aspect-ratio: 16 / 9; // proporción hero
-                }
-
-                // opcional: si quieres que solo la imagen toque el borde superior
-                .card__picture {
+                    // opcional: si quieres que solo la imagen toque el borde superior
                     margin-top: 0rem; // compensa el padding de la tarjeta
+
+                    .card__img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 8px 8px 0 0; // esquinas redondeadas solo arriba
+                        object-fit: cover;
+                        aspect-ratio: 16 / 9; // proporción hero
+                    }
                 }
 
                 // Title and description 
@@ -146,7 +147,6 @@
                     top: 10rem; // distancia desde arriba
                     right: -2.5rem; // esquina superior derecha
                     background: #7700F0; // tu color de branding
-                    background: orangered;
                     color: #fff;
                     padding: 0.4rem 0.8rem;
                     font-size: 1.2rem;

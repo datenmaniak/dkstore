@@ -1,6 +1,6 @@
 <div id="products"></div>
 <section id="catalog" class="catalog">
-    <h2>Catálogo de productos</h2>
+    <h2>Catálogo de productos - Minimal </h2>
 
     <div class="catalog__grid">
 
@@ -21,12 +21,13 @@
            33vw" type="image/jpeg">
 
                 <!-- Fallback por defecto -->
-                <img class="card__img" src="./build/img/akhil-yerabati-Q2uV5TkjNz8-unsplash-lg.jpg" alt="Producto destacado"
-                    loading="lazy">
+                <img class="card__img" src="./build/img/akhil-yerabati-Q2uV5TkjNz8-unsplash-lg.jpg"
+                    alt="Producto destacado" loading="lazy">
             </picture>
 
             <h3 class="card__title">Producto minimalista</h3>
-            <p class="card__description">Vivamus a hendrerit justo. Maecenas mattis varius consequat. Pellentesque tempor
+            <p class="card__description">Vivamus a hendrerit justo. Maecenas mattis varius consequat. Pellentesque
+                tempor
                 leo nec accumsan dapibus. </p>
             <a href="#" class="card__link">
                 <button class="btn btn--primary">Ver más detalles</button>

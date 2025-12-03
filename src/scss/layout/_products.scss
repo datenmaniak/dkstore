@@ -6,6 +6,8 @@
   width: 100%;
   // background-color: core.$primary;
   @include container($container-widths);
+  margin-top: 5.625rem; // igual a la altura del header
+
 }
 
 .products__container {

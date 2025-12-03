@@ -668,6 +668,10 @@ header {
   right: 0;
 }
 
+.top-margin {
+  margin-top: 5.625rem;
+}
+
 .mt {
   margin-top: 0.575rem;
 }
@@ -1723,6 +1727,7 @@ nav .top-bar p {
 .about-us {
   border-radius: 20px;
   background-color: rgb(246.7125, 237.7875, 237.7875);
+  margin-top: 5.625rem;
 }
 .about-us__container {
   display: grid;
@@ -1867,6 +1872,10 @@ nav .top-bar p {
     max-width: 1330px;
   }
 }
+.ads {
+  margin-top: 5.625rem;
+  background-color: rgb(235.224375, 233.35875, 236.84125);
+}
 .ads__container {
   border-radius: 20px;
   margin-top: 50px;
@@ -1994,7 +2003,6 @@ nav .top-bar p {
 .catalog {
   border-radius: 20px;
   margin: 1rem;
-  background-color: rgb(235.224375, 233.35875, 236.84125);
   width: 100%;
   margin: 0 auto;
   padding: 0 15px;
@@ -2033,6 +2041,10 @@ nav .top-bar p {
   .catalog {
     max-width: 1330px;
   }
+}
+.catalog {
+  margin-top: 5.625rem;
+  background-color: rgb(229.9594871795, 245.2874592075, 252.4405128205);
 }
 .catalog h2 {
   text-align: center;
@@ -2077,14 +2089,15 @@ nav .top-bar p {
 }
 .catalog__grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 0.575rem;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   padding: 0 40px;
   align-items: stretch;
   padding-bottom: 7rem;
 }
 .catalog__grid .card {
+  position: relative;
   max-width: 350px;
   border: 1px solid rgba(188, 199, 199, 0.383);
   border-radius: 8px;
@@ -2196,14 +2209,15 @@ nav .top-bar p {
   transform: translateY(-4px);
 }
 .catalog__grid .card--standard {
-  background-color: rgb(247.2, 246.3, 248);
+  background-color: rgb(249.65, 252.7614285714, 254.6);
 }
 .catalog__grid .card--standard .card__picture {
   display: block;
   width: 100%;
   margin: 0;
+  margin-top: 0rem;
 }
-.catalog__grid .card--standard card__img {
+.catalog__grid .card--standard .card__picture .card__img {
   width: 100%;
   height: auto;
   display: block;
@@ -2211,9 +2225,6 @@ nav .top-bar p {
   -o-object-fit: cover;
      object-fit: cover;
   aspect-ratio: 16/9;
-}
-.catalog__grid .card--standard .card__picture {
-  margin-top: 0rem;
 }
 @media (min-width: 250px) {
   .catalog__grid .card--standard h3 {
@@ -2304,7 +2315,6 @@ nav .top-bar p {
   top: 10rem;
   right: -2.5rem;
   background: #7700F0;
-  background: orangered;
   color: #fff;
   padding: 0.4rem 0.8rem;
   font-size: 1.2rem;
