@@ -113,8 +113,8 @@ $imagen_mostrar = $no_image; // Por defecto
 
 
     <div class="admin-container">
-
-        <!-- <aside class="sidebar">
+        <!-- 
+        <aside class="sidebar">
             <h3>Dashboard</h3>
             <ul>
                 <li><a href="/admin/productos/create.php">Crear</a></li>
@@ -215,10 +215,11 @@ $imagen_mostrar = $no_image; // Por defecto
 
 
 
-<script src="/build/js/bundle.js"></script>
+<!-- <script src="/build/js/bundle.js"></script> -->
 
 <?php
 // includeTemplate('footer');
+includeTemplate('end-page');
 
 // cerrar la conexion a la DB
 mysqli_close($db);

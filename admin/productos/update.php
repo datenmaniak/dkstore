@@ -330,13 +330,13 @@ if (!empty($producto['imagen'])) {
     <!-- <main class="add-products-container mt-15 basic-container"> -->
     <h2>Actualizar Producto</h2>
 
-    <a href="/admin/" class="btn btn-secondary mt-2">Volver</a>
+    <a href="/admin/index.php" class="btn btn-secondary mt-2">Volver</a>
 
 
     <?php foreach ($errores as $error): ?>
-    <div class="alerta error">
-        <?php echo $error; ?>
-    </div>
+        <div class="alerta error">
+            <?php echo $error; ?>
+        </div>
     <?php endforeach; ?>
 
 
@@ -374,10 +374,10 @@ if (!empty($producto['imagen'])) {
             <select name="proveedor_id" id="">
                 <option value="">- Elija el proveedor - </option>
                 <?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
-                <option <?php echo $producto['proveedor_id'] === $seller['id'] ? 'selected' : ''; ?>
-                    value="<?php echo $seller['id']; ?>">
-                    <?php echo $seller['empresa'] . ' - ' . $seller['contact_name']; ?>
-                </option>
+                    <option <?php echo $producto['proveedor_id'] === $seller['id'] ? 'selected' : ''; ?>
+                        value="<?php echo $seller['id']; ?>">
+                        <?php echo $seller['empresa'] . ' - ' . $seller['contact_name']; ?>
+                    </option>
                 <?php endwhile; ?>
                 <!-- <option value="1">Global PC</option>
                 <option value="2">datenmaniak</option> -->
@@ -388,10 +388,10 @@ if (!empty($producto['imagen'])) {
             <select name="categoria_id" id="">
                 <option value="">- Elija categoría -</option>
                 <?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
-                <option <?php echo $producto['categoria_id'] === $category['id'] ? 'selected' : ''; ?>
-                    value="<?php echo $category['id']; ?>">
-                    <?php echo $category['categoria'] . ' - ' . $category['descripcion']; ?>
-                </option>
+                    <option <?php echo $producto['categoria_id'] === $category['id'] ? 'selected' : ''; ?>
+                        value="<?php echo $category['id']; ?>">
+                        <?php echo $category['categoria'] . ' - ' . $category['descripcion']; ?>
+                    </option>
                 <?php endwhile; ?>
             </select>
         </fieldset>

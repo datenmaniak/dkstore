@@ -17,12 +17,13 @@ $default_image_url = '/assets/img/no-image.png';
 // Bases de datos
 $db = conectDB();
 
-// get the records
-$query = "SELECT * FROM productos WHERE eliminado = 0";
+// get the records. 
+$query = "SELECT * FROM productos WHERE eliminado = 0 AND activo = 1";
+// Excluye los que tienen un soft-deleted y aquellos que ha sido marcado
+// para mostrarse en el catálogo.
+
 // Query Db
 $result = mysqli_query($db, $query);
-
-
 
 
 ?>
@@ -40,11 +41,9 @@ $result = mysqli_query($db, $query);
             } else {
                 $image_url = $default_image_url;
             }
-
-
         ?>
-
-
+            <!-- Estrellas en la esquina superior izquierda -->
+            <!-- <div class="card__stars">★★★★★</div> -->
 
             <article class="card card--standard">
                 <div class="card__badge">En oferta</div>
@@ -52,7 +51,7 @@ $result = mysqli_query($db, $query);
                 <picture class="card__picture">
                     <source srcset="<?php echo $image_url; ?>" type="image/webp">
                     <source srcset="<?php echo $image_url; ?>" type="image/*">
-                    <img class="card__img" src="<?php echo $images_url; ?>" alt="imagen del producto" loading="lazy">
+                    <img class="card__img" src="<?php echo $image_url; ?>" alt="imagen del producto" loading="lazy">
                 </picture>
 
                 <h3 class="card__title"><?php echo htmlspecialchars($item['nombre_producto']); ?></h3>
@@ -60,7 +59,10 @@ $result = mysqli_query($db, $query);
 
                 <p class="card__description"><?php echo htmlspecialchars($item['descripcion']); ?></p>
                 <p class="card__price">
-                    Precio: $<?php echo number_format($item['precio'], 2, ',', '.'); ?>
+                    <span>US$</span>
+                    <span class="price-value">
+                        <?php echo number_format($item['precio'], 2, ',', '.'); ?>
+                    </span>
                 </p>
                 <!-- Opciones de botones -->
                 <!-- <a href="/" class="card__link"> -->
@@ -70,9 +72,8 @@ $result = mysqli_query($db, $query);
                 <a href="/" class="card__link">
                     <button class="btn btn--primary">Ver detalles</button>
                 </a>
+
             </article>
-
-
 
         <?php endwhile; ?>
     </div> <!-- catalog__grid -->

@@ -13,8 +13,8 @@
 
     width: 100%;
     @include container($container-widths);
-    margin-top: 5.625rem; // igual a la altura del header
-    background-color: color.scale(core.$brand-secondary-color, $lightness: +90%, $saturation: 65%);
+    margin-top: 7.625rem; // igual a la altura del header
+    background-color: color.scale(core.$brand-alternate-color, $lightness: +90%, $saturation: -95%);
 
 
 
@@ -85,6 +85,22 @@
                 font-family: core.$alt-font;
                 @include responsive-font($p-sizes);
 
+            }
+
+            &__price {
+                font-family: core.$brand-alternate-font;
+                font-size: 2.5rem;
+                font-weight: 600;
+
+                span:first-child {
+                    vertical-align: super;
+                    font-size: .90em;
+                }
+
+                .price-value {
+                    font-size: 1.955rem;
+                    font-weight: 600;
+                }
             }
 
             &:hover {
@@ -233,6 +249,8 @@
             &--split {
                 display: flex;
                 flex-direction: column;
+                background-color: color.scale(core.$brand-color-three, $lightness: +90%, $saturation: -65%);
+
                 // height: 100%;
                 // max-height: 300px; // asegura que la tarjeta tenga altura definida
 
