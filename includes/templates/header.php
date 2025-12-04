@@ -1,3 +1,10 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,10 +55,20 @@
                     <li><a href="/productos.php">Productos</a></li>
                     <li><a href="">Blog</a></li>
                     <li><a href="">Contacto</a></li>
+
+
                     <!-- Último elemento: acceso a cuenta -->
-                    <li class="nav__login">
-                        <a href="/admin/login.php">Mi cuenta</a>
-                    </li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <!-- User has logged -->
+                        <li class="nav__login">
+                            <a href="/admin/logout.php">Cerrar Sessión</a>
+                        </li>
+                    <?php else: ?>
+
+                        <li class="nav__login">
+                            <a href="/admin/login.php">Mi cuenta</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="dark-mode-button">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="..." />
