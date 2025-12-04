@@ -4,6 +4,8 @@ Este proyecto se desarrolló a partir de la base de **web-template-core**, que e
 
 **Dk-Store** se inició como el resultado de los estudios y prácticas del curso de Desarrollo Web, y con el propósito de crear un kit de herramientas para mis propios diseños web, y fundamentos y la base a futuros proyectos de Desarrollo Web.
 
+Este proyecto fue la primera etapa de migración a PHP. Aunque, resulte código espaguetis, me ha servido para aprender y pasar a otro nivel de conocimiento a nivel de Frontend y Backend.
+
 ---
 
 ## 🚀 Características principales
