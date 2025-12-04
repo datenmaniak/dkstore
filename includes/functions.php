@@ -21,7 +21,7 @@ function requireRole($role)
 {
     session_start();
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-        header("Location: /no-access.php");
+        header("Location: /admin/no-access.php");
         exit;
     }
 }
@@ -45,7 +45,8 @@ function includeTemplate(string $page)
         'catalog-std-db',
         'hero',
         'home',
-        'end-page'
+        'end-page',
+        'no-access'
     ];
 
     if (in_array($page, $allowed)) {

@@ -90,10 +90,10 @@ main .auth-form {
         @include button-style(core.$brand-primary-color);
     }
 
-    .btn-secondary {
-        @include button-style(core.$brand-secondary-color);
-        margin-top: 0.5rem;
-    }
+    // .btn-secondary {
+    //     @include button(core.$brand-secondary-color);
+    //     margin-top: 0.5rem;
+    // }
 
     .error-message {
         color: core.$brand-alternate-color;

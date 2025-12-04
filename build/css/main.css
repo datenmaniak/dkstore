@@ -749,9 +749,10 @@ button {
   display: inline-block;
   background-color: #7700F0;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -768,14 +769,19 @@ button:disabled {
   background-color: rgb(159.94875, 94.35, 226.65);
   cursor: not-allowed;
 }
+button {
+  cursor: pointer;
+  font-weight: 400;
+}
 
 .btn {
   display: inline-block;
   background-color: #7700F0;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -794,16 +800,16 @@ button:disabled {
 }
 .btn {
   cursor: pointer;
-  font-weight: 400;
 }
 
 .btn-secondary {
   display: inline-block;
   background-color: #3e89ac;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -825,9 +831,10 @@ button:disabled {
   display: block;
   background-color: #7700F0;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -851,9 +858,10 @@ button:disabled {
   display: block;
   background-color: #7700F0;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -877,9 +885,10 @@ button:disabled {
   display: block;
   background-color: #7700F0;
   color: #fff;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -1178,9 +1187,10 @@ button:disabled {
   display: block;
   background-color: #7700F0;
   color: white;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -3200,9 +3210,10 @@ textarea {
   display: block;
   background-color: #7700F0;
   color: white;
+  font-weight: bold;
   border: none;
   border-radius: 6px;
-  padding: 1.75rem 1.25rem;
+  padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -3236,6 +3247,42 @@ textarea {
   font-size: 1.4rem;
   color: #28a745;
   /* verde por defecto para activo */
+}
+
+.no-access {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  background-color: #f9f9f9;
+}
+.no-access .no-access-container {
+  max-width: 500px;
+  padding: 2rem;
+  text-align: center;
+  border: 2px solid #B1A8B9;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.no-access .no-access-container h2 {
+  color: #392A46;
+  margin-bottom: 1rem;
+}
+.no-access .no-access-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.no-access .no-access-container .btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.no-access .no-access-container .btn.btn-primary {
+  background-color: #7700F0;
+  color: #fff;
 }
 
 main .auth-form {
@@ -3368,26 +3415,6 @@ main .auth-form {
 }
 .auth-form .btn-login:hover {
   background-color: rgb(101.29875, 0, 204.3);
-}
-.auth-form .btn-secondary {
-  padding: 10px 20px;
-  font-weight: bold;
-  background: #3e89ac;
-  color: white;
-  font-size: 1.2em;
-  border-radius: 5px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-  text-align: center;
-  width: 100px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.auth-form .btn-secondary:hover {
-  background-color: rgb(52.541025641, 116.0987179487, 145.758974359);
-}
-.auth-form .btn-secondary {
-  margin-top: 0.5rem;
 }
 .auth-form .error-message {
   color: #B1A8B9;

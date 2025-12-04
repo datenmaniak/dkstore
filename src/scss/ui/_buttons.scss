@@ -13,9 +13,10 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
     display: $type;
     background-color: $bg;
     color: $text;
+    font-weight: bold;
     border: none;
     border-radius: $border-radius;
-    padding: 1.75rem 1.25rem;
+    padding: 1.135rem .825rem;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -86,12 +87,14 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
 // 🎯 Implementaciones
 button {
     @include button(core.$brand-primary-color, #fff);
+    cursor: pointer;
+    font-weight: 400;
+
 }
 
 .btn {
     @include button(core.$brand-primary-color, #fff);
     cursor: pointer;
-    font-weight: 400;
 }
 
 .btn-secondary {

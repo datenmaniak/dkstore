@@ -27,6 +27,10 @@ try {
         [
             "username" => "admin1",
             "password" => "claveAdmin1"
+        ],
+        [
+            "username" => "usuario",
+            "password" => "12qwaszx"
         ]
     ];
 
