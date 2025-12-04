@@ -1,10 +1,12 @@
 # dk Store
 
-Este proyecto se desarrolló a partir de la base de **web-template-core**, que en mi opinión me resulta para mi aprendizaje y desarrollo Web como un **framework modular y responsivo**.
+Este proyecto se desarrolló a partir de la base de **web-template-core**, cuyo contenido se convirtió en un **framework modular y responsivo** personal, durante el aprendizaje de desarrollo Web y la aplicación de las tecnologías; Gulp, Sass, node, npm, entre otras.
 
-**Dk-Store** se inició como el resultado de los estudios y prácticas del curso de Desarrollo Web, y con el propósito de crear un kit de herramientas para mis propios diseños web, y fundamentos y la base a futuros proyectos de Desarrollo Web.
+**Dk-Store** paso a ser un nuevo proyecto, con más prestaciones. Como el resultado del estudio de Desarrollo Web y las prácticas del curso.
 
-Este proyecto fue la primera etapa de migración a PHP. Aunque, resulte código espaguetis, me ha servido para aprender y pasar a otro nivel de conocimiento a nivel de Frontend y Backend.
+Lo considero la base y un kit de herramientas para mis propios diseños web, y fundamentos a futuros proyectos de Desarrollo Web.
+
+Este ha sido la primera etapa de migración a PHP. Aunque, resulte código espaguetis, me ha servido para aprender y pasar a otro nivel de conocimiento a nivel de Frontend y Backend.
 
 ---
 
