@@ -8,7 +8,7 @@ includeTemplate('header');
 
 // gestión de conexión
 require_once PATH_CONFIG . '/database.php';
-session_start();
+// session_start();
 
 // Conexión a la BD
 $db = conectDB();
@@ -18,20 +18,20 @@ $error_message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Capturar datos del formulario
-    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
     // Preparar query
-    $query = "SELECT id, username, password_hash, role, is_active 
+    $query = "SELECT id, email, password_hash, role, is_active 
           FROM users 
-          WHERE username = ? 
+          WHERE email = ? 
           LIMIT 1";
 
     $stmt = mysqli_prepare($db, $query);
 
     if ($stmt) {
 
-        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
@@ -40,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Verificar contraseña
                 if (password_verify($password, $usuario['password_hash'])) {
                     // Guardar sesión
+                    session_start();
                     $_SESSION['user_id'] = $usuario['id'];
-                    $_SESSION['username'] = $usuario['username'];
+                    $_SESSION['email'] = $usuario['email'];
                     $_SESSION['role'] = $usuario['role'];
 
                     // Redirección según rol
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         header("Location: /");
                     }
-
+                    exit;
                     // echo "✅ Bienvenido {$usuario['username']} (Rol: {$usuario['role']})";
                     // header("Location: dashboard.php"); // redirección opcional
                 } else {
@@ -74,19 +75,17 @@ mysqli_close($db);
 
 ?>
 
-<main class="admin-layoutcmt mt-15">
-
-
+<main class="admin-layout">
     <section class="narrow-container auth-form top-margin ">
         <h2>Autenticación de Usuario</h2>
         <form method="POST">
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" placeholder="Su cuenta de usuario" name="username" required>
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="Su email registrado aquí" name="email" required>
 
             <label for="password">Contraseña:</label>
             <input type="password" id="password" placeholder="" name="password" required>
 
-            <button type="submit" class="btn  btn-block-50">Ingresar </button>
+            <button type="submit" class="btn  btn-secondary btn-block-50">Ingresar </button>
         </form>
 
         <?php if (!empty($error_message)): ?>
@@ -98,10 +97,6 @@ mysqli_close($db);
 
 </main>
 
-<script src="/build/js/bundle.js"></script>
 
-<?php
 
-includeTemplate('footer');
-
-?>
+<?php includeTemplate('footer'); ?>

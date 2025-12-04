@@ -3,6 +3,7 @@
 require '../../includes/config/database.php';
 require  '../../includes/functions.php';
 
+requireRole('admin'); // obliga a ser admin
 
 
 // Bases de datos

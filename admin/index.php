@@ -4,6 +4,9 @@
 require '../includes/config/database.php';
 require '../includes/functions.php';
 
+// Valida la sesión
+// session_start();
+
 /* requireLogin(); // obliga a estar logueado */
 requireRole('admin'); // obliga a ser admin
 
@@ -213,8 +216,7 @@ $imagen_mostrar = $no_image; // Por defecto
 <!-- <script src="/build/js/bundle.js"></script> -->
 
 <?php
-// includeTemplate('footer');
-includeTemplate('end-page');
+includeTemplate('footer');
 
 // cerrar la conexion a la DB
 mysqli_close($db);

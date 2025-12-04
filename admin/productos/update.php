@@ -1,8 +1,9 @@
 <?php
 
-// echo "<pre>";
-// var_dump($_GET);
-// echo "</pre>";
+require '../../includes/config/database.php';
+require '../../includes/functions.php';
+
+requireRole('admin'); // obliga a ser admin
 
 // get the record and validate the URL
 $id = $_GET['id'];
@@ -14,8 +15,9 @@ if (!$id) {
 
 // var_dump($id);
 
-require '../../includes/config/database.php';
-require '../../includes/functions.php';
+
+
+
 includeTemplate('header');
 
 
