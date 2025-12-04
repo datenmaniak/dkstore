@@ -1,11 +1,11 @@
 node_modules/
 wp
 assets/img
-fuera-de-servicio
+fuera-de-servicio/
 src/img/*
 build/img/*
 assets/hero/*
 assets/icons/*
 assets/logos/*
 assets/obsolete
-uploads/
+uploads/*
