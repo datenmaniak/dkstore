@@ -7,6 +7,28 @@
 
 require __DIR__ . '/app.php';
 
+
+function requireLogin()
+{
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: /admin/login.php");
+        exit;
+    }
+}
+
+function requireRole($role)
+{
+    session_start();
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
+        header("Location: /no-access.php");
+        exit;
+    }
+}
+
+
+
+
 function includeTemplate(string $page)
 {
     // templates whitelist permit

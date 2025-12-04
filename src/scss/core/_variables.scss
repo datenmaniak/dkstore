@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Paleta de colores
 
 $primary: #ff0000;
@@ -19,6 +21,9 @@ $brand-secondary-color: #3e89ac;
 $brand-alternate-color: #B1A8B9;
 $brand-light-color: #B4CAD7;
 $brand-dark-color: #392A46;
+$brand-primary-bg: color.scale($brand-primary-color, $lightness: +95%, $saturation: -75%);
+$brand-secondary-bg: color.scale($brand-secondary-color, $lightness: +85%, $saturation: -5%);
+$brand-alternate-bg: color.scale($brand-alternate-color, $lightness: +90%, $saturation: -95%);
 
 // /* fondos */
 $bg-alt-pri: rgba(243, 237, 237, 0.7);

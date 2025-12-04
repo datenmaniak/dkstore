@@ -50,7 +50,7 @@
                     <li><a href="">Contacto</a></li>
                     <!-- Último elemento: acceso a cuenta -->
                     <li class="nav__login">
-                        <a href="/login.php">Mi cuenta</a>
+                        <a href="/admin/login.php">Mi cuenta</a>
                     </li>
                     <li class="dark-mode-button">
                         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -60,10 +60,7 @@
                     <li class="mobileMenu"></li>
                 </ul>
                 <!--  mobile option -->
-                <div class="menuToggle"
-                    aria-label="Abrir menú"
-                    role="menuToggle"
-                    aria-expanded="false">
+                <div class="menuToggle" aria-label="Abrir menú" role="menuToggle" aria-expanded="false">
                 </div>
             </nav>
 

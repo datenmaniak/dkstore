@@ -1,0 +1,10 @@
+$usuarios = [
+        [
+            "username" => "usuario1",
+            "password" => "claveUsuario1"
+        ],
+        [
+            "username" => "admin1",
+            "password" => "claveAdmin1"
+        ]
+    ];

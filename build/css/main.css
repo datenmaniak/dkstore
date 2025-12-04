@@ -2045,6 +2045,7 @@ nav .top-bar p {
 .catalog {
   margin-top: 7.625rem;
   background-color: rgb(247.1525, 247.1075, 247.1925);
+  background-color: rgb(225.0557692308, 237.6615384615, 243.5442307692);
 }
 .catalog h2 {
   text-align: center;
@@ -3209,4 +3210,99 @@ textarea {
   font-size: 1.4rem;
   color: #28a745;
   /* verde por defecto para activo */
+}
+
+main .auth-form {
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+.auth-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: rgb(225.0557692308, 237.6615384615, 243.5442307692);
+  border: 1px solid #B4CAD7;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+}
+.auth-form h2 {
+  color: #7700F0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.auth-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #392A46;
+  font-weight: 500;
+}
+.auth-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #B4CAD7;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.auth-form input:focus {
+  border-color: #7700F0;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(119, 0, 240, 0.2);
+}
+.auth-form input {
+  margin-bottom: 1rem;
+}
+.auth-form .btn-login {
+  padding: 10px 20px;
+  font-weight: bold;
+  background: #7700F0;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 100px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.auth-form .btn-login:hover {
+  background-color: rgb(101.29875, 0, 204.3);
+}
+.auth-form .btn-secondary {
+  padding: 10px 20px;
+  font-weight: bold;
+  background: #3e89ac;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 100px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.auth-form .btn-secondary:hover {
+  background-color: rgb(52.541025641, 116.0987179487, 145.758974359);
+}
+.auth-form .btn-secondary {
+  margin-top: 0.5rem;
+}
+.auth-form .error-message {
+  color: #B1A8B9;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.error-band {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: red;
+  border: 1px solid #B1A8B9;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
 }

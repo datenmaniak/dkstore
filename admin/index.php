@@ -1,15 +1,13 @@
 <?php
 /* index.php   - Administrador  */
 
-// echo "<pre>";
-// var_dump($_GET);
-// echo "</pre>";
-
-// Importar la conexion a la DB
-
-
 require '../includes/config/database.php';
 require '../includes/functions.php';
+
+/* requireLogin(); // obliga a estar logueado */
+requireRole('admin'); // obliga a ser admin
+
+
 includeTemplate('header');
 
 $images_folder =  '../uploads/';
@@ -85,7 +83,7 @@ $imagen_mostrar = $no_image; // Por defecto
 <main class="admin-layout">
     <h3>Panel de Administración</h3>
     <div class="panel-options">
-        <a href="/" class="btn btn-secondary">Volver</a>
+        <a href="/admin/logout.php" class="btn btn-secondary">Cerrar sesión</a>
         <a href="/admin/productos/create.php" class="btn btn-primary">Agregar</a>
     </div>
 
@@ -108,9 +106,6 @@ $imagen_mostrar = $no_image; // Por defecto
         }
     }
     ?>
-
-
-
 
     <div class="admin-container">
         <!-- 

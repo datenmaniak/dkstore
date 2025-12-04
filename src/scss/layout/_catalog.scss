@@ -15,7 +15,7 @@
     @include container($container-widths);
     margin-top: 7.625rem; // igual a la altura del header
     background-color: color.scale(core.$brand-alternate-color, $lightness: +90%, $saturation: -95%);
-
+    background-color: core.$brand-secondary-bg;
 
 
     h2 {
