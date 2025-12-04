@@ -1,141 +1,41 @@
-# web-template-core
+# dk Store
 
-**web-template-core** es un repositorio base diseñado como **framework modular y responsivo** para futuros proyectos web.  
-Incluye un sistema de compilación con Gulp, un conjunto de mixins SCSS altamente personalizables y una arquitectura pensada para escalabilidad, branding y optimización de recursos.
+Este proyecto se desarrolló a partir de la base de **web-template-core**, que en mi opinión me resulta para mi aprendizaje y desarrollo Web como un **framework modular y responsivo**.
+
+**Dk-Store** se inició como el resultado de los estudios y prácticas del curso de Desarrollo Web, y con el propósito de crear un kit de herramientas para mis propios diseños web, y fundamentos y la base a futuros proyectos de Desarrollo Web.
 
 ---
 
 ## 🚀 Características principales
 
-- **Diseño totalmente responsivo**  
-  - Tipografía adaptativa para `h1`, `h2`, `span`, `span.branding`, `p` y `li`.  
-  - Breakpoints documentados y consistentes para múltiples dispositivos.  
+- Comprende un CRUD de productos.
+- Catálogo de productos
+- Inicio de sesión
 
-- **Compilación y bundling con Gulp**  
-  - Generación automática de un archivo principal de estilos (`styles.css`).  
-  - Bundling de JavaScript en un único `bundle.js`.  
-  - Optimización de imágenes en **tres tamaños** + conversión a **WebP**.  
+- **Diseño totalmente responsivo**
+- **Compilación y bundling con Gulp**
 
-- **Mixins SCSS avanzados**  
-  - Soporte para **tres tipos de contenedores**: `dynamic`, `narrow`, `fluid`.  
-  - Implementación de **tres sistemas de Grid** para layouts flexibles.  
-  - Tipografía responsiva mediante `clamp()` y mapas Sass documentados.  
+  - Generación automática de un archivo principal de estilos `main.css` y (`main.min.css`).
+  - Bundling de JavaScript en un único `bundle.js` y (`bundle.min.js`).
+  - Optimización de imágenes en **tres tamaños** + conversión a **WebP**.
 
-- **Arquitectura modular y escalable**  
-  - Separación clara de bloques: header, hero, cards, navegación.  
-  - Documentación de comportamiento en distintos tamaños de pantalla.  
-  - Pensado para servir como **template base** en proyectos futuros.  
+- **Mixins SCSS avanzados**
+
+- **Arquitectura modular y escalable**
+  - Separación clara de bloques: header, hero, cards, navegación.
+  - Documentación de comportamiento en distintos tamaños de pantalla.
+  - Pensado para servir como **template base** en proyectos futuros.
 
 ---
 
 ## 📂 Estructura del proyecto
 
-He registrado la estructura aquí, intencionalmente para mi propia documentación.
+Visite **web-template-core** para saber más de la estructura base.
 
-```zsh
-tree --gitignore -L 5
-.
-├── assets
-│   ├── hero
-│   ├── icons
-│   └── logos
-├── backup-header.html
-├── backup-setting.json
-├── build
-│   ├── css
-│   │   ├── main.css
-│   │   └── main.min.css
-│   ├── img
-│   └── js
-│       ├── bundle.js
-│       ├── bundle.min.js
-│       └── bundle.min.js.map
-├── footer.html
-├── gulpfile.mjs
-├── index.html
-├── login.html
-├── package.json
-├── package-lock.json
-├── README2.MD
-├── README.md
-├── src
-│   ├── img
-│   ├── js
-│   │   ├── hide-menu.js
-│   │   └── scrolled-header.js
-│   └── scss
-│       ├── base
-│       │   ├── _global.scss
-│       │   ├── _index.scss
-│       │   ├── _normalize.scss
-│       │   └── _user-choice.scss
-│       ├── config
-│       │   ├── _index.scss
-│       │   └── _mixins.scss
-│       ├── core
-│       │   ├── _index.scss
-│       │   ├── _typografia.scss
-│       │   └── _variables.scss
-│       ├── layout
-│       │   ├── _about-us copy.scss
-│       │   ├── _about-us.scss
-│       │   ├── _ads.scss
-│       │   ├── _catalog.scss
-│       │   ├── _footer.scss
-│       │   ├── header
-│       │   │   ├── _dropdown.scss
-│       │   │   ├── _header.scss
-│       │   │   ├── _hero.scss
-│       │   │   ├── _index.scss
-│       │   │   ├── _logo.scss
-│       │   │   ├── _nav-login.scss
-│       │   │   ├── _nav.scss
-│       │   │   └── _toggle.scss
-│       │   ├── _index.scss
-│       │   ├── _products.scss
-│       │   └── _site-footer.scss
-│       ├── main.scss
-│       └── ui
-│           ├── _button.scss
-│           ├── _index.scss
-│           └── _modal.scss
-└── style.css
+## Nota:
 
-19 directories, 47 files
-
-
-```
-
-## Exclusión de directorios/archivos
-
-Especificación de exclusiones  en el **.gitignore**  para generar la estructura.
-
-```
-node_modules
-wp
-assets/img
-fuera-de-servicio
-src/img/*
-build/img/*     
-assets/hero/*
-assets/icons/*
-assets/logos/*
-assets/obsolete
-
-```
-**Se incluyen directorios necesarios por la aplicación, solo para generar la estructura**
-
-### Aclaratoria
-
-En este directorio   residen las imágenes optimizadas que utiliza la aplicación. 
-
-    build/img/*     
-
-En este otro, las imágenes que serán procesadas y optimizadas.
-
-    src/img
-
-
+Estoy consciente que requiere refactorizar para eliminar códigos redundantes y organización de la estructura Sass.
 
 ## ✨ Autor
+
 Creado por Datenmaniak — IT Freelancer y Web Developer autodidacta. Enfocado en proyectos modulares, branding técnico y optimización de flujos de trabajo.
