@@ -56,7 +56,8 @@ main .auth-form {
 
 
 .auth-form {
-    max-width: 400px;
+    // max-width: 400px;
+    @include container($container-narrow-widths);
     margin: 2rem auto;
     padding: 2rem;
     // background: #fff;
@@ -70,6 +71,7 @@ main .auth-form {
         color: core.$brand-primary-color;
         margin-bottom: 1.5rem;
         text-align: center;
+        @include responsive-font($h2-sizes);
     }
 
     label {

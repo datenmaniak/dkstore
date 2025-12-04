@@ -86,7 +86,7 @@ mysqli_close($db);
             <label for="password">Contraseña:</label>
             <input type="password" id="password" placeholder="" name="password" required>
 
-            <button type="submit" class="btn btn-block-50 ">Ingresar </button>
+            <button type="submit" class="btn  btn-block-50">Ingresar </button>
         </form>
 
         <?php if (!empty($error_message)): ?>
