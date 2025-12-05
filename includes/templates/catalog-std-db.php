@@ -2,10 +2,15 @@
 
 <?php
 
-
-require_once PATH_CONFIG . '/database.php';
-
+// before
+// require_once PATH_CONFIG . '/database.php';
 /* require __DIR__ . '/../functions.php'; */
+
+
+
+// Se simplifica 
+require_once __DIR__ . '/../../includes/app.php';
+
 
 $images_folder = PATH_UPLOADS . '/';
 $default_image = PATH_IMG . '/no-image.jpg';
@@ -42,38 +47,38 @@ $result = mysqli_query($db, $query);
                 $image_url = $default_image_url;
             }
         ?>
-        <!-- Estrellas en la esquina superior izquierda -->
-        <!-- <div class="card__stars">★★★★★</div> -->
+            <!-- Estrellas en la esquina superior izquierda -->
+            <!-- <div class="card__stars">★★★★★</div> -->
 
-        <article class="card card--standard">
-            <div class="card__badge">En oferta</div>
+            <article class="card card--standard">
+                <div class="card__badge">En oferta</div>
 
-            <picture class="card__picture">
-                <source srcset="<?php echo $image_url; ?>" type="image/webp">
-                <source srcset="<?php echo $image_url; ?>" type="image/*">
-                <img class="card__img" src="<?php echo $image_url; ?>" alt="imagen del producto" loading="lazy">
-            </picture>
+                <picture class="card__picture">
+                    <source srcset="<?php echo $image_url; ?>" type="image/webp">
+                    <source srcset="<?php echo $image_url; ?>" type="image/*">
+                    <img class="card__img" src="<?php echo $image_url; ?>" alt="imagen del producto" loading="lazy">
+                </picture>
 
-            <h3 class="card__title"><?php echo htmlspecialchars($item['nombre_producto']); ?></h3>
-            <p>Código: <code><?php echo htmlspecialchars($item['codigo_sku']); ?></code></p>
+                <h3 class="card__title"><?php echo htmlspecialchars($item['nombre_producto']); ?></h3>
+                <p>Código: <code><?php echo htmlspecialchars($item['codigo_sku']); ?></code></p>
 
-            <p class="card__description"><?php echo htmlspecialchars($item['descripcion']); ?></p>
-            <p class="card__price">
-                <span>US$</span>
-                <span class="price-value">
-                    <?php echo number_format($item['precio'], 2, ',', '.'); ?>
-                </span>
-            </p>
-            <!-- Opciones de botones -->
-            <!-- <a href="/" class="card__link"> -->
-            <!-- <button class="btn-ghost">Ver más</button> -->
-            <!-- </a> -->
+                <p class="card__description"><?php echo htmlspecialchars($item['descripcion']); ?></p>
+                <p class="card__price">
+                    <span>US$</span>
+                    <span class="price-value">
+                        <?php echo number_format($item['precio'], 2, ',', '.'); ?>
+                    </span>
+                </p>
+                <!-- Opciones de botones -->
+                <!-- <a href="/" class="card__link"> -->
+                <!-- <button class="btn-ghost">Ver más</button> -->
+                <!-- </a> -->
 
-            <a href="/" class="card__link">
-                <button class="btn ">Ver detalles</button>
-            </a>
+                <a href="/" class="card__link">
+                    <button class="btn ">Ver detalles</button>
+                </a>
 
-        </article>
+            </article>
 
         <?php endwhile; ?>
     </div> <!-- catalog__grid -->

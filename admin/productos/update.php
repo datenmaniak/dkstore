@@ -1,7 +1,13 @@
 <?php
 
-require '../../includes/config/database.php';
-require '../../includes/functions.php';
+// before
+// require '../../includes/config/database.php';
+// require '../../includes/functions.php';
+
+// Se simplifica 
+require_once __DIR__ . '/../../includes/app.php';
+
+
 
 requireRole('admin'); // obliga a ser admin
 

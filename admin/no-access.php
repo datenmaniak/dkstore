@@ -1,6 +1,11 @@
 <?php
-require '../includes/config/database.php';
-require '../includes/functions.php';
+
+// before
+// require '../includes/config/database.php';
+// require '../includes/functions.php';
+
+require_once __DIR__ . '../../includes/app.php';
+
 includeTemplate('header');
 ?>
 

@@ -1,0 +1,41 @@
+.
+├── admin
+│   ├── admin.php
+│   ├── adm.php
+│   ├── categorias
+│   │   └── categorias.php
+│   ├── index.php
+│   ├── login.php
+│   ├── logout.php
+│   ├── no-access.php
+│   ├── productos
+│   │   ├── create.php
+│   │   ├── remove.php
+│   │   ├── update.php
+│   │   └── update-template.php
+│   └── proveedores
+│       └── proveedores.php
+├── includes
+│   ├── app.php
+│   ├── config
+│   │   └── database.php
+│   ├── functions.php
+│   └── templates
+│       ├── about-us.php
+│       ├── ads.php
+│       ├── catalog-featured.php
+│       ├── catalog-minimal.php
+│       ├── catalog.php
+│       ├── catalog-split.php
+│       ├── catalog-std-db copy 2.php
+│       ├── catalog-std-db copy.php
+│       ├── catalog-std-db.php
+│       ├── catalog-std.php
+│       ├── color-palette.php
+│       ├── end-page.php
+│       ├── footer.php
+│       ├── header.php
+│       ├── hero.php
+│       └── nav.php
+└── README.md
+

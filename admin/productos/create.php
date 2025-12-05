@@ -1,9 +1,15 @@
 <?php
 
-require '../../includes/config/database.php';
-require  '../../includes/functions.php';
+// before
+// require '../../includes/config/database.php';
+// require  '../../includes/functions.php';
 
-requireRole('admin'); // obliga a ser admin
+// after
+require_once __DIR__ . '/../../includes/app.php';
+
+
+
+requireRole('admin'); // obliga a ser admin - requiere acceso como admin
 
 
 // Bases de datos

@@ -1,8 +1,14 @@
 <?php
 /* index.php   - Administrador  */
 
-require '../includes/config/database.php';
-require '../includes/functions.php';
+// bfore
+// require '../includes/config/database.php';
+// require '../includes/functions.php';
+
+
+// Se simplifica
+require_once __DIR__ . '../../includes/app.php';
+
 
 // Valida la sesión
 // session_start();

@@ -20,3 +20,6 @@ define('PATH_IMG', PATH_ASSETS . '/img');
 
 // Cargar funciones comunes
 require_once PATH_FUNCTIONS;
+
+// Cargar conexión a la base de datos
+require_once PATH_CONFIG . '/database.php';

@@ -1,8 +1,14 @@
 <?php
 
 
+//  before
 /* require_once __DIR__ . '/includes/functions.php'; */
-require '../includes/functions.php';
+// require '../includes/functions.php';
+
+// Simplificado asi
+require_once __DIR__ . '../../includes/app.php';
+
+
 includeTemplate('header');
 
 

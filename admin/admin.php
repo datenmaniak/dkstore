@@ -1,7 +1,14 @@
 <?php
 /* index.php   - Administrador  */
 
-require '../includes/functions.php';
+// before
+// require '../includes/functions.php';
+// simplificado
+require_once __DIR__ . '/../../includes/app.php';
+
+
+
+
 includeTemplate('header');
 
 ?>

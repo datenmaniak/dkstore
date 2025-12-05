@@ -4,8 +4,8 @@
 
 /* Functions file */
 
-
-require __DIR__ . '/app.php';
+// before
+// require __DIR__ . '/app.php';
 
 
 function requireLogin()
