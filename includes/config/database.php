@@ -1,11 +1,11 @@
 <?php
 
-function conectDB()
+function conectDB(): mysqli
 {
 
-    $db = mysqli_connect('localhost', 'dk', 'chachita',  'dkstore');
+    $db = new mysqli('localhost', 'dk', 'chachita', 'dkstore');
 
-    if (!$db) {
+    if (! $db) {
         echo "DB conection error";
         exit;
     }

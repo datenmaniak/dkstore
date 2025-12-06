@@ -13,7 +13,7 @@ includeTemplate('header');
 
 
 // gestión de conexión
-require_once PATH_CONFIG . '/database.php';
+// require_once PATH_CONFIG . '/database.php';
 // session_start();
 
 // Conexión a la BD

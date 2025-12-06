@@ -5,14 +5,14 @@
   Cambia el texto: activo / inactivo 
 . */
 document.addEventListener('DOMContentLoaded', function () {
-    const checkbox = document.getElementById('activo');
-    const estadoTexto = document.getElementById('estado-texto');
+  const checkbox = document.getElementById('is_active');
+  const estadoTexto = document.getElementById('estado-notificacion');
 
-    function actualizarEstado() {
-        estadoTexto.textContent = checkbox.checked ? ' Activo' : ' Inactivo';
-    }
+  function actualizarEstado() {
+    estadoTexto.textContent = checkbox.checked ? ' Activo' : ' Inactivo';
+  }
 
-    checkbox.addEventListener('change', actualizarEstado);
+  checkbox.addEventListener('change', actualizarEstado);
 });
 
 (() => {

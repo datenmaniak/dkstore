@@ -1,0 +1,16 @@
+{
+    "name": "dk/dk-store",
+    "description": "Migración de un proyecto a OOP.",
+    "authors": [
+        {
+            "name": "datenmaniak",
+            "email": "ppwj@yahoo.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "dkstore\\": "classes/"
+        }
+    }
+}

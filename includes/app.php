@@ -1,25 +1,29 @@
 <!-- app.php -->
 
 <?php
-// app.php dentro de /includesx
-/* 
-define('PATH_TEMPLATES', __DIR__ . '/templates');
-define('PATH_FUNCTIONS', __DIR__ . '/functions.php');
-define('BASE_PATH', __DIR__); */
 
+    // Activar autoload de Composer
+    require_once __DIR__ . '/../vendor/autoload.php';
 
-define('BASE_PATH', dirname(__DIR__)); // ahora apunta a /dk-store
-define('PATH_INCLUDES', BASE_PATH . '/includes');
-define('PATH_TEMPLATES', PATH_INCLUDES . '/templates');
-define('PATH_CONFIG', PATH_INCLUDES . '/config');
-define('PATH_FUNCTIONS', PATH_INCLUDES . '/functions.php');
-define('PATH_UPLOADS', BASE_PATH . '/uploads');
-define('PATH_ASSETS', BASE_PATH . '/assets');
-define('PATH_IMG', PATH_ASSETS . '/img');
+    define('BASE_PATH', dirname(__DIR__)); // ahora apunta a /dk-store
+    define('PATH_INCLUDES', BASE_PATH . '/includes');
+    define('PATH_TEMPLATES', PATH_INCLUDES . '/templates');
+    define('PATH_CONFIG', PATH_INCLUDES . '/config');
+    define('PATH_FUNCTIONS', PATH_INCLUDES . '/functions.php');
+    define('PATH_UPLOADS', BASE_PATH . '/uploads');
+    define('PATH_ASSETS', BASE_PATH . '/assets');
+    define('PATH_IMG', PATH_ASSETS . '/img');
+    define('PATH_AUTOLOAD', BASE_PATH . '/vendor');
 
+    // Cargar funciones comunes
+    require PATH_FUNCTIONS;
 
-// Cargar funciones comunes
-require_once PATH_FUNCTIONS;
+    // Cargar conexión a la base de datos
+    require_once PATH_CONFIG . '/database.php';
 
-// Cargar conexión a la base de datos
-require_once PATH_CONFIG . '/database.php';
+    // Conexión a la DB
+    $db = conectDB();
+
+    use dkstore\Productos;
+
+Productos::setDB($db);
