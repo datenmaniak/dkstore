@@ -221,17 +221,32 @@ class Productos
             } else {
                 $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML
                 $this->revisarIntentos("descripcion", $this->descripcion);
+                $this->validarRegex("descripcion", $this->descripcion);
             }
         }
         // Otras sanitizaciones (ej: nombre_producto)...
         if (isset($this->nombre_producto)) {
             $this->nombre_producto = strip_tags(trim($this->nombre_producto));
             $this->revisarIntentos("nombre_producto", $this->nombre_producto);
+            $this->validarRegex("nombre_producto", $this->nombre_producto);
         }
         /* Codigo SKU */
         if (isset($this->codigo_sku)) {
             $this->codigo_sku = strip_tags(trim($this->codigo_sku));
             $this->revisarIntentos("codigo_sku", $this->codigo_sku);
+            $this->validarRegex("codigo_sku", $this->codigo_sku);
+        }
+        // Validar precio
+        if (isset($this->precio)) {
+            $this->validarRegex("precio", (string) $this->precio);
+        }
+
+        // Validar existencia y stock
+        if (isset($this->existencia)) {
+            $this->validarRegex("existencia", (string) $this->existencia);
+        }
+        if (isset($this->stock_minimo)) {
+            $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
         }
 
         foreach (get_object_vars($this) as $prop => $valor) {
@@ -279,7 +294,13 @@ class Productos
     // Detecta patrones sospechosos en un campo
     private function revisarIntentos(string $campo, string $valor): void
     {
-        $patrones = ['SELECT', 'DROP', 'DELETE', 'UPDATE', 'INSERT', '<script>', '--'];
+        $patrones = ['SELECT', 'DROP', 'DELETE', 'UPDATE', 'INSERT',
+            '<script>', '--', 'EXEC',
+            'SLEEP', 'BENCHMARK', 'LOAD_FILE',
+            'INTO', 'OUTFILE',
+            'TRUNCATE',
+            'onerror=', 'onload=', 'javascript:',
+        ];
 
         foreach ($patrones as $patron) {
             if (stripos($valor, $patron) !== false) {
@@ -293,6 +314,27 @@ class Productos
                 break; // ya no hace falta seguir revisando
             }
         }
+    }
+    private function validarRegex(string $campo, string $valor): bool
+    {
+        $regexMap = [
+            'codigo_sku'      => '/^[A-Z0-9\-]{3,32}$/',
+            'nombre_producto' => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,]{3,64}$/u',
+            'descripcion'     => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,;:()]{24,1000}$/u',
+            'precio'          => '/^\d+(\.\d{1,2})?$/',
+            'existencia'      => '/^\d+$/',
+            'stock_minimo'    => '/^\d+$/',
+        ];
+
+        if (isset($regexMap[$campo])) {
+            if (! preg_match($regexMap[$campo], $valor)) {
+                error_log("[VALIDACIÓN FALLIDA] Campo: {$campo} | Valor: {$valor}");
+                $this->errores[] = "El campo {$campo} contiene caracteres inválidos o no cumple el formato.";
+                $this->$campo    = '';
+                return false;
+            }
+        }
+        return true;
     }
 
 }
