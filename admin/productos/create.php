@@ -262,7 +262,10 @@
         </div>
         <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="">
         <label>Descripción:
-            <textarea name="descripcion"><?php echo htmlspecialchars($producto->descripcion) ?></textarea>
+            <textarea name="descripcion" maxlength="255">
+
+                <?php echo htmlspecialchars($producto->descripcion) ?></textarea>
+            <small id="description_input_counter">0/255</small>
         </label>
         <label>Existencia:
             <input type="number" name="existencia" value="<?php echo $producto->existencia; ?>">

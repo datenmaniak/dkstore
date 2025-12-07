@@ -146,6 +146,8 @@ class Productos
 
         $result = $stmt->execute();
 
+        // debugResult($result);
+
         $stmt->close();
 
         return $result;
@@ -211,18 +213,25 @@ class Productos
             }
         }
 
-        // Sanitiza descripción + validación integrada
+        /* // Sanitiza descripción, nombre y otros atributos tipo string  */
         if (isset($this->descripcion) && $this->descripcion !== '') {
             [$valido, $resultado] = $this->validarDescripcion($this->descripcion);
             if (! $valido) {
                 $this->errores[] = $resultado;
             } else {
-                $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML [memory:6]
+                $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML
+                $this->revisarIntentos("descripcion", $this->descripcion);
             }
         }
         // Otras sanitizaciones (ej: nombre_producto)...
         if (isset($this->nombre_producto)) {
             $this->nombre_producto = strip_tags(trim($this->nombre_producto));
+            $this->revisarIntentos("nombre_producto", $this->nombre_producto);
+        }
+        /* Codigo SKU */
+        if (isset($this->codigo_sku)) {
+            $this->codigo_sku = strip_tags(trim($this->codigo_sku));
+            $this->revisarIntentos("codigo_sku", $this->codigo_sku);
         }
 
         foreach (get_object_vars($this) as $prop => $valor) {
@@ -254,7 +263,7 @@ class Productos
 
     public function validarDescripcion(string $descripcion, int $min = 24, int $max = 1000): array
     {
-        $descripcion = trim($descripcion);
+        $descripcion = strip_tags(trim($descripcion));
         $longitud    = mb_strlen($descripcion, 'UTF-8');
 
         if ($longitud < $min) {
@@ -265,6 +274,25 @@ class Productos
         }
 
         return [true, $descripcion]; // [válido, valor_limpio]
+    }
+
+    // Detecta patrones sospechosos en un campo
+    private function revisarIntentos(string $campo, string $valor): void
+    {
+        $patrones = ['SELECT', 'DROP', 'DELETE', 'UPDATE', 'INSERT', '<script>', '--'];
+
+        foreach ($patrones as $patron) {
+            if (stripos($valor, $patron) !== false) {
+                // Muestra en consola (error_log)
+                error_log("[INTENTO SOSPECHOSO] Campo: {$campo} | Patrón: {$patron} | Valor: {$valor}");
+                // También puedes añadirlo a $this->errores si quieres bloquear
+                $this->errores[] = "Entrada sospechosa detectada en {$campo} (patrón: {$patron}).";
+
+                // 🚨 Vaciar el campo automáticamente
+                $this->$campo = '';
+                break; // ya no hace falta seguir revisando
+            }
+        }
     }
 
 }
