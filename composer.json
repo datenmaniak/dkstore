@@ -7,7 +7,9 @@
             "email": "ppwj@yahoo.com"
         }
     ],
-    "require": {},
+    "require": {
+        "intervention/image": "^3.11"
+    },
     "autoload": {
         "psr-4": {
             "dkstore\\": "classes/"
