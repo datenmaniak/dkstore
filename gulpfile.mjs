@@ -82,7 +82,7 @@ function buildStyles() {
       .pipe(dest("build/css"))
       .on("end", () => {
         console.log(
-          "\x1b[35m[Violet Pulse] ✅ SCSS compilado correctamente.\x1b[0m"
+          "\x1b[35m✅ SCSS compilado.\x1b[0m"
         );
       })
   );
@@ -107,7 +107,7 @@ function buildStylesMini() {
       .pipe(dest("build/css"))
       .on("end", () => {
         console.log(
-          "\x1b[35m[Violet Pulse] ✅ SCSS minificado compilado correctamente.\x1b[0m"
+          "\x1b[35m✅ SCSS minificado.\x1b[0m"
         );
       })
   );
@@ -130,7 +130,7 @@ function generateJS() {
       .pipe(dest("build/js"))
       .on("end", () => {
         console.log(
-          "\x1b[35m[Violet Pulse] ✅ JS script compilado correctamente.\x1b[0m"
+          "\x1b[35m✅ JS script compilado correctamente.\x1b[0m"
         );
       })
   );
@@ -151,7 +151,7 @@ function generateJSmini() {
     .pipe(dest("build/js"))
     .on("end", () => {
       console.log(
-        "\x1b[35m[Violet Pulse] ✅ JS minificado compilado correctamente.\x1b[0m"
+        "\x1b[35m✅ JS minificado compilado correctamente.\x1b[0m"
       );
     });
 }
@@ -194,8 +194,9 @@ function resizeImages(done) {
           // .toFile(`${outputDir}/${base}${ext}`)
           .then(() => {
             console.log(
-              ` ✅   ${file} → ${base}${size.suffix}${ext}  `,
-              "\x1b[35m Imagen optimizada correctamente.\x1b[0m"
+              /*      ` ✅   ${file} → ${base}${size.suffix}${ext}  `, */
+              ` ✅   → ${base}${size.suffix}${ext}`,
+              "\x1b[35m correctamente.\x1b[0m"
             );
           })
           .catch((err) => {
@@ -232,8 +233,8 @@ function convertImagesToWebp(done) {
         .toFile(`${outputDir}/${base}.webp`)
         .then(() => {
           console.log(
-            ` ✅   ${file} → ${base}.webp `,
-            "\x1b[35m Imagen Webp generada correctamente.\x1b[0m"
+            ` ✅  → ${base}.webp `,
+            "\x1b[35m generada correctamente.\x1b[0m"
           );
           // console.log(`✅ ${file} → ${base}.webp`);
         })
