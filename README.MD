@@ -26,9 +26,19 @@ Este ha sido la primera etapa de migración a PHP. Aunque, resulte código espag
 - **Mixins SCSS avanzados**
 
 - **Arquitectura modular y escalable**
+
   - Separación clara de bloques: header, hero, cards, navegación.
   - Documentación de comportamiento en distintos tamaños de pantalla.
   - Pensado para servir como **template base** en proyectos futuros.
+
+- **Subida de imagen con Intervention Image**
+
+  [Intervention Image Website](https://image.intervention.io/v2)
+
+```zsh
+
+composer require invervention/image
+```
 
 ---
 
