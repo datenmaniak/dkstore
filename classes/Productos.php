@@ -13,6 +13,9 @@ class Productos
         self::$db = $database;
     }
 
+    // Errores
+    protected static array $errores = [];
+
     public $id;
     public $codigo_sku;
     public $nombre_producto;
@@ -103,7 +106,7 @@ class Productos
             return false; // Maneja errores con getErrores()
         }
 
-        // Begin  ********* Antes  ***
+        // Begin  ********* Antes  *** vulnerables a SQL injection
         //     $query = "INSERT INTO productos (
         //     codigo_sku, nombre_producto, precio, imagen, descripcion,
         //     existencia, stock_minimo, activo, eliminado,
@@ -153,21 +156,6 @@ class Productos
         return $result;
     }
 
-    // private array $sanitizers = [
-    //     'id'              => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 1]],
-    //     'codigo_sku'      => ['callback' => 'strip_tags'], // Remueve tags
-    //     'nombre_producto' => ['callback' => 'strip_tags'], // ← CAMBIO CLAVE
-    //     'precio'          => ['filter' => FILTER_VALIDATE_FLOAT, 'options' => ['min_range' => 0]],
-    //     'imagen'          => ['callback' => 'strip_tags'], // Nombres de archivos
-    //     'descripcion'     => ['callback' => 'strip_tags'], // ← También aquí
-    //     'existencia'      => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
-    //     'stock_minimo'    => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
-    //     'is_active'       => FILTER_VALIDATE_BOOLEAN,
-    //     'is_deleted'      => FILTER_VALIDATE_BOOLEAN,
-    //     'proveedor_id'    => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 1]],
-    //     'categoria_id'    => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 1]],
-    // ];
-
     private array $sanitizers = [
         'id'              => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 1]],
         'codigo_sku'      => ['callback' => 'strip_tags'],
@@ -183,11 +171,9 @@ class Productos
         'categoria_id'    => FILTER_VALIDATE_INT,
     ];
 
-    private array $errores = [];
-
     public function sanitize(): bool
     {
-        $this->errores = [];
+        // self::$errores = [];
 
         // 1. VALIDACIONES DE LONGITUD (NUEVO)
         $longitudes = [
@@ -202,11 +188,11 @@ class Productos
                 $long  = mb_strlen($valor, 'UTF-8');
 
                 if (isset($limites['min']) && $long < $limites['min']) {
-                    $this->errores[] = "El campo $campo debe tener al menos {$limites['min']} caracteres.";
+                    self::$errores[] = "El campo $campo debe tener al menos {$limites['min']} caracteres.";
                     continue;
                 }
                 if (isset($limites['max']) && $long > $limites['max']) {
-                    $this->errores[] = "El campo $campo no puede exceder {$limites['max']} caracteres.";
+                    self::$errores[] = "El campo $campo no puede exceder {$limites['max']} caracteres.";
                     $this->$campo    = mb_substr($valor, 0, $limites['max']); // CORTA
                     continue;
                 }
@@ -217,24 +203,24 @@ class Productos
         if (isset($this->descripcion) && $this->descripcion !== '') {
             [$valido, $resultado] = $this->validarDescripcion($this->descripcion);
             if (! $valido) {
-                $this->errores[] = $resultado;
+                self::$errores[] = $resultado;
             } else {
                 $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML
                 $this->revisarIntentos("descripcion", $this->descripcion);
-                $this->validarRegex("descripcion", $this->descripcion);
+                // $this->validarRegex("descripcion", $this->descripcion);
             }
         }
         // Otras sanitizaciones (ej: nombre_producto)...
         if (isset($this->nombre_producto)) {
             $this->nombre_producto = strip_tags(trim($this->nombre_producto));
             $this->revisarIntentos("nombre_producto", $this->nombre_producto);
-            $this->validarRegex("nombre_producto", $this->nombre_producto);
+            // $this->validarRegex("nombre_producto", $this->nombre_producto);
         }
         /* Codigo SKU */
         if (isset($this->codigo_sku)) {
             $this->codigo_sku = strip_tags(trim($this->codigo_sku));
             $this->revisarIntentos("codigo_sku", $this->codigo_sku);
-            $this->validarRegex("codigo_sku", $this->codigo_sku);
+            // $this->validarRegex("codigo_sku", $this->codigo_sku);
         }
         // Validar precio
         if (isset($this->precio)) {
@@ -267,13 +253,13 @@ class Productos
                 }
             }
         }
-        return empty($this->errores); // true si todo OK
+        return empty(self::$errores); // true si todo OK
     }
 
     // AGREGAR DESPUÉS de sanitize()
-    public function getErrores(): array
+    public static function getErrores(): array
     {
-        return $this->errores;
+        return self::$errores;
     }
 
     public function validarDescripcion(string $descripcion, int $min = 24, int $max = 1000): array
@@ -306,8 +292,8 @@ class Productos
             if (stripos($valor, $patron) !== false) {
                 // Muestra en consola (error_log)
                 error_log("[INTENTO SOSPECHOSO] Campo: {$campo} | Patrón: {$patron} | Valor: {$valor}");
-                // También puedes añadirlo a $this->errores si quieres bloquear
-                $this->errores[] = "Entrada sospechosa detectada en {$campo} (patrón: {$patron}).";
+                // También puedes añadirlo a self::$errores si quieres bloquear
+                self::$errores[] = "Entrada sospechosa detectada en {$campo} (patrón: {$patron}).";
 
                 // 🚨 Vaciar el campo automáticamente
                 $this->$campo = '';
@@ -329,7 +315,7 @@ class Productos
         if (isset($regexMap[$campo])) {
             if (! preg_match($regexMap[$campo], $valor)) {
                 error_log("[VALIDACIÓN FALLIDA] Campo: {$campo} | Valor: {$valor}");
-                $this->errores[] = "El campo {$campo} contiene caracteres inválidos o no cumple el formato.";
+                self::$errores[] = "El campo {$campo} contiene caracteres inválidos o no cumple el formato.";
                 $this->$campo    = '';
                 return false;
             }
@@ -337,4 +323,48 @@ class Productos
         return true;
     }
 
+    // Mover el bloque de validación aqui
+    public function validateEntry()
+    {
+        // validacion
+        if (! $this->nombre_producto) {
+            self::$errores[] = 'Es obligatorio incluir un nombre';
+        }
+
+        // Llama validación de la clase
+        [$esValido, $resultado] = $this->validarDescripcion($this->descripcion);
+        if (! $esValido) {
+            self::$errores[] = $resultado;
+        }
+        // } else {
+        //     $this->descripcion = $resultado; // Usa versión limpia
+        // }
+        if (! $this->existencia) {
+            self::$errores[] = 'Es necesario incluir un existencia';
+        }
+        if (! $this->precio) {
+            self::$errores[] = 'Es necesario incluir un precio';
+        }
+        if (! $this->stock_minimo) {
+            self::$errores[] = 'Es necesario incluir un stock minimo del inventario';
+        }
+        if (! $this->proveedor_id) {
+            self::$errores[] = 'Es obligatorio incluir el código del proveedor';
+        }
+        if (! $this->categoria_id) {
+            self::$errores[] = 'Es necesario incluir el código de categoria';
+        }
+
+        if (! $this->imagen) {
+            self::$errores[] = 'La imagen es obligatoria';
+        }
+
+        return self::$errores;
+    }
+    public function setImage($imagen)
+    {
+        if ($imagen) {
+            $this->imagen = $imagen;
+        }
+    }
 }
