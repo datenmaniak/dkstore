@@ -3,6 +3,8 @@
     require_once __DIR__ . '/../../includes/app.php';
 
     use dkstore\Productos;
+    use Intervention\Image\Drivers\Gd\Driver;
+    use Intervention\Image\ImageManager;
 
     requireRole('admin'); // obliga a ser admin - requiere acceso como admin
 
@@ -22,24 +24,13 @@
     $images_folder  = '../../uploads/';
     $no_image       = '../../assets/img/no-image.jpg';
     $imagen_mostrar = $no_image; // Por defecto
+    $uploaded_image = '../../assets/img/arrow_12959560.png';
 
     /* // instanciar producto */
     $producto = new Productos(); // ← SIEMPRE existe
 
     // Arreglo con mensajes de errores
-    $errores = [];
-
-    // leer variables / mantiene, para evitar repetir la entrada de campos
-    // en caso de errores
-    // $codigo_sku      = '';
-    // $nombre_producto = '';
-    // $precio          = '';
-    // $descripcion     = '';
-    // $existencia      = '';
-    // $stock_minimo    = '';
-    // $activo          = '';
-    // $proveedor_id    = '';
-    // $categoria_id    = '';
+    $errores = Productos::getErrores();
 
     // echo "<h1>🔍 DEBUG COMPLETO</h1>";
     // echo "<pre>REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD'] . "</pre>";
@@ -47,133 +38,61 @@
     // Ejecutar despues que se envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        // Begin Debug
-        // echo "<h2>📤 POST RECIBIDO:</h2>";
-        // echo "<pre>";
-        // var_dump($_POST);
-        // echo "</pre>";
-
-        // echo "<h2>🔧 CREANDO PRODUCTO:</h2>";
-        // $producto = new Productos($_POST);
-        // echo "<pre>";
-        // echo "nombre_producto: '" . $producto->nombre_producto . "'\n";
-        // echo "proveedor_id: '" . $producto->proveedor_id . "'\n";
-        // echo "</pre>";
-        // END debug
-
         // Guardar en sesión ANTES de validar
         $_SESSION['form_data'] = $_POST;
 
         $producto = new Productos($_POST);
 
-        // carga los campos
-        // $codigo_sku      = mysqli_real_escape_string($db, $_POST['codigo_sku']);
-        // $nombre_producto = mysqli_real_escape_string($db, $_POST['nombre_producto']);
-        // $precio          = mysqli_real_escape_string($db, $_POST['precio']);
-        // $descripcion     = mysqli_real_escape_string($db, $_POST['descripcion']);
-        // $existencia      = mysqli_real_escape_string($db, $_POST['existencia']);
-        // $stock_minimo    = mysqli_real_escape_string($db, $_POST['stock_minimo']);
-        // $activo          = mysqli_real_escape_string($db, isset($db, $_POST['activo']) ? 1 : 0);
-        // // $activo = mysqli_real_escape_string($db, $_POST['activo']);
-        // $proveedor_id = mysqli_real_escape_string($db, $_POST['proveedor_id']);
-        // $categoria_id = mysqli_real_escape_string($db, $_POST['categoria_id']);
-
-        // 1. Validar imagen ANTES de sanitize()
-        // imagen del producto
-        $imagen     = $_FILES['imagen'];
-        $validacion = validarImagen($_FILES['imagen']);
-        if (! $validacion['valida']) {
-            $errores[] = "Error: " . $validacion['error'];
-        }
-        if (! $imagen['name']) {
-            $errores[] = 'La imagen del producto es obligatoria!';
-        }
-
-        // validacion
-        if (! $producto->nombre_producto) {
-            $errores[] = 'Es obligatorio incluir un nombre';
-        }
-        // if (! $producto->$precio) {
-        //     $errores[] = 'Es necesario establecer un precio';
+        // BEGIN:  procesar imagen
+        // 1. Validar imagen
+        // $validacion = validarImagen($_FILES['imagen']);
+        // if (! $validacion['valida']) {
+        //     $errores[] = "Error: " . $validacion['error'];
         // }
-        // // Validación longitud (ajusta $max según tu esquema MySQL, ej: VARCHAR(1000))
-        // $longitud = mb_strlen($descripcion, 'UTF-8');
-        // if ($longitud < 24) {
-        //     $errores[] = 'La descripción debe tener al menos 24 caracteres.';
-        // }
-        // Llama validación de la clase
-        [$esValido, $resultado] = $producto->validarDescripcion($producto->descripcion);
-        if (! $esValido) {
-            $errores[] = $resultado;
-        } else {
-            $descripcion = $resultado; // Usa versión limpia
-        }
-        // if ($longitud > 1000) { // Reemplaza por longitud real de tu tabla
-        //     $errores[] = 'La descripción no puede exceder 1000 caracteres.';
-        // }
-        if (! $producto->existencia) {
-            $errores[] = 'Es necesario incluir un existencia';
-        }
-        if (! $producto->precio) {
-            $errores[] = 'Es necesario incluir un precio';
-        }
-        if (! $producto->stock_minimo) {
-            $errores[] = 'Es necesario incluir un stock minimo del inventario';
-        }
-        if (! $producto->proveedor_id) {
-            $errores[] = 'Es obligatorio incluir el código del proveedor';
-        }
-        if (! $producto->categoria_id) {
-            $errores[] = 'Es necesario incluir el código de categoria';
-        }
 
-        // $is_active = $producto->is_active ?? 1; // 1 por defecto (activo)
+        // BEGIN procesar imagen
+        // if ($validacion['valida']) {
+        if ($_FILES['imagen']['tmp_name']) {
 
-        // 2. Sanitizar/Validar (incluye longitud descripción)
+            $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
+            $imgManager = new ImageManager(Driver::class);
+            $img        = $imgManager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
+
+                                              // actualiza la referencia de la imagen
+            $producto->setImage($imgNewName); // if (! $_FILES['imagen']) {
+                                              //     $imagen_mostrar = $_FILES['tmp_name'];
+                                              //     debugResult($imagen_mostrar, false);
+                                              // }
+            $imagen_mostrar = $imgNewName;
+
+        }
+        debugResult($_FILES['imagen'], false);
+
+        // obtener la ruta y guardar en el servidor (antes sin OOP)
+        /* move_uploaded_file($imagen['tmp_name'], $images_folder . $imgNewName); */
+        // $producto->imagen = $imgNewName; // Actualiza imagen
+
+        // } else {
+        //     echo "Error: " . $validacion['error'];
+        // }
+        // END procesar imagen
+        // END - gestion / validacion imagen
+
+        // 2. Validar campos
+        $errores = $producto->validateEntry();
+
+        // 3. Sanitizar/Validar
         if (! $producto->sanitize()) {
             $errores = array_merge($errores, $producto->getErrores());
         } else {
             unset($_SESSION['form_data']); // Limpiar al éxito
         }
 
-        // 3. Si todo OK, procesar imagen y guardar
+        // 4. Si todo OK, procesar data
         if (empty($errores)) {
 
-            if ($validacion['valida']) {
-                $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
-
-                move_uploaded_file($imagen['tmp_name'], $images_folder . $imgNewName);
-
-                $producto->imagen = $imgNewName; // Actualiza imagen
-
-            } else {
-                echo "Error: " . $validacion['error'];
-            }
-
-            //         // insertar en la DB
-            //         $query = "INSERT INTO productos (codigo_sku, nombre_producto,
-            // precio, imagen, descripcion, existencia, stock_minimo,
-            // proveedor_id, categoria_id )
-            // VALUES ('$codigo_sku', '$nombre_producto',
-            // '$precio', '$imgNewName', '$descripcion', '$existencia',
-            //  $stock_minimo,
-            // '$proveedor_id', '$categoria_id' )";
-
-            // echo $query;
-            // $res = mysqli_query($db, $query);
-
-            // if (! $producto->sanitize()) {
-            //     $errores = $producto->getErrores(); // Recoge errores de la clase
-            //                                         // $descripcion = $_POST['descripcion'] ?? ''; // Repobla
-            // } elseif ($producto->guardarRecord()) {
-            //     // Sanitización OK, guarda
-
-            //     debugResult($p);
-
-            //     // header('Location: /admin/productos/');
-
-            //     exit();
-            // }
+            // nuevo modo de almacenar en el servidor
+            $img->save($images_folder . $imgNewName);
 
             if ($producto->guardarRecord()) {
                 // header('Location: /admin/productos/');
@@ -181,16 +100,6 @@
                 exit;
             }
         }
-
-        // if ($res) {
-        //     // echo "Insertado correcto en la DB";
-
-        //     // redireccionar a otra página para evitar repetidos registro duplicados
-        //     // al 'enviar datos'
-
-        //     // Query string
-        //     header('Location: /admin?result=1');
-        // }
 
         // Imagen preview para errores
         if (! empty($_FILES['imagen']['name'])) {
@@ -201,15 +110,9 @@
 
     includeTemplate('header');
 
-    //                              // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
-    // $imagen_mostrar = $no_image; // Por defecto
-
-    // /* if (!empty($producto['imagen']) || !empty($imagen)) { */
-    // if (! empty($imagen)) {
-    //     $imagen_mostrar = $images_folder . $imagen;
-    // } elseif (! empty($prod['imagen'])) {
-    //     $imagen_mostrar = $images_folder . $prod['imagen'];
-    // }
+    if ($_FILES['imagen']['tmp_name']) {
+        $imagen_mostrar = $uploaded_image;
+    }
 
 ?>
 
