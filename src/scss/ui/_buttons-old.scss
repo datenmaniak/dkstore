@@ -1,0 +1,147 @@
+@use "sass:color";
+@use "../core/" as core;
+@use "../config/" as *;
+
+$border-radius: 6px;
+
+// Hover helpers
+$darker: color.scale(core.$brand-primary-color, $lightness: -30%, $saturation: +20%);
+$lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: +5%);
+
+// 🎯 Mixin principal para botones
+@mixin button($bg: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
+    display: $type;
+    background-color: $bg;
+    color: $text;
+    font-weight: bold;
+    border: none;
+    border-radius: $border-radius;
+    padding: 1.135rem .825rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+    width: $width;
+
+    // Centrado para block con ancho < 100%
+    @if $type ==block and $width !=100% and $width !=auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:hover {
+        background-color: color.scale($bg, $lightness: -30%);
+        // box-shadow: 10px 12px 24px rgba(60, 60, 60, 0.35);
+        // box-shadow: 1px 2px 15px color.scale($bg, $lightness: -10%);
+        // transform: translateY(+7px);
+        // background-color: color.scale($bg, $lightness: -80%, $saturation: -95%);
+    }
+
+    &:active {
+        background-color: color.scale($bg, $lightness: -20%, $saturation: +10%);
+    }
+
+    &:disabled {
+        background-color: color.scale($bg, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Mixin para ghost buttons
+@mixin button-ghost($color: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
+    display: $type;
+    background-color: transparent;
+    color: $color;
+    border: 1px solid $color;
+    border-radius: $border-radius;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    width: $width;
+
+    // Centrado para block con ancho < 100%
+    @if $type ==block and $width !=100% and $width !=auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:hover {
+        background-color: color.scale($color, $lightness: +10%);
+        color: #fff;
+    }
+
+    &:active {
+        background-color: $color;
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        color: color.scale($color, $lightness: +30%, $saturation: -30%);
+        cursor: not-allowed;
+    }
+}
+
+// 🎯 Implementaciones
+button {
+    @include button(core.$brand-primary-color, #fff);
+    cursor: pointer;
+    font-weight: 400;
+
+}
+
+.btn {
+    @include button(core.$brand-primary-color, #fff);
+    cursor: pointer;
+}
+
+// .btn-auto {
+//     @include button(block, auto);
+// }
+
+.btn-secondary {
+    @include button(core.$brand-secondary-color, #fff);
+}
+
+.btn-block-75 {
+    @include button(core.$brand-primary-color, #fff, block, 75%);
+}
+
+.btn-block-50 {
+    @include button(core.$brand-primary-color, #fff, block, 50%);
+}
+
+.btn-block-30 {
+    @include button(core.$brand-primary-color, #fff, block, 30%);
+}
+
+.btn-block-20 {
+    @include button(core.$brand-primary-color, #fff, block, 20%);
+}
+
+.btn-block-10 {
+    @include button(core.$brand-primary-color, #fff, block, 10%);
+}
+
+.btn-center {
+    @include button(core.$brand-primary-color, #fff, block, 10%, center)
+}
+
+.btn-left {
+    @include button(core.$brand-primary-color, #fff, block, 10%, left)
+}
+
+.btn-right {
+    @include button(core.$brand-primary-color, #fff, block, 10%, right)
+}
+
+@mixin btn-block-size($bg: core.$brand-primary-color, $fg: #fff, $type: inline-block, $size) {
+    @include button($bg, $fg, block, $size );
+}
+
+
+.btn-ghost {
+    @include button-ghost(core.$brand-primary-color);
+}

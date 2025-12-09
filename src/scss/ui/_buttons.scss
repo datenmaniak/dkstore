@@ -1,14 +1,19 @@
 @use "sass:color";
+@use "sass:map";
 @use "../core/" as core;
 @use "../config/" as *;
 
+/* Creado por Willians Patiño, 8.12.2025, 10:54 
+
+    datenmaniak@outlook.com
+
+*/
+
+
+// 🔧 Configuración base
 $border-radius: 6px;
 
-// Hover helpers
-$darker: color.scale(core.$brand-primary-color, $lightness: -30%, $saturation: +20%);
-$lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: +5%);
-
-// 🎯 Mixin principal para botones
+// 🎨 Mixin principal para botones
 @mixin button($bg: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
     display: $type;
     background-color: $bg;
@@ -23,7 +28,6 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
     transition: background-color 0.25s ease;
     width: $width;
 
-    // Centrado para block con ancho < 100%
     @if $type ==block and $width !=100% and $width !=auto {
         margin-left: auto;
         margin-right: auto;
@@ -31,10 +35,6 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
 
     &:hover {
         background-color: color.scale($bg, $lightness: -30%);
-        // box-shadow: 10px 12px 24px rgba(60, 60, 60, 0.35);
-        // box-shadow: 1px 2px 15px color.scale($bg, $lightness: -10%);
-        // transform: translateY(+7px);
-        // background-color: color.scale($bg, $lightness: -80%, $saturation: -95%);
     }
 
     &:active {
@@ -47,7 +47,7 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
     }
 }
 
-// 🎯 Mixin para ghost buttons
+// 🎨 Mixin para ghost buttons
 @mixin button-ghost($color: core.$brand-primary-color, $text: #fff, $type: inline-block, $width: auto) {
     display: $type;
     background-color: transparent;
@@ -61,7 +61,6 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
     transition: all 0.25s ease;
     width: $width;
 
-    // Centrado para block con ancho < 100%
     @if $type ==block and $width !=100% and $width !=auto {
         margin-left: auto;
         margin-right: auto;
@@ -82,35 +81,7 @@ $lighter: color.scale(core.$brand-primary-color, $lightness: +15%, $saturation: 
         color: color.scale($color, $lightness: +30%, $saturation: -30%);
         cursor: not-allowed;
     }
-}
 
-// 🎯 Implementaciones
-button {
-    @include button(core.$brand-primary-color, #fff);
-    cursor: pointer;
-    font-weight: 400;
-
-}
-
-.btn {
-    @include button(core.$brand-primary-color, #fff);
-    cursor: pointer;
-}
-
-.btn-secondary {
-    @include button(core.$brand-secondary-color, #fff);
-}
-
-.btn-block-75 {
-    @include button(core.$brand-primary-color, #fff, block, 75%);
-}
-
-.btn-block-50 {
-    @include button(core.$brand-primary-color, #fff, block, 50%);
-}
-
-.btn-block-25 {
-    @include button(core.$brand-primary-color, #fff, block, 25%);
 }
 
 @mixin btn-block-size($bg: core.$brand-primary-color, $fg: #fff, $type: inline-block, $size) {
@@ -118,6 +89,67 @@ button {
 }
 
 
-.btn-ghost {
-    @include button-ghost(core.$brand-primary-color);
+// 🎯 Variantes de color
+$btn-variants: (
+    primary: (bg: core.$brand-primary-color, text: #fff),
+    secondary: (bg: core.$brand-secondary-color, text: #fff),
+    danger: (bg: #e53935, text: #fff),
+    success: (bg: #43a047, text: #fff),
+    warning: (bg: #f88604, text: #fff),
+    ghost: (bg: transparent, text: core.$brand-primary-color, ghost: true)
+);
+
+@each $name, $props in $btn-variants {
+    $bg: map.get($props, bg);
+    $text: map.get($props, text);
+    $ghost: if(map.has-key($props, ghost), true, false);
+
+    .btn-#{$name} {
+        @if $ghost {
+            @include button-ghost($text, $bg);
+        }
+
+        @else {
+            @include button($bg, $text);
+        }
+    }
 }
+
+// 📐 Variantes de tamaño
+$btn-sizes: (
+    100: 100%,
+    75: 75%,
+    50: 50%,
+    30: 30%,
+    20: 20%,
+    10: 10%
+);
+
+@each $name, $value in $btn-sizes {
+    .btn-block-#{$name} {
+        // @include button(core.$brand-primary-color, #fff, block, $value);
+        display: block;
+        width: $value;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+// 📍 Posiciones
+$btn-positions: (
+    left: (margin-left: 0, margin-right: auto),
+    center: (margin-left: auto, margin-right: auto),
+    right: (margin-left: auto, margin-right: 0)
+);
+
+@each $pos, $margins in $btn-positions {
+    .btn-#{$pos} {
+        display: block;
+        margin-left: map.get($margins, margin-left);
+        margin-right: map.get($margins, margin-right);
+    }
+}
+
+// @mixin btn-block-size($bg: core.$brand-primary-color, $fg: #fff, $type: inline-block, $size) {
+//     @include button($bg, $fg, block, $size );
+// }
