@@ -1,0 +1,202 @@
+@use "sass:color";
+@use "sass:map";
+@use "../core/" as core;
+@use "../config/" as *;
+
+/* Creado por Willians Patiño, 8.12.2025, 13:00 
+
+    datenmaniak@outlook.com
+
+*/
+
+// Variables de branding
+$primary-color: core.$brand-primary-color;
+$success-color: #2ecc71;
+$error-color: #e74c3c;
+$warning-color: #f39c12;
+$info-color: #3498db;
+
+// Mixin principal
+@mixin notification-bar($bg-color, $text-color: #fff,
+    $align: center, $size: medium) {
+    display: flex;
+    align-items: center;
+    justify-content: $align; // controla la alineación
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: $bg-color;
+    color: $text-color;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.4s ease-out;
+
+
+    .icon {
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .message {
+        flex-grow: 1;
+        text-align: $align;
+    }
+
+    .close-btn {
+        margin-left: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// Mixin de tamaño (solo tipografía y padding)
+@mixin notification-size($size: medium) {
+    @if $size ==small {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    @else if $size ==medium {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    @else if $size ==large {
+        padding: 18px 24px;
+        font-size: 16px;
+    }
+}
+
+// Mixin de tamaño horizontal
+// @mixin notification-width($size: medium) {
+//     @if $size ==small {
+//         width: 200px;
+//     }
+
+//     @else if $size ==medium {
+//         width: 400px;
+//     }
+
+//     @else if $size ==large {
+//         width: 100%; // ocupa todo el ancho disponible
+//     }
+// }
+
+
+// Mixin de ancho horizontal responsivo
+@mixin notification-width($size: medium) {
+    @if $size ==small {
+        width: 50%; // ocupa la mitad del viewport
+        max-width: 400px; // límite opcional
+    }
+
+    @else if $size ==medium {
+        width: 75%; // ocupa tres cuartos
+        max-width: 800px;
+    }
+
+    @else if $size ==large {
+        width: 100%; // ocupa todo el ancho disponible
+    }
+}
+
+// Animación
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+// Clases que embeben el mixin
+.notification-bar {
+    &.success {
+        @include notification-bar($success-color);
+    }
+
+    &.error {
+        @include notification-bar($error-color);
+    }
+
+    &.warning {
+        @include notification-bar($warning-color, #000);
+    }
+
+    &.info {
+        @include notification-bar($info-color);
+    }
+
+    &.primary {
+        @include notification-bar($primary-color);
+    }
+
+    // Variantes de alineación
+    // &.left {
+    //     justify-content: flex-start;
+    //     text-align: left;
+    // }
+
+    // &.center {
+    //     justify-content: center;
+    //     text-align: center;
+    // }
+
+    // &.right {
+    //     justify-content: flex-end;
+    //     text-align: right;
+    // }
+
+
+
+    // Variantes de alineación horizontal
+    &.left {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    &.center {
+        margin: 0 auto;
+    }
+
+    &.right {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    // Variantes de tamaño (no alteran color)
+    &.v-small {
+        @include notification-size(small);
+    }
+
+    &.v-medium {
+        @include notification-size(medium);
+    }
+
+    &.v-large {
+        @include notification-size(large);
+    }
+
+    // Variantes de ancho horizontal
+    &.small {
+        @include notification-width(small);
+    }
+
+    &.medium {
+        @include notification-width(medium);
+    }
+
+    &.large {
+        @include notification-width(large);
+    }
+}
