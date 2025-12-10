@@ -1,4 +1,4 @@
-<footer class="footer radius-t">
+<footer class="footer">
     <div class="footer-container">
         <!-- Branding -->
         <div class="footer-column footer-branding">
@@ -61,11 +61,5 @@
 
         </div>
     </div>
-    <p class="copyright "> <small>&copy; datenmaniak - Derechos Reservados <?php echo date('Y'); ?></small></p>
+    <p class="copyright "> <small>&copy; datenmaniak - Derechos Reservados                                                                           <?php echo date('Y'); ?></small></p>
 </footer>
-
-<script src="/build/js/bundle.js"></script>
-
-</body>
-
-</html>

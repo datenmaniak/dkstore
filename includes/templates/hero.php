@@ -11,7 +11,7 @@
                     ¿Quieres tus productos favoritos al mejor precio? ¡Aquí los tienes!
                 </span>
             </h2>
-            <a href="/" class="btn">Explore las ofertas</a>
+            <a href="/" class="btn-primary btn-block-30 btn-left">Explore las ofertas</a>
 
         </div>
     </div>
