@@ -1,83 +1,79 @@
 <?php
 
+    //  before
+    /* require_once __DIR__ . '/includes/functions.php'; */
+    // require '../includes/functions.php';
 
-//  before
-/* require_once __DIR__ . '/includes/functions.php'; */
-// require '../includes/functions.php';
+    // Simplificado asi
+    require_once __DIR__ . '../../includes/app.php';
 
-// Simplificado asi
-require_once __DIR__ . '../../includes/app.php';
+    includeTemplate('header');
 
+    // gestión de conexión
+    // require_once PATH_CONFIG . '/database.php';
+    // session_start();
 
-includeTemplate('header');
+    // Conexión a la BD
+    $db = conectDB();
 
+    // notifications
+    $error_message = "";
 
-// gestión de conexión
-// require_once PATH_CONFIG . '/database.php';
-// session_start();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Capturar datos del formulario
+        $email    = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
 
-// Conexión a la BD
-$db = conectDB();
-
-// notifications
-$error_message = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Capturar datos del formulario
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Preparar query
-    $query = "SELECT id, email, password_hash, role, is_active 
-          FROM users 
-          WHERE email = ? 
+        // Preparar query
+        $query = "SELECT id, email, password_hash, role, is_active
+          FROM users
+          WHERE email = ?
           LIMIT 1";
 
-    $stmt = mysqli_prepare($db, $query);
+        $stmt = mysqli_prepare($db, $query);
 
-    if ($stmt) {
+        if ($stmt) {
 
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-        if ($usuario = mysqli_fetch_assoc($result)) {
-            if ($usuario['is_active']) {
-                // Verificar contraseña
-                if (password_verify($password, $usuario['password_hash'])) {
-                    // Guardar sesión
-                    session_start();
-                    $_SESSION['user_id'] = $usuario['id'];
-                    $_SESSION['email'] = $usuario['email'];
-                    $_SESSION['role'] = $usuario['role'];
+            if ($usuario = mysqli_fetch_assoc($result)) {
+                if ($usuario['is_active']) {
+                    // Verificar contraseña
+                    if (password_verify($password, $usuario['password_hash'])) {
+                        // Guardar sesión
+                        session_start();
+                        $_SESSION['user_id'] = $usuario['id'];
+                        $_SESSION['email']   = $usuario['email'];
+                        $_SESSION['role']    = $usuario['role'];
 
-                    // Redirección según rol
-                    if ($usuario['role'] === 'admin') {
-                        header("Location: /admin/index.php");
+                        // Redirección según rol
+                        if ($usuario['role'] === 'admin') {
+                            header("Location: /admin/index.php");
+                        } else {
+                            header("Location: /");
+                        }
+                        exit;
+                        // echo "✅ Bienvenido {$usuario['username']} (Rol: {$usuario['role']})";
+                        // header("Location: dashboard.php"); // redirección opcional
                     } else {
-                        header("Location: /");
+                        $error_message = " Credenciales inválidas.";
                     }
-                    exit;
-                    // echo "✅ Bienvenido {$usuario['username']} (Rol: {$usuario['role']})";
-                    // header("Location: dashboard.php"); // redirección opcional
                 } else {
-                    $error_message =  " Credenciales inválidas.";
+                    $error_messages = "Usuario inactivo.";
                 }
             } else {
-                $error_messages = "Usuario inactivo.";
+                $error_message = "Usuario no encontrado.";
             }
+
+            mysqli_stmt_close($stmt);
         } else {
-            $error_message = "Usuario no encontrado.";
+            $error_message = "❌ Error al preparar la consulta: " . mysqli_error($db);
         }
-
-        mysqli_stmt_close($stmt);
-    } else {
-        $error_message = "❌ Error al preparar la consulta: " . mysqli_error($db);
     }
-}
 
-
-mysqli_close($db);
+    mysqli_close($db);
 
 ?>
 
@@ -94,10 +90,10 @@ mysqli_close($db);
             <button type="submit" class="btn  btn-secondary btn-block-50">Ingresar </button>
         </form>
 
-        <?php if (!empty($error_message)): ?>
-            <div class="error-band">
-                <?= htmlspecialchars($error_message) ?>
-            </div>
+        <?php if (! empty($error_message)): ?>
+        <div class="error-band">
+            <?php echo htmlspecialchars($error_message)?>
+        </div>
         <?php endif; ?>
     </section>
 
@@ -105,4 +101,6 @@ mysqli_close($db);
 
 
 
-<?php includeTemplate('footer'); ?>
+<?php includeTemplate('footer');
+includeTemplate('scripts');
+includeTemplate('end-page'); ?>

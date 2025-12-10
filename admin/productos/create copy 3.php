@@ -20,14 +20,11 @@
     $categories      = "SELECT * FROM categorias";
     $categories_list = mysqli_query($db, $categories);
 
-    // template to use here
-    $template = 'product-form';
-    // $template_path = PATH_TEMPLATES . '/' . basename($template);
-
     // ubicacion de la imagenes
     $images_folder  = '../../uploads/';
     $no_image       = '../../assets/img/no-image.png';
     $imagen_mostrar = $no_image; // Por defecto
+    $uploaded_image = '../../assets/img/arrow_12959560.png';
 
     /* // instanciar producto */
     $producto = new Productos(); // ← SIEMPRE existe
@@ -62,15 +59,9 @@
         // 2. Validar campos
         $errores = $producto->validateEntry();
 
-        // Validar y sanitizar → la clase maneja errores internamente
-        // $producto->sanitize();
-
-        // // Solo consultas los errores centralizados
-        // $errores = Productos::getErrores();
-
+        // 3. Sanitizar/Validar
         if (! $producto->sanitize()) {
-            // $errores = array_merge($errores, $producto->getErrores());
-            $errores = array_merge($errores, $producto::getErrores());
+            $errores = array_merge($errores, $producto->getErrores());
         } else {
             unset($_SESSION['form_data']); // Limpiar al éxito
         }
@@ -79,8 +70,7 @@
         if (empty($errores)) {
 
             // nuevo modo de almacenar en el servidor
-            $img->save(PATH_UPLOADS . $imgNewName);
-            // $img->save($images_folder . $imgNewName);
+            $img->save($images_folder . $imgNewName);
 
             if ($producto->guardarRecord()) {
                 // header('Location: /admin/productos/');
@@ -93,6 +83,7 @@
         if (! empty($_FILES['imagen']['name'])) {
             $imagen_mostrar = $images_folder . $_FILES['imagen']['name'];
         }
+
     }
 
     includeTemplate('header');
@@ -103,7 +94,7 @@
 
     if ($hay_imagen_nueva) {
         // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
-        $imagen_mostrar  = $imgNewName;
+        $imagen_mostrar  = $uploaded_image;
         $mostrar_spinner = true;
     } else {
         // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
@@ -140,14 +131,88 @@
     <form method="POST" class="form-productos" enctype="multipart/form-data">
         <!-- action="/admin/productos/create.php"> -->
 
-        <?php includeTemplate('product-form'); ?>
+        <label>Código (SKU):
+            <input type="text" name="codigo_sku" value="<?php echo htmlspecialchars($producto->codigo_sku) ?>">
+        </label>
+        <label>Nombre del producto:
+            <input type="text" name="nombre_producto"
+                value="<?php echo htmlspecialchars($producto->nombre_producto) ?>">
+        </label>
+        <label>Precio:
+            <input type="number" step="0.01" name="precio" value="<?php echo $producto->precio; ?>">
+        </label>
+        <div class="product-image">
+            <label>Imagen (100 kb. max):
+                <input type="file" name="imagen" accept="image/*">
+            </label>
+            <!-- Renderizado condicional -->
+            <?php if ($mostrar_spinner): ?>
+            <!-- Spinner activo sin imagen -->
+            <!-- Contenedor del spinner tipo barra -->
+            <div class="bar-spinner">
+                <span class="spinner-message">Imagen cargada. Esperando para procesar...</span>
+                <div class="spinner-bar"></div>
+            </div>
+            <?php else: ?>
+            <!-- Imagen por defecto -->
+            <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto">
+            <?php endif; ?>
 
+        </div>
+        <label>Descripción:
+            <textarea name="descripcion" maxlength="255">
+                <?php echo htmlspecialchars($producto->descripcion) ?></textarea>
+            <small id="description_input_counter">0/255</small>
+        </label>
+        <label>Existencia:
+            <input type="number" name="existencia" value="<?php echo $producto->existencia; ?>">
+        </label>
+        <label>Stock mínimo:
+            <input type="number" name="stock_minimo" value="<?php echo $producto->stock_minimo; ?>">
+        </label>
+        <!-- TODO: aqui estuvo  el campo de activo  -->
+
+        <!-- <label>ID Proveedor: <input type="number" name="proveedor_id"></label> -->
+        <fieldset>
+            <legend>Proveedor:</legend>
+            <select name="proveedor_id" id="">
+                <option value="">- Elija el proveedor - </option>
+                <?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
+                <option value="<?php echo $seller['id'] ?>"
+                    <?php echo $producto->proveedor_id == $seller['id'] ? 'selected' : '' ?>>
+                    <?php echo htmlspecialchars($seller['empresa']) ?>
+                </option>
+                <?php endwhile; ?>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Categoría:</legend>
+            <select name="categoria_id" id="">
+                <option value="">- Elija categoría -</option>
+                <?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
+                <option value="<?php echo $category['id'] ?>"
+                    <?php echo $producto->categoria_id == $category['id'] ? 'selected' : '' ?>>
+                    <?php echo htmlspecialchars($category['categoria'] . " - " . $category['descripcion']) ?>
+                </option>
+                <?php endwhile; ?>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Visible en el catálogo </legend>
+            <label for="is_active" class="form-check form-switch">
+                <input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+                    <?php echo($producto->is_active == 1) ? 'checked' : '' ?>>
+
+                <span id="estado-notificacion" class="form-check-label">
+                    <?php echo($producto->is_active == 1) ? ' activo' : ' inactivo'; ?>
+                </span>
+            </label>
+
+        </fieldset>
+        <div class="submit-block">
+        </div>
         <button type="submit" class="btn-primary btn-block-30 btn-right">Enviar</button>
-
-
     </form>
 </main>
 
-<?php includeTemplate('footer');
-includeTemplate('scripts');
-includeTemplate('end-page'); ?>
+<?php includeTemplate('footer'); ?>
