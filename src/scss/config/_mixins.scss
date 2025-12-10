@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "sass:list";
 @use "sass:map";
 
 @use "../core/" as core;
@@ -96,7 +97,32 @@ $container-narrow-widths: (
     width: 100%;
 }
 
-//  G r i d 
+//  G r i d
+// Grid avanzado: define # columnas y anchos específicos  -- 10.12.2025, 10h39, por @datenmaniak
+@mixin grid-advanced($columns, $gap, $custom-widths: ()) {
+    display: grid;
+    gap: $gap;
+
+    $template: (
+    );
+
+@for $i from 1 through $columns {
+
+    // Si hay un ancho definido para esta columna, úsalo
+    @if map.has-key($custom-widths, $i) {
+        $template: list.append($template, map.get($custom-widths, $i));
+    }
+
+    @else {
+        // Si no, usa 1fr por defecto
+        $template: list.append($template, 1fr);
+    }
+}
+
+grid-template-columns: $template;
+}
+
+
 @mixin grid($columnas, $espaciado ) {
     display: grid;
     gap: $espaciado;
@@ -142,8 +168,6 @@ $container-narrow-widths: (
     // Ejemplo de uso
     //     @include grid-two-columns(3fr, 1fr, 1.2rem);
     //  @include grid-two-columns(250px, 1fr, 1.2rem);
-
-
 }
 
 
