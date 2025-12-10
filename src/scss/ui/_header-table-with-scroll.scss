@@ -1,0 +1,202 @@
+@use "sass:color";
+@use "sass:map";
+@use "../core/" as core;
+@use '../config/mixins' as *;
+// @use "../ui/" as ui;
+
+// .catalog-scroll {
+//     max-height: 500px;
+//     /* altura máxima del catálogo */
+//     overflow-y: auto;
+//     /* activa scroll vertical */
+//     position: relative;
+// }
+
+// .catalog-scroll table {
+//     width: 100%;
+//     border-collapse: collapse;
+// }
+
+// .catalog-scroll::after {
+//     content: "";
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 40px;
+//     /* altura del fade */
+//     pointer-events: none;
+//     /* no bloquea el scroll */
+//     background: linear-gradient(to bottom, transparent, #fff);
+// }
+
+// .catalog-scroll th {
+//     position: sticky;
+//     top: 0;
+//     /* se pega al borde superior */
+//     background: #fff;
+//     /* color de fondo para que no se mezcle con filas */
+//     z-index: 2;
+//     /* asegura que quede por encima del contenido */
+// }
+
+//  2do
+// .catalog-scroll {
+//     max-height: 500px;
+//     /* altura máxima del contenedor */
+//     overflow-y: auto;
+//     /* activa scroll vertical */
+//     position: relative;
+// }
+
+// /* Fade-out al final */
+// .catalog-scroll::after {
+//     content: "";
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 40px;
+//     pointer-events: none;
+//     background: linear-gradient(to bottom, transparent, #fff);
+// }
+
+// /* Cabecera fija */
+// .products-table th {
+//     // position: sticky;
+//     top: 0;
+//     background: #fff;
+//     /* color de fondo sólido */
+//     z-index: 2;
+//     /* asegura que quede por encima de las filas */
+//     text-align: left;
+// }
+
+
+// -- tercer intento
+// .catalog-scroll {
+//     max-height: 500px; // altura definida
+//     overflow-y: auto; // scroll vertical
+//     position: relative;
+
+//     table {
+//         width: 100%;
+//         border-collapse: collapse;
+
+//         th {
+//             position: sticky;
+//             top: 0;
+//             background: #fff; // color sólido
+//             z-index: 2;
+//         }
+//     }
+// }
+
+// .catalog-scroll {
+//     max-height: 500px; // altura definida
+//     overflow-y: auto; // scroll vertical
+//     position: relative;
+
+//     table {
+//         width: 100%;
+//         border-collapse: collapse;
+
+//         th {
+//             position: sticky;
+//             top: 0;
+//             background: #7700F0; // tu branding
+//             color: #fff; // texto blanco
+//             z-index: 2;
+//         }
+//     }
+// }
+
+.catalog-scroll {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.table-header {
+    // @include grid(10, 0.125rem);
+    // @include grid-fluid(8rem, 0.125rem);
+    // display: grid;
+    // grid-template-columns: 90px 70px 90px 250px 120px 90px 100px 95px 80px;
+    @include grid-advanced(10,
+        0.175rem, // Separación entre columnas
+        (1: 80px, // Imagen
+            2: 50px, // ID
+            3: 100px, // SKU
+            4: 200px, // columna Nombre
+            5: 400px, // columna Descripción
+            6: 100px, // Precio
+            7: 60px, // Exist
+            8: 60px, // Stock
+            9: 95px, // columna Catálogo
+            10: 100px // columna Acciones
+        ));
+
+    background-color: core.$brand-primary-color; // branding
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    // text-align: center;
+
+}
+
+.table-body {
+    max-height: 400px; // altura con scroll
+    overflow-y: auto;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tbody {
+        display: block;
+        max-height: 400px; // scroll solo en el cuerpo
+        overflow-y: auto;
+    }
+
+    tr {
+        // display: grid;
+        // grid-template-columns: 80px 60px 100px 150px 200px 100px 100px 120px 120px;
+        // @include grid(10, 0.125rem);
+        @include grid-advanced(11,
+            0.225rem,
+            (1: 80px, // Imagen
+                2: 50px, // ID
+                3: 100px, // SKU
+                4: 200px, // columna Nombre
+                5: 400px, // columna Descripción
+                6: 100px, // Precio
+                7: 60px, // Exist
+                8: 60px, // Stock
+                9: 80px, // columna Catálogo
+                10: 60px, // edit icon
+                11: 60px // delete icon
+            ));
+
+        border-bottom: 1px solid #e5e5e5;
+        align-items: center;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    td {
+        // padding: 0.75rem 1rem;
+        vertical-align: middle;
+    }
+}
+
+/* Oculta el <thead> pero mantiene accesibilidad */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
