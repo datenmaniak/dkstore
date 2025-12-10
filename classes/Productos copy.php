@@ -41,7 +41,7 @@ class Productos
             'descripcion'     => '',
             'existencia'      => 0,
             'stock_minimo'    => 0,
-            'is_active'       => 0,
+            'is_active'       => 1,
             'is_deleted'      => 0,
             'proveedor_id'    => null,
             'categoria_id'    => null,
@@ -173,7 +173,7 @@ class Productos
 
     public function sanitize(): bool
     {
-        self::$errores = []; // limpiar antes de sanitizar
+        // self::$errores = [];
 
         // 1. VALIDACIONES DE LONGITUD (NUEVO)
         $longitudes = [
@@ -256,6 +256,12 @@ class Productos
         return empty(self::$errores); // true si todo OK
     }
 
+    // AGREGAR DESPUÉS de sanitize()
+    public static function getErrores(): array
+    {
+        return self::$errores;
+    }
+
     public function validarDescripcion(string $descripcion, int $min = 24, int $max = 1000): array
     {
         $descripcion = strip_tags(trim($descripcion));
@@ -318,17 +324,10 @@ class Productos
     }
 
     // Mover el bloque de validación aqui
-    public function validateEntry(): array
+    public function validateEntry()
     {
-
-        self::$errores = []; // limpiar antes de validar
-
-        if (empty($this->codigo_sku)) {
-            self::$errores[] = 'Es obligatorio el código del producto!';
-        }
-
         // validacion
-        if (empty($this->nombre_producto)) {
+        if (! $this->nombre_producto) {
             self::$errores[] = 'Es obligatorio incluir un nombre';
         }
 
@@ -340,26 +339,23 @@ class Productos
         // } else {
         //     $this->descripcion = $resultado; // Usa versión limpia
         // }
-        if (empty($this->descripcion)) {
-            self::$errores[] = 'La descripción es obligatoria';
-        }
-        if (empty($this->existencia)) {
+        if (! $this->existencia) {
             self::$errores[] = 'Es necesario incluir un existencia';
         }
-        if (empty($this->precio)) {
+        if (! $this->precio) {
             self::$errores[] = 'Es necesario incluir un precio';
         }
-        if (empty($this->stock_minimo)) {
+        if (! $this->stock_minimo) {
             self::$errores[] = 'Es necesario incluir un stock minimo del inventario';
         }
-        if (empty($this->proveedor_id)) {
+        if (! $this->proveedor_id) {
             self::$errores[] = 'Es obligatorio incluir el código del proveedor';
         }
-        if (empty($this->categoria_id)) {
-            self::$errores[] = 'Es obligatorio incluir el código de categoría';
+        if (! $this->categoria_id) {
+            self::$errores[] = 'Es necesario incluir el código de categoria';
         }
 
-        if (empty($this->imagen)) {
+        if (! $this->imagen) {
             self::$errores[] = 'La imagen es obligatoria';
         }
 
@@ -371,51 +367,4 @@ class Productos
             $this->imagen = $imagen;
         }
     }
-    public static function getErrores(): array
-    {
-        return self::$errores;
-    }
-
-    // listar todos los productos
-    public static function getall()
-    {
-        $sql = "SELECT * from productos WHERE eliminado = 0";
-
-        $listing = self::consultaSQL($sql);
-
-        return $listing;
-    }
-
-    public static function consultaSQL($sql)
-    {
-        // consulta la BD
-        $result = self::$db->query($sql);
-
-        // iterar sobre los resultados
-        $data_array = [];
-        while ($record = $result->fetch_assoc()) {
-            $data_array[] = self::crearObjeto($record);
-        }
-
-        // liberar memoria
-        $result->free();
-
-        // devolver resultados
-        return $data_array;
-    }
-
-    protected static function crearObjeto($record)
-    {
-        $objeto = new self;
-
-        foreach ($record as $key => $value) {
-
-            if (property_exists($objeto, $key)) {
-                $objeto->$key = $value;
-            }
-        }
-
-        return $objeto;
-    }
-
 }

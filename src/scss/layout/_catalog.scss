@@ -146,8 +146,8 @@
             &--featured {
                 position: relative;
                 overflow: visible; // permite que los elementos sobresalgan
-                border-color: core.$primary;
-                box-shadow: 0 0 10px rgba(core.$primary, 0.3);
+                border-color: core.$brand-primary-color;
+                box-shadow: 0 0 10px rgba(core.$brand-primary-color, 0.3);
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
                 // border: 2px solid #7700F0;
 

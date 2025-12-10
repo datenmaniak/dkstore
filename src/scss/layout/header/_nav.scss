@@ -220,7 +220,7 @@
     .site-name {
       font-size: 1.7rem;
       font-weight: 800;
-      color: core.$primary;
+      color: core.$brand-primary-color;
     }
   }
 
@@ -254,7 +254,7 @@
       // @include responsive-font($list-sizes);
       margin-top: 7px;
       display: inline-block;
-      background-color: core.$primary; // tu color de branding
+      background-color: core.$brand-primary-color; // tu color de branding
       color: #fff;
       padding: 8px 16px;
       border-radius: 5px;
@@ -263,7 +263,7 @@
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: color.scale(core.$primary, $lightness: -20%, $saturation: +20%);
+        background-color: color.scale(core.$brand-primary-color, $lightness: -20%, $saturation: +20%);
         transform: scale(1.02);
 
       }
@@ -296,7 +296,7 @@
   //   margin: 0;
 
   //   &:hover {
-  //     color: core.$primary;
+  //     color: core.core.$brand-primary-color;
   //   }
   // }
 

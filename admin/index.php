@@ -135,8 +135,8 @@
                 <div>Nombre</div>
                 <div>Descripción</div>
                 <div>Precio</div>
-                <div>Existencia</div>
-                <div>Min Stock</div>
+                <div>Cant.</div>
+                <div>Stock</div>
                 <div>Catálogo</div>
                 <div>Acciones</div>
             </div>
@@ -153,7 +153,7 @@
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Precio</th>
-                            <th>Existencia</th>
+                            <th>Cant</th>
                             <th>Catálogo</th>
                             <th>Acciones</th>
                         </tr>
@@ -184,7 +184,7 @@
                             <td><?php echo $item->existencia; ?> </td>
 
                             <!-- // TODO: Work here -->
-                            <td class="text-center">
+                            <td class="text-center active-in-catalog">
                                 <span class="status-badge
                                 <?php echo $item->is_active ? 'active' : 'inactive'; ?>">
                                     <i
@@ -195,7 +195,8 @@
 
 
                             <td class="actions-p">
-                                <a href="/admin/productos/update.php?id=<?php echo $item->id; ?> " class="btn-icon">
+                                <a href="/admin/productos/update.php?id=<?php echo $item->id; ?> "
+                                    class="btn-icon edit-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"
                                         fill="currentColor">
                                         <path
@@ -209,7 +210,7 @@
                             <td class="actions-p ">
                                 <form method="POST" action="">
                                     <input type="hidden" name="id" value="<?php echo $item->id; ?>">
-                                    <button type="submit" class="btn-icon">
+                                    <button type="submit" class="btn-icon delete-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25"
                                             height="25" fill="currentColor">
                                             <path

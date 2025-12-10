@@ -7,12 +7,15 @@
     // before
     // require __DIR__ . '/app.php';
 
-    function debugResult($var = '')
+    function debugResult($var = '', $must_end = true)
     {
         echo "<pre>";
         var_dump($var);
         echo "</pre>";
-        exit();
+        if ($must_end) {
+            exit();
+        }
+
     }
 
     function requireLogin()
@@ -33,12 +36,12 @@
         }
     }
 
-    function includeTemplate(string $page)
+    function includeTemplate(string $page): bool
     {
+
         // templates whitelist permit
         $allowed = [
             'header',
-            'footer',
             'about-us',
             'ads',
             'catalog-featured',
@@ -49,16 +52,44 @@
             'catalog-std-db',
             'hero',
             'home',
-            'end-page',
+            'product-form',
             'no-access',
+            'footer',
+            'scripts',
+            'end-page',
         ];
 
-        if (in_array($page, $allowed)) {
-            require PATH_TEMPLATES . "/$page.php";
-        } else {
-            echo "$page: Plantilla no permitida.";
+        // Validar si la plantilla está permitida
+        if (! in_array($page, $allowed, true)) {
+            showNotification("Plantilla no ha sido autorizada: " . htmlspecialchars($page));
+            exit;
+            return false;
         }
+        $file = PATH_TEMPLATES . "/$page.php";
+
+        // Validar si el archivo existe
+        if (! file_exists($file)) {
+            showNotification("Plantilla no existe: " . htmlspecialchars($page));
+            exit;
+            return false;
+        }
+
+        // require PATH_TEMPLATES . "/$page.php";
+        require $file;
+        return true;
+
     }
+    /**
+     * Renderiza una notificación estándar
+     */
+    function showNotification(string $message): void
+    {
+        echo '<div class="notification-bar warning high center">';
+        echo '    <span class="icon">⚠️</span>';
+        echo '    <div class="message">' . $message . '</div>';
+        echo '</div>';
+    }
+
     function validarImagen(array $archivo): array
     {
 

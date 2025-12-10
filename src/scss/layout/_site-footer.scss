@@ -8,7 +8,7 @@
     color: #eee;
     background-color: core.$brown;
     // margin-top: 2rem;
-    // background-color: core.$primary;
+    // background-color: core.$brand-primary-color;
     @include container($container-widths);
     height: auto;
     padding-bottom: 3rem;
@@ -110,7 +110,7 @@
 
     span:hover {
         color: #a62dfd; // tono violeta branding
-        color: core.$primary;
+        color: core.$brand-primary-color;
         transform: scale(1.2); // efecto de zoom al pasar
     }
 
