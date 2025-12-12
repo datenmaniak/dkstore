@@ -802,7 +802,7 @@ header {
 
 .btn-danger {
   display: inline-block;
-  background-color: #e53935;
+  background-color: #f01c18;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -815,19 +815,19 @@ header {
   width: auto;
 }
 .btn-danger:hover {
-  background-color: rgb(174.8894736842, 25.9736842105, 22.5105263158);
+  background-color: rgb(173.5317073171, 14.2731707317, 11.2682926829);
 }
 .btn-danger:active {
-  background-color: rgb(202.4463157895, 27.2285167464, 23.1536842105);
+  background-color: rgb(199.6097560976, 15.0720867209, 11.5902439024);
 }
 .btn-danger:disabled {
-  background-color: rgb(218.32, 134.04, 132.08);
+  background-color: rgb(221.82, 117.94, 115.98);
   cursor: not-allowed;
 }
 
 .btn-success {
   display: inline-block;
-  background-color: #43a047;
+  background-color: #34b03a;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -840,19 +840,19 @@ header {
   width: auto;
 }
 .btn-success:hover {
-  background-color: rgb(46.9, 112, 49.7);
+  background-color: rgb(36.4, 123.2, 40.6);
 }
 .btn-success:active {
-  background-color: rgb(48.24, 133.36, 51.9010752688);
+  background-color: rgb(37.44, 144.96, 42.6425806452);
 }
 .btn-success:disabled {
-  background-color: rgb(127.544030837, 184.355969163, 129.9875550661);
+  background-color: rgb(118.7247368421, 193.8752631579, 122.3610526316);
   cursor: not-allowed;
 }
 
 .btn-warning {
   display: inline-block;
-  background-color: #f88604;
+  background-color: #f87204;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -865,13 +865,13 @@ header {
   width: auto;
 }
 .btn-warning:hover {
-  background-color: rgb(173.6, 93.8, 2.8);
+  background-color: rgb(173.6, 79.8, 2.8);
 }
 .btn-warning:active {
-  background-color: rgb(198.72, 107.2209836066, 2.88);
+  background-color: rgb(198.72, 91.1685245902, 2.88);
 }
 .btn-warning:disabled {
-  background-color: rgb(225.9033333333, 168.7133333333, 103.4966666667);
+  background-color: rgb(225.9033333333, 158.68, 103.4966666667);
   cursor: not-allowed;
 }
 
@@ -919,6 +919,13 @@ header {
 .btn-block-50 {
   display: block;
   width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-block-40 {
+  display: block;
+  width: 40%;
   margin-left: auto;
   margin-right: auto;
 }

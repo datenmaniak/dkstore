@@ -52,7 +52,7 @@
             if ($imagen) {
                 $rutaImagen = $images_folder . $imagen;
                 if (file_exists($rutaImagen)) {
-                    unlink($rutaImagen); // elimina el archivo
+                    unlink($rutaImagen); // elimina la imagen del producto
                 } else {
                     echo "No se encontró la imagen en: $rutaImagen";
                 }
@@ -85,7 +85,7 @@
 
 <main class="admin-layout ">
     <h3>Panel de Administración - Productos</h3>
-    <a href="/admin/productos/create.php" class="btn-primary btn-block-10 btn-right">Agregar</a>
+    <a href="/admin/productos/create.php" class="btn-secondary btn-block-10 btn-right">Agregar</a>
     <div class="panel-options ">
         <!-- <a href="/admin/logout.php" class="btn-secondary">Cerrar sesión</a> -->
     </div>

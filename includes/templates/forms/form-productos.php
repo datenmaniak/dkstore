@@ -66,7 +66,7 @@
         <button type="button" id="previewClear" class="btn-primary  btn-right" style="display:none; ">Quitar
             imagen</button>
     </div>
-    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php debugResult($producto->imagen, false); ?> -->
+    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php debugResult($producto->imagen, false); ?> -->
 
 </div>
 

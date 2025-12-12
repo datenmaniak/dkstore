@@ -30,9 +30,11 @@
     $form_template = 'product-form';
 
     // ubicacion de la imagenes
-    $images_folder  = '../../uploads/';
-    $no_image       = '../../assets/img/no-image.png';
-    $imagen_mostrar = $no_image; // Por defecto
+    $images_folder   = '../../uploads/';
+    $no_image        = '../../assets/img/no-image.png';
+    $imagen_mostrar  = $no_image; // Por defecto
+    $imgNewName      = $no_image;
+    $mostrar_spinner = false;
 
     /* // instanciar producto */
     $producto = new Productos();
@@ -54,23 +56,42 @@
         $producto = new Productos($_POST);
 
         // BEGIN procesar imagen
-        // if ($validacion['valida']) {
-        if ($_FILES['imagen']['tmp_name']) {
+        // // if ($validacion['valida']) {
+        // if ($_FILES['imagen']['tmp_name']) {
+
+        //     $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
+        //     $imgManager = new ImageManager(Driver::class);
+        //     $img        = $imgManager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
+
+        //                                       // actualiza la referencia de la imagen
+        //     $producto->setImage($imgNewName); // if (! $_FILES['imagen']) {
+        //                                       // $imagen_mostrar = $_FILES['tmp_name'];
+        //                                       // debugResult($imagen_mostrar, false);
+        //                                       // }
+        //     $imagen_mostrar = $imgNewName;
+        // }
+
+        // error_log("DESPUÉS CONSTRUCTOR: " . $producto->nombre_producto);
+        // error_log(print_r($producto, true));
+        $hay_nueva_imagen = ! empty($_FILES['imagen']['tmp_name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
+
+        // if ($_FILES['imagen']['tmp_name']) {
+        if ($hay_nueva_imagen) {
+
+            // Guardar imagen anterior
+            $imagen_anterior = $producto->imagen;
+
+            // Ruta para eliminar imagen anterior SOLO si existe
+            $ruta_imagen_anterior = $images_folder . $imagen_anterior;
 
             $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
             $imgManager = new ImageManager(Driver::class);
             $img        = $imgManager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
 
-                                              // actualiza la referencia de la imagen
-            $producto->setImage($imgNewName); // if (! $_FILES['imagen']) {
-                                              // $imagen_mostrar = $_FILES['tmp_name'];
-                                              // debugResult($imagen_mostrar, false);
-                                              // }
-            $imagen_mostrar = $imgNewName;
-        }
+            /*  actualiza la referencia de la imagen */
+            $producto->setImage($imgNewName, $ruta_imagen_anterior);
 
-        // error_log("DESPUÉS CONSTRUCTOR: " . $producto->nombre_producto);
-        // error_log(print_r($producto, true));
+        }
 
         // 2. Validar entradas (errores que el usuario debe corregir)
         $erroresValid = $producto->validateEntry();
@@ -94,7 +115,10 @@
         // 5. Si todo OK, procesar data
         if (empty($errores) && $sanOk) {
 
-            // Guardar imagen en servidor
+            // Detectar si realmente se subió una imagen nueva
+            // $hay_nueva_imagen = ! empty($_FILES['imagen']['tmp_name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
+
+            // Actualiza / almacena la referencia de la imagen en el servidor
             $img->save(PATH_UPLOADS . $imgNewName);
 
             // Intentar guardar en BD
@@ -114,20 +138,20 @@
         }
     }
 
-    $hay_imagen_nueva = isset($_FILES['imagen']) &&
-    $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
-    ! empty($_FILES['imagen']['name']);
-    $mostrar_spinner = true;
+    // $hay_imagen_nueva = isset($_FILES['imagen']) &&
+    // $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
+    // ! empty($_FILES['imagen']['name']);
+    // $mostrar_spinner = true;
 
-    if ($hay_imagen_nueva) {
-        // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
-        $imagen_mostrar  = $imgNewName;
-        $mostrar_spinner = true;
-    } else {
-        // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
-        $imagen_mostrar  = $no_image;
-        $mostrar_spinner = false;
-    }
+    // if ($hay_imagen_nueva) {
+    //     // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
+    //     $imagen_mostrar  = $imgNewName;
+    //     $mostrar_spinner = true;
+    // } else {
+    //     // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
+    //     $imagen_mostrar  = $no_image;
+    //     $mostrar_spinner = false;
+    // }
 
 ?>
 
@@ -167,11 +191,14 @@
                 'sellers_list'    => $sellers_list,
                 'imagen_mostrar'  => $imagen_mostrar,
                 'mostrar_spinner' => $mostrar_spinner,
+                'imgNewName'      => $imgNewName,
+                'images_folder'   => $images_folder,
             ]);
 
         ?>
         <?php if ($is_form_ok): ?>
-        <button type="submit" class="btn-primary btn-block-20 btn-left">Enviar</button>
+        <button type="submit" class="btn-success btn-block-30 btn-left">Aceptar</button>
+        <a href="/admin/index.php" class="btn-warning btn-block-30 btn-right">Cancelar</a>
         <?php else: ?>
         <?php showNotification("Form not found: " . htmlspecialchars($tpl), false); ?>
         <?php endif; ?>

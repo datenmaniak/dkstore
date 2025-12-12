@@ -54,6 +54,46 @@
         // Binding directo desde el formulario
         $producto->dataBinding($_POST);
 
+        // BEGIN procesar imagen
+        // if ($validacion['valida']) {
+
+        // 2. Validar campos
+        // $errores = $producto->validateEntry();
+
+        // if (! $producto->sanitize()) {
+        //     // $errores = array_merge($errores, $producto->getErrores());
+        //     $errores = array_merge($errores, $producto::getErrores());
+        // } else {
+        //     unset($_SESSION['form_data']); // Limpiar al éxito
+        // }
+
+        //     if (empty($errores)) {
+
+        //         $set_parts = [];
+        //         foreach ($producto as $campo => $valor) {
+        //             $set_parts[] = "$campo = '" . mysqli_real_escape_string($db, $valor) . "'";
+        //         }
+
+        //         $query = 'UPDATE productos SET ' . implode(', ', $set_parts) . ' WHERE id = ' . (int) $id;
+
+        //         $res = mysqli_query($db, $query);
+
+        //         if ($res) {
+        //             // echo "Insertado correcto en la DB";
+
+        //             // redireccionar a otra página para evitar repetidos registro duplicados
+        //             // al 'enviar datos'
+
+        //             // Query string
+        //             header('Location: /admin?result=2');
+        //             exit();
+        //         }
+        //     }
+        // }
+
+        // error_log("DESPUÉS CONSTRUCTOR: " . $producto->nombre_producto);
+        // error_log(print_r($producto, true));
+
         // 2. Validar entradas (errores que el usuario debe corregir)
         $erroresValid = $producto->validateEntry();
 

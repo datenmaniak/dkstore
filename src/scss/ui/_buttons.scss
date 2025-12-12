@@ -93,9 +93,9 @@ $border-radius: 6px;
 $btn-variants: (
     primary: (bg: core.$brand-primary-color, text: #fff),
     secondary: (bg: core.$brand-secondary-color, text: #fff),
-    danger: (bg: #e53935, text: #fff),
-    success: (bg: #43a047, text: #fff),
-    warning: (bg: #f88604, text: #fff),
+    danger: (bg: #f01c18, text: #fff),
+    success: (bg: #34b03a, text: #fff),
+    warning: (bg: #f87204, text: #fff),
     ghost: (bg: transparent, text: core.$brand-primary-color, ghost: true)
 );
 
@@ -120,6 +120,7 @@ $btn-sizes: (
     100: 100%,
     75: 75%,
     50: 50%,
+    40: 40%,
     30: 30%,
     20: 20%,
     10: 10%

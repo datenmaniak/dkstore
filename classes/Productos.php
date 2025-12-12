@@ -474,12 +474,16 @@ class Productos
     {
         if ($imagen) {
             $this->imagen = $imagen;
+            error_log("=== Imagen agregada ===");
+            error_log($this->imagen);
         }
         if (
             ! empty($ruta_imagen_anterior) && file_exists($ruta_imagen_anterior)
         ) {
-            // unlink($ruta_imagen_anterior);
-            echo "Imagen anterior eliminada";
+            unlink($ruta_imagen_anterior);
+            error_log("=== Imagen eliminada ===");
+            error_log($ruta_imagen_anterior);
+
         }
     }
 
