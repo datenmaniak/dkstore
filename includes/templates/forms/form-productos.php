@@ -66,7 +66,7 @@
         <button type="button" id="previewClear" class="btn-primary  btn-right" style="display:none; ">Quitar
             imagen</button>
     </div>
-    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php debugResult($producto->imagen, false); ?> -->
+    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php debugResult($producto->imagen, false); ?> -->
 
 </div>
 
@@ -86,11 +86,10 @@
 <fieldset>
     <legend>Visible en el catálogo </legend>
     <label for="is_active" class="form-check form-switch">
-
         <input type="checkbox" id="is_active" name="is_active" value="<?php echo (int) $producto->is_active; ?>"
             class="form-check-input"                                     <?php echo (int) $producto->is_active === 1 ? 'checked' : ''; ?>>
         <span id="estado-notificacion" class="form-check-label">
-            <?php echo (int) $producto->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
+            <?php echo (int) $producto->is_active === 1 ? '  Activo' : '  Inactivo'; ?>
         </span>
 
     </label>
