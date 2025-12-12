@@ -470,10 +470,16 @@ class Productos
         return $this->errorsValidation;
     }
 
-    public function setImage($imagen)
+    public function setImage($imagen, $ruta_imagen_anterior)
     {
         if ($imagen) {
             $this->imagen = $imagen;
+        }
+        if (
+            ! empty($ruta_imagen_anterior) && file_exists($ruta_imagen_anterior)
+        ) {
+            // unlink($ruta_imagen_anterior);
+            echo "Imagen anterior eliminada";
         }
     }
 
@@ -532,12 +538,67 @@ class Productos
         return $objeto;
     }
 
-    public function syncData($args = [])
+    public function dataBinding($args = [])
     {
-        debugResult($args, false);
-
+        foreach ($args as $key => $value) {
+            if (property_exists($this, $key) && ! is_null($value)) {
+                $this->$key = $value;
+            }
+        }
     }
+    public function actualizarRecord(): bool
+    {
+        try {
+            $stmt = self::$db->prepare("
+            UPDATE productos SET
+                codigo_sku = ?,
+                nombre_producto = ?,
+                precio = ?,
+                imagen = ?,
+                descripcion = ?,
+                existencia = ?,
+                stock_minimo = ?,
+                activo = ?,
+                eliminado = ?,
+                proveedor_id = ?,
+                categoria_id = ?
+            WHERE id = ?
+        ");
 
-}{
+            if (! $stmt) {
+                throw new \Exception("Error preparando el query SQL: " . self::$db->error);
+            }
+
+            // Tipos: s = string, d = double, i = integer
+            $stmt->bind_param(
+                "ssdssiiiiiii",
+                $this->codigo_sku,      // s → texto
+                $this->nombre_producto, // s → texto
+                $this->precio,          // d → decimal
+                $this->imagen,          // s → texto
+                $this->descripcion,     // s → texto
+                $this->existencia,      // i → entero
+                $this->stock_minimo,    // i → entero
+                $this->is_active,       // i → tinyint
+                $this->is_deleted,      // i → tinyint
+                $this->proveedor_id,    // i → entero
+                $this->categoria_id,    // i → entero
+                $this->id               // i → entero (WHERE id=?)
+            );
+
+            if (! $stmt->execute()) {
+                $this->addError('system', 'Error al actualizar el registro en la base de datos.');
+                return false;
+            }
+
+            $stmt->close();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("[ERROR SISTEMA] " . $e->getMessage());
+            $this->addError('system', 'Ocurrió un error interno al actualizar el producto.');
+            return false;
+        }
+    }
 
 }

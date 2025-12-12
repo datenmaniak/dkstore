@@ -21,10 +21,12 @@
 
     includeTemplate('header');
 
-    $images_folder   = '../../uploads/';
+    // $images_folder   = '../../uploads/';
+    $images_folder   = PATH_UPLOADS;
     $no_image        = '../../assets/img/no-image.jpg';
     $imagen_mostrar  = $no_image; // Por defecto
     $mostrar_spinner = false;
+    $imgNewName      = $no_image;
 
     // Productos::setDB($db); // ← IMPORTANTE: Configura DB en la clase
 
@@ -45,30 +47,31 @@
     // Ejecutar despues que se envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+        // debugResult($producto, false);
+
         // Guardar en sesión ANTES de validar
         $_SESSION['form_data'] = $_POST;
 
-        // asigna los atributos
-        $args               = [];
-        $args['codigo_sku'] = $_POST['codigo'] ?? '';
+        // // asigna los atributos
+        // $args = $_POST;
 
-        $producto->syncData($args);
+        // Data binding: asignar valores del formulario al objeto
+        // Binding directo desde el formulario
+        $producto->dataBinding($_POST);
+
+        // $args['codigo_sku']      = $_POST['codigo_sku'] ?? '';
+        // $args['nombre_producto'] = $_POST['nombre_producto'] ?? '';
+        // $args['precio']          = $_POST['precio'] ?? 0;
+
+        // $producto->nombre = $_POST['nombre'] ?? null;
+        // $producto->precio = $_POST['precio'] ?? null;
+        // $producto->imagen = $_POST['imagen'] ?? null;
+
+        // $producto->dataBinding($args);
+        // debugResult($producto, false);
 
         // BEGIN procesar imagen
         // if ($validacion['valida']) {
-        if ($_FILES['imagen']['tmp_name']) {
-
-            $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
-            $imgManager = new ImageManager(Driver::class);
-            $img        = $imgManager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
-
-                                              // actualiza la referencia de la imagen
-            $producto->setImage($imgNewName); // if (! $_FILES['imagen']) {
-                                              //     $imagen_mostrar = $_FILES['tmp_name'];
-                                              //     debugResult($imagen_mostrar, false);
-                                              // }
-            $imagen_mostrar = $imgNewName;
-        }
 
         // 2. Validar campos
         // $errores = $producto->validateEntry();
@@ -104,21 +107,86 @@
         //     }
         // }
 
-    }
-    // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
-    $hay_imagen_nueva = isset($_FILES['imagen']) &&
-    $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
-    ! empty($_FILES['imagen']['name']);
+        // error_log("DESPUÉS CONSTRUCTOR: " . $producto->nombre_producto);
+        // error_log(print_r($producto, true));
 
-    if ($hay_imagen_nueva) {
-        // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
-        $imagen_mostrar  = $imgNewName;
-        $mostrar_spinner = true;
-    } else {
-        // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
-        $imagen_mostrar  = $no_image;
-        $mostrar_spinner = false;
+        // 2. Validar entradas (errores que el usuario debe corregir)
+        $erroresValid = $producto->validateEntry();
+
+        error_log("=== DESPUÉS validateEntry + sanitize ===");
+        error_log(print_r($producto, true));
+
+        // 3. Sanitizar entradas (limpieza y detección de intentos sospechosos)
+        $sanOk = $producto->sanitize();
+
+        error_log("DESPUÉS SANITIZE: " . $producto->nombre_producto);
+        error_log(print_r($producto, true));
+
+        $erroresSan = $producto->getErrores('sanitize');
+
+        // $erroresValid = $producto->validarDescripcion();
+
+        // 4. Consolidar errores de validación + sanitización
+        $errores = array_merge($erroresValid, $erroresSan);
+
+        // 5. Si todo OK, procesar data
+        if (empty($errores) && $sanOk) {
+
+            // Detectar si realmente se subió una imagen nueva
+            $hay_nueva_imagen = ! empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
+
+            /*  if ($_FILES['imagen']['tmp_name']) { */
+
+            if ($hay_nueva_imagen) {
+
+                // Guardar imagen anterior
+                $imagen_anterior = $producto->imagen;
+
+                // Ruta para eliminar imagen anterior SOLO si existe
+                $ruta_imagen_anterior = $images_folder . $imagen_anterior;
+
+                $imgNewName = generarNombreUnico($_FILES['imagen']['name']);
+                $imgManager = new ImageManager(Driver::class);
+                $img        = $imgManager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
+
+                /*  actualiza la referencia de la imagen */
+                $producto->setImage($imgNewName, $ruta_imagen_anterior);
+
+                // Actualiza / almacena la referencia de la imagen en el servidor
+                $img->save(PATH_UPLOADS . $imgNewName);
+            }
+
+            // Intentar guardar en BD
+            if ($producto->actualizarRecord()) {
+                header('Location: /admin?result=2');
+                exit;
+            } else {
+                // Acumular errores de sistema si falla el guardado
+                $erroresSys = $producto->getErrores('system');
+                $errores    = array_merge($errores, $erroresSys);
+            }
+        }
+
+        // Imagen preview para errores
+        if (! empty($_FILES['imagen']['name'])) {
+            $imagen_mostrar = $images_folder . $_FILES['imagen']['name'];
+        }
+
     }
+    // // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
+    // $hay_imagen_nueva = isset($_FILES['imagen']) &&
+    // $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
+    // ! empty($_FILES['imagen']['name']);
+
+    // if ($hay_imagen_nueva) {
+    //     // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
+    //     $imagen_mostrar  = $imgNewName;
+    //     $mostrar_spinner = true;
+    // } else {
+    //     // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
+    //     $imagen_mostrar  = $no_image;
+    //     $mostrar_spinner = false;
+    // }
 ?>
 
 
@@ -160,6 +228,8 @@
                 'sellers_list'    => $sellers_list,
                 'imagen_mostrar'  => $imagen_mostrar,
                 'mostrar_spinner' => $mostrar_spinner,
+                'imgNewName'      => $imgNewName,
+                'images_folder'   => $images_folder,
             ]);
 
         ?>

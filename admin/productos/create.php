@@ -2,7 +2,6 @@
     /*
   create.php
   -- agregar productos
-
    */
     // require_once __DIR__ . '/../../includes/app.php';
     require_once dirname(__DIR__, 2) . '/includes/app.php';
@@ -118,6 +117,7 @@
     $hay_imagen_nueva = isset($_FILES['imagen']) &&
     $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
     ! empty($_FILES['imagen']['name']);
+    $mostrar_spinner = true;
 
     if ($hay_imagen_nueva) {
         // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
@@ -178,6 +178,7 @@
 
 
     </form>
+
 
 
 

@@ -244,7 +244,7 @@
 
     foreach ($templates_to_load as $tpl) {
         if (! includeTemplate($tpl)) {
-            showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($tpl));
+            showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($tpl), false);
         }
     }
 

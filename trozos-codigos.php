@@ -192,6 +192,40 @@ echo "Error: " . $validacion['error'];
 <?php endif; ?>
 
 // end
+
+<!-- // BEGIN imagen del producto 12.12.25 11:06 -->
+<div class="product-image">
+    <label>Imagen (100 kb. max):
+        <input type="file" id="imagenUpload" name="imagen" accept="image/*">
+    </label>
+    <!-- Renderizado condicional -->
+    <?php if ($mostrar_spinner): ?>
+    <!-- Overlay con spinner tipo barra -->
+    <div class="overlay-spinner">
+        <div class="bar-spinner">
+            <span class="spinner-message">Procesando imagen...</span>
+            <div class="spinner-bar"></div>
+        </div>
+    </div>
+    <?php else: ?>
+    <!-- Imagen por defecto -->
+    <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto">
+    <?php endif; ?>
+
+
+    <!-- Contenedor para la vista previa (siempre presente) -->
+    <div id="previewContainer" class="preview">
+        <img id="imagenPreview" class="img-prod" alt="Vista previa" style="display:none; ">
+
+        <button type="button" id="previewClear" class="btn-primary  btn-right" style="display:none; ">Quitar
+            imagen</button>
+    </div>
+    <?php debugResult($mostrar_spinner, false); ?>
+
+</div>
+<!-- // END imagen del producto -->
+
+
 <div class="product-image">
     <label>Imagen (100 kb. max):
         <!-- <input type="file" name="imagen" accept="image/*"> -->
@@ -212,7 +246,7 @@ echo "Error: " . $validacion['error'];
 </div>
 
 // end
-<!--                                                                                                                                  <?php else: ?>
+<!--                                                                                                                                      <?php else: ?>
             <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto"> -->
 
 
