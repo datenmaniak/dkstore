@@ -64,8 +64,8 @@ class Productos
         }
 
         // Normalizar checkbox
-        $this->is_active  = isset($args['is_active']) ? 1 : 0;
-        $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
+        // $this->is_active  = isset($args['is_active']) ? 1 : 0;
+        // $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
 
         // Normalizar numéricos
         $this->precio       = isset($args['precio']) ? (float) $args['precio'] : 0.0;
@@ -145,7 +145,7 @@ class Productos
     //     nombre_producto,
     // precio, imagen, descripcion,
     // existencia, stock_minimo,
-    // activo, eliminado,
+    // activo, is_deleted,
     // proveedor_id, categoria_id )
     // VALUES ('$this->codigo_sku', '$this->nombre_producto',
     // '$this->precio', '$this->imagen', '$this->descripcion',
@@ -185,7 +185,7 @@ class Productos
             $stmt = self::$db->prepare("
             INSERT INTO productos (
             codigo_sku, nombre_producto, precio, imagen, descripcion,
-            existencia, stock_minimo, activo, eliminado,
+            existencia, stock_minimo, is_active, is_deleted,
             proveedor_id, categoria_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");
@@ -195,7 +195,7 @@ class Productos
             // }
 
             // $activo    = $this->is_active ? 1 : 0;
-            // $eliminado = $this->is_deleted ? 1 : 0;
+            // $is_deleted = $this->is_deleted ? 1 : 0;
 
             // Tipos: s = string, d = double, i = integer
             $stmt->bind_param(
@@ -322,9 +322,6 @@ class Productos
         // $this->validarRegex("precio", (string) $this->precio);
         // $this->validarRegex("existencia", (string) $this->existencia);
         // $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
-
-        // $this->is_active  = isset($args['is_active']) ? '1' : '0';
-        // $this->is_deleted = isset($args['is_deleted']) ? '1' : '0';
 
         foreach (get_object_vars($this) as $prop => $valor) {
             if (isset($this->sanitizers[$prop]) && $valor !== null) {
@@ -490,7 +487,7 @@ class Productos
     // listar todos los productos
     public static function getAll()
     {
-        $sql = "SELECT * from productos WHERE eliminado = 0";
+        $sql = "SELECT * from productos WHERE is_deleted = 0 ORDER BY updated_at DESC;";
 
         $listing = self::consultaSQL($sql);
 
@@ -501,7 +498,7 @@ class Productos
     {
         // Busca un registro por su ID
 
-        $sql = "SELECT * FROM productos WHERE id = $id AND eliminado = 0";
+        $sql = "SELECT * FROM productos WHERE id = $id AND is_deleted = 0";
 
         $found = self::consultaSQL($sql);
 
@@ -542,14 +539,37 @@ class Productos
         return $objeto;
     }
 
+    // public function dataBinding($args = [])
+    // {
+    //     foreach ($args as $key => $value) {
+    //         if (property_exists($this, $key) && ! is_null($value)) {
+    //             $this->$key = $value;
+    //         }
+    //     }
+    // }
+
     public function dataBinding($args = [])
     {
+        // Asignación genérica
         foreach ($args as $key => $value) {
             if (property_exists($this, $key) && ! is_null($value)) {
                 $this->$key = $value;
             }
         }
+
+        // Normalización explícita de checkboxes
+        $this->is_active  = isset($args['is_active']) ? 1 : 0;
+        $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
+        //  **** Para futuras implementacion, considerar estos modelos. ***
+        // Radio Buttons
+        // $this->tipo = $args['tipo'] ?? 'default';
+        // Campos numericos
+        // $this->precio = isset($args['precio']) ? (float)$args['precio'] : 0.0;
+        // $this->stock  = isset($args['stock']) ? (int)$args['stock'] : 0;
+        // *****************************
+
     }
+
     public function actualizarRecord(): bool
     {
         try {
@@ -562,8 +582,8 @@ class Productos
                 descripcion = ?,
                 existencia = ?,
                 stock_minimo = ?,
-                activo = ?,
-                eliminado = ?,
+                is_active = ?,
+                is_deleted = ?,
                 proveedor_id = ?,
                 categoria_id = ?
             WHERE id = ?
