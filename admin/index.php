@@ -59,7 +59,7 @@
             }
 
             // 3. Marcar el producto como eliminado (soft delete) - Consulta preparada
-            $stmt = $db->prepare("UPDATE productos SET eliminado = 1 WHERE id = ?");
+            $stmt = $db->prepare("UPDATE productos SET is_deleted = 1 WHERE id = ? LIMIT 1");
             $stmt->bind_param("i", $id);
 
             if ($stmt->execute()) {
@@ -185,15 +185,15 @@
                             <td><?php echo $item->stock_minimo; ?> </td>
                             <td><?php echo $item->existencia; ?> </td>
 
-                            <!-- // TODO: Work here -->
                             <td class="text-center active-in-catalog">
-                                <span class="status-badge
-                                <?php echo $item->is_active ? 'active' : 'inactive'; ?>">
+                                <span
+                                    class="status-badge                                                                                                                                                                                                                                                                                                                                                                                                  <?php echo (int) $item->is_active === 1 ? 'active' : 'inactive'; ?>">
                                     <i
-                                        class="<?php echo $item->is_active ? 'ri-checkbox-line me-1' : 'ri-close-line me-1'; ?>"></i>
-                                    <?php echo $item->is_active ? 'Activo' : 'Inactivo'; ?>
+                                        class="<?php echo (int) $item->is_active === 1 ? 'ri-checkbox-line me-1' : 'ri-close-line me-1'; ?>"></i>
+                                    <?php echo (int) $item->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
                                 </span>
                             </td>
+
 
 
                             <td class="actions-p">

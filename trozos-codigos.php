@@ -1,3 +1,45 @@
+<!-- formulario: 12.12.25, 18h00 -->
+
+
+<fieldset>
+    <legend>Visible en el catálogo </legend>
+    <label for="is_active" class="form-check form-switch">
+
+        <input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+            <?php echo (int) $producto->is_active === 1 ? 'checked' : ''; ?>>
+        <span id="estado-notificacion" class="form-check-label">
+            <?php echo (int) $producto->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
+        </span>
+
+    </label>
+
+</fieldset>
+
+
+<?php $activo = (int) ($producto->is_active ?? 0); ?>
+<input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+    <?php echo($activo ?? '0') === '1' ? 'checked' : '' ?>>
+<span id="estado-notificacion" class="form-check-label">
+    <?php echo($activo ?? '0') === '1' ? 'activo' : 'inactivo' ?>
+</span>
+?>
+
+<td class="text-center active-in-catalog">
+    <span class="status-badge
+                                <?php echo $item->is_active ? 'active' : 'inactive'; ?>">
+        <i class="<?php echo $item->is_active ? 'ri-checkbox-line me-1' : 'ri-close-line me-1'; ?>"></i>
+        <?php echo $item->is_active ? 'Activo' : 'Inactivo'; ?>
+    </span>
+</td>
+
+
+<input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+    <?php echo (int) $producto->is_active === 1 ? 'checked' : ''; ?>>
+<span id="estado-notificacion" class="form-check-label">
+    <?php echo (int) $producto->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
+</span>
+
+
 <?php
 
 < ! -- <  ? phpforeach($errores as $error) : ?>
@@ -246,7 +288,7 @@ echo "Error: " . $validacion['error'];
 </div>
 
 // end
-<!--                                                                                                                                      <?php else: ?>
+<!--                                                                                                                                          <?php else: ?>
             <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto"> -->
 
 

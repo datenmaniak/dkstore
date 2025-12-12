@@ -73,6 +73,8 @@
         // 4. Consolidar errores de validación + sanitización
         $errores = array_merge($erroresValid, $erroresSan);
 
+        // debugResult($producto->is_active, true);
+
         // 5. Si todo OK, procesar data
         if (empty($errores) && $sanOk) {
 

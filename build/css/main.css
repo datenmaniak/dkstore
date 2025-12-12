@@ -756,7 +756,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -781,7 +781,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -806,7 +806,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -831,7 +831,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -856,7 +856,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -880,7 +880,7 @@ header {
   background-color: transparent;
   color: #7700F0;
   border: 1px solid #7700F0;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
   text-align: center;
@@ -1639,7 +1639,7 @@ header {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -1757,7 +1757,7 @@ header {
   background-color: transparent;
   color: #7700F0;
   border: 1px solid #7700F0;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
   text-align: center;
@@ -3669,7 +3669,7 @@ textarea {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;

@@ -19,7 +19,7 @@
     $db = conectDB();
 
     // get the records.
-    $query = "SELECT * FROM productos WHERE eliminado = 0 AND activo = 1";
+    $query = "SELECT * FROM productos WHERE is_deleted = 0 AND is_active = 1 ORDER BY created_at DESC;";
     // Excluye los que tienen un soft-deleted y aquellos que ha sido marcado
     // para mostrarse en el catálogo.
 
