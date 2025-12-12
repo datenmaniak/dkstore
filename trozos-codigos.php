@@ -212,7 +212,7 @@ echo "Error: " . $validacion['error'];
 </div>
 
 // end
-<!--                                                                      <?php else: ?>
+<!--                                                                                                                                  <?php else: ?>
             <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto"> -->
 
 
@@ -249,3 +249,317 @@ if (includeTemplate('product-form')): ?>
     <a href="/" class="btn-secondary btn-block-20">Salir</a>
 </div>
 <?php endif; ?>
+
+
+
+<?php includeTemplate('footer');
+    includeTemplate('scripts');
+includeTemplate('end-page'); ?>
+
+
+<?php
+    // Inicializaciones seguras para evitar errores de variables indefinidas
+    $mostrar_spinner = $mostrar_spinner ?? false;
+    $producto        = $producto ?? new \dkstore\Productos();
+    $sellers_list    = $sellers_list ?? [];
+    $categories_list = $categories_list ?? [];
+?>
+
+//BEGIN - carga el item en el formulario
+<?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
+<option value="<?php echo $seller['id'] ?>"<?php echo $producto->proveedor_id == $seller['id'] ? 'selected' : '' ?>>
+    <?php echo htmlspecialchars($seller['empresa']) ?>
+</option>
+<?php endwhile; ?>
+
+<?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
+<option value="<?php echo $category['id'] ?>"
+    <?php echo $producto->categoria_id == $category['id'] ? 'selected' : '' ?>>
+    <?php echo htmlspecialchars($category['categoria'] . " - " . $category['descripcion']) ?>
+</option>
+<?php endwhile; ?>
+
+
+// BEGIN Codigo del formulario de update.php
+<label>Código (SKU):
+    <input type="text" name="codigo_sku" value="<?php echo $producto['codigo_sku']; ?>">
+</label>
+<label>Nombre del producto:
+    <input type="text" name="nombre_producto" value="<?php echo $producto['nombre_producto']; ?>">
+</label>
+<label>Precio:
+    <input type="number" step="0.01" name="precio" value="<?php echo $producto['precio']; ?>">
+</label>
+<label>Imagen (100 kb. max):
+    <input type="file" name="imagen" accept="image/*">
+</label>
+
+<!-- imagen -->
+<img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="">
+
+
+<label>Descripción:
+    <textarea name="descripcion"><?php echo $producto['descripcion']; ?></textarea>
+</label>
+<label>Existencia:
+    <input type="number" name="existencia" value="<?php echo $producto['existencia']; ?>">
+</label>
+<label>Stock mínimo:
+    <input type="number" name="stock_minimo" value="<?php echo $producto['stock_minimo']; ?>">
+</label>
+<fieldset>
+    <legend>Proveedor:</legend>
+    <select name="proveedor_id" id="">
+        <option value="">- Elija el proveedor - </option>
+        <?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
+        <option<?php echo $producto['proveedor_id'] === $seller['id'] ? 'selected' : ''; ?>
+            value="<?php echo $seller['id']; ?>">
+            <?php echo $seller['empresa'] . ' - ' . $seller['contact_name']; ?>
+            </option>
+            <?php endwhile; ?>
+            <!-- <option value="1">Global PC</option>
+                <option value="2">datenmaniak</option> -->
+    </select>
+</fieldset>
+<fieldset>
+    <legend>Categoría:</legend>
+    <select name="categoria_id" id="">
+        <option value="">- Elija categoría -</option>
+        <?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
+        <option<?php echo $producto['categoria_id'] === $category['id'] ? 'selected' : ''; ?>
+            value="<?php echo $category['id']; ?>">
+            <?php echo $category['categoria'] . ' - ' . $category['descripcion']; ?>
+            </option>
+            <?php endwhile; ?>
+    </select>
+</fieldset>
+<fieldset>
+    <legend>Visible en el catálogo </legend>
+    <label for="activo" class="form-check form-switch">
+        <input type="checkbox" id="activo" name="activo" class="form-check-input" value="1"
+            <?php echo($producto['activo'] == 1) ? 'checked' : ''; ?>>
+        <span id="estado-texto" class="form-check-label">
+            <?php echo($producto['activo'] == 1) ? ' activo' : ' inactivo'; ?>
+        </span>
+    </label>
+
+</fieldset>
+
+// END
+
+//begin : VIEJO METODO PARA VALIDAR FOTO EN update.php_check_syntax
+/* // TODO: aqui procesa la imagen del producto */
+// Detectar si realmente se subió una imagen nueva
+$hay_nueva_imagen = ! empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK;
+
+$imgNewName = '';
+if ($hay_nueva_imagen) {
+$validacion = validarImagen($_FILES['imagen']);
+
+if (! $validacion['valida']) {
+$errores[] = 'Error: ' . $validacion['error'];
+} else {
+// Solo aquí procesamos la imagen NUEVA y eliminamos la anterior
+$imgNewName = generarNombreUnico($_FILES['imagen']['name']);
+
+// Guardar imagen anterior
+$imagen_anterior = $prod['imagen'];
+
+// Ruta para eliminar imagen anterior SOLO si existe
+$ruta_imagen_anterior = $images_folder . $imagen_anterior;
+
+// mover archivo temporal a directorio de 'uploads'
+if (move_uploaded_file($_FILES['imagen']['tmp_name'], $images_folder . $imgNewName)) {
+
+// if (!empty($producto['imagen']) && file_exists($ruta_imagen_anterior)) {
+// unlink($ruta_imagen_anterior);
+// }
+
+if (
+! empty($imagen_anterior) &&
+$imagen_anterior !== $imgNewName && file_exists($ruta_imagen_anterior)
+) {
+unlink($ruta_imagen_anterior);
+}
+
+// Aquí actualizarías SQL con: imagen = '$imgNewName'
+$update_imagen = true;
+$producto['imagen'] = $imgNewName; // aqui se guarda para SQL
+
+// Ahora recalculamos la ruta para mostrar en el formulario
+$imagen_mostrar = $images_folder . $producto['imagen'];
+} else {
+$errores[] = 'Error al mover la imagen al servidor';
+}
+}
+}
+
+//END
+
+
+// viene de: create.php , Errores
+<?php if ($errores): ?>
+<div class="notification-bar error medium center ">
+    <span class="icon">⚠️</span>
+    <div class="message">
+        <ul>
+            <?php foreach ($errores as $error): ?>
+            <li><?php echo htmlspecialchars($error) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <span class="close-btn">
+        <img src="/assets/icons/close.svg" width="40px" height="40px" alt="">
+        <!-- <i class="ri-close-large-line"></i></span> -->
+</div>
+<?php endif; ?>
+
+// TODO: agregar a formulario cuando este concluido el modulo create.php
+<!-- // REMOVE SUSPENDIDO TEMPORALMENTE-->
+<!-- <fieldset>
+    <legend>Proveedor:</legend>
+    <select name="proveedor_id" id="">
+        <option value="">- Elija el proveedor - </option>
+        // BEGIN
+        <?php if ($sellers_list && $sellers_list instanceof mysqli_result): ?>
+            <?php while ($seller = mysqli_fetch_assoc($sellers_list)): ?>
+                <option value="<?php echo $seller['id'] ?>"
+                <?php echo($producto->proveedor_id ?? '') == $seller['id'] ? 'selected' : '' ?>>
+                <?php echo sanitizeHTML($seller['empresa']) ?>
+            </option>
+            <?php endwhile; ?>
+            <?php endif; ?>
+
+            //END
+        </select>
+    </fieldset> -->
+<!-- // REMOVE SUSPENDIDO TEMPORALMENTE-->
+<!-- <fieldset>
+    <legend>Categoría:</legend>
+    <select name="categoria_id" id="">
+        <option value="">- Elija categoría -</option>
+        // begin
+        <?php if ($categories_list && $categories_list instanceof mysqli_result): ?>
+        <?php while ($category = mysqli_fetch_assoc($categories_list)): ?>
+        <option value="<?php echo $category['id'] ?>"
+            <?php echo($producto->categoria_id ?? '') == $category['id'] ? 'selected' : '' ?>>
+            <?php echo sanitizeHTML($category['categoria'] . " - " . $category['descripcion']) ?>
+        </option>
+        <?php endwhile; ?>
+        <?php endif; ?>
+
+        // end
+    </select>
+</fieldset> -->
+//END
+
+<input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+    <?php echo($producto->is_active == 1) ? 'checked' : '' ?>>
+
+<span id="estado-notificacion" class="form-check-label">
+    <?php echo($producto->is_active == 1) ? ' activo' : ' inactivo'; ?>
+</span>
+
+
+//TODO formulario actual create.php
+<form method="POST" class="form-productos" enctype="multipart/form-data">
+
+    <?php
+
+        if (! includeTemplate($form_template)) {
+            showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($form_template));
+        }
+    ?>
+    <div class="send-form">
+        <button type="submit" class="btn-primary btn-block-20 btn-left">Enviar</button>
+    </div>
+
+</form>
+
+
+
+<form method="POST" class="form-productos" enctype="multipart/form-data" style="border: 5px solid green;">
+
+    <!-- DEBUG: Confirma datos PHP -->
+    <div style="background:yellow;padding:10px;">
+        DEBUG: nombre_producto = "<?php echo htmlspecialchars($producto->nombre_producto) ?>"
+    </div>
+
+    <?php includeTemplate('product-form'); ?>
+
+    <div class="send-form">
+        <button type="submit" class="btn-primary btn-block-20 btn-left">ENVIAR SIN JS</button>
+    </div>
+</form>
+
+// create.php
+
+<!-- Renderizado condicional existente -->
+<?php if ($mostrar_spinner): ?>
+<div class="bar-spinner" id="barSpinner">
+    <span class="spinner-message">Imagen no procesada. Reintente de nuevo...</span>
+    <div class="spinner-bar"></div>
+</div>
+<?php endif; ?>
+
+// Validar y sanitizar → la clase maneja errores internamente
+// $producto->sanitize();
+
+// // Solo consultas los errores centralizados
+// $errores = Productos::getErrores();
+//todo:
+// if (! $producto->sanitize()) {
+// // $errores = array_merge($errores, $producto->getErrores());
+// $errores = array_merge($errores, $producto::getErrores());
+// } else {
+// unset($_SESSION['form_data']); // Limpiar al éxito
+// }
+// TODO:
+
+// 4. Si todo OK, procesar data
+// if (empty($errores)) {
+
+// // nuevo modo de almacenar en el servidor
+// $img->save(PATH_UPLOADS . $imgNewName);
+// // $img->save($images_folder . $imgNewName);
+
+// if ($producto->guardarRecord()) {
+// // header('Location: /admin/productos/');
+// header('Location: /admin?result=1');
+// exit;
+// }
+// }
+
+
+
+<form method="POST" class="form-productos" enctype="multipart/form-data">
+
+    <?php
+        // ✅ SEGURO + RÁPIDO - Solo 3 variables
+        $GLOBALS['producto']        = $producto;
+        $GLOBALS['sellers_list']    = $sellers_list;
+        $GLOBALS['categories_list'] = $categories_list;
+
+        includeTemplate('product-form');
+        // if (! includeTemplate($form_template)) {
+        //     showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($form_template));
+        // }
+    ?>
+
+    <div class="send-form">
+        <button type="submit" class="btn-primary btn-block-20 btn-left">Enviar</button>
+    </div>
+
+</form>
+
+<?php
+    // ✅ SEGURO + RÁPIDO - Solo 3 variables
+    $GLOBALS['producto']        = $producto;
+    $GLOBALS['sellers_list']    = $sellers_list;
+    $GLOBALS['categories_list'] = $categories_list;
+
+    includeTemplate('product-form');
+    // if (! includeTemplate($form_template)) {
+    //     showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($form_template));
+// }
+?>

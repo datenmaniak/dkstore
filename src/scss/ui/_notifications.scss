@@ -53,6 +53,37 @@ $info-color: #3498db;
             opacity: 1;
         }
     }
+
+    &.hide {
+
+        // Duración fija de 3 segundos
+
+        animation: show-hide 3s forwards;
+    }
+
+
+}
+
+@keyframes show-hide {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
 }
 
 // Mixin de tamaño (solo tipografía y padding)

@@ -76,7 +76,6 @@
     }
 
     // gestion/presentacion de la imagen
-    $images_folder  = '../../uploads/';
     $no_image       = '../../assets/img/no-image.jpg';
     $imagen_mostrar = $no_image; // Por defecto
 
@@ -97,16 +96,19 @@
 
             switch ($result) {
                 case 1:
-                    echo '<p  class="notification-bar success medium center">Producto registrado correctamente</p>';
+                    echo '<p  class="notification-bar success medium center hide">Producto registrado correctamente</p>';
                     break;
                 case 2:
-                    echo '<p  class="notification-bar success medium center">Producto actualizado correctamente</p>';
+                    echo '<p  class="notification-bar success medium center hide">Producto actualizado correctamente</p>';
                     break;
                 case 3:
-                    echo '<p  class="notification-bar warning medium center">Producto eliminado correctamente</p>';
+                    echo '<p  class="notification-bar warning medium center hide">Producto eliminado correctamente</p>';
+                    break;
+                case 9:
+                    echo '<p  class="notification-bar warning medium center hide">Error: Notifique al administrador de sistemas</p>';
                     break;
                 default:
-                    echo '<p  class="notification-bar warning medium center">Acción desconocida o no registrada</p>';
+                    echo '<p  class="notification-bar warning medium center hide">Acción desconocida o no registrada</p>';
 
                     break;
             }
@@ -237,11 +239,13 @@
 
 
 <?php
-    includeTemplate('footer');
-    includeTemplate('scripts');
-    includeTemplate('end-page');
 
-    // cerrar la conexion a la DB
-    mysqli_close($db);
+    $templates_to_load = ['footer', 'scripts', 'end-page'];
+
+    foreach ($templates_to_load as $tpl) {
+        if (! includeTemplate($tpl)) {
+            showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($tpl));
+        }
+    }
 
 ?>

@@ -1,6 +1,11 @@
 <?php
+    /*
+  create.php
+  -- agregar productos
 
-    require_once __DIR__ . '/../../includes/app.php';
+   */
+    // require_once __DIR__ . '/../../includes/app.php';
+    require_once dirname(__DIR__, 2) . '/includes/app.php';
 
     use dkstore\Productos;
     use Intervention\Image\Drivers\Gd\Driver;
@@ -8,21 +13,22 @@
 
     requireRole('admin'); // obliga a ser admin - requiere acceso como admin
 
-    // Bases de datos
-    $db = conectDB();
+    // // includeTemplate('header');
+
+    if (! includeTemplate('header')) {
+        showNotification("Plantilla no existe o no autorizada: " . sanitizeHTML('header'), true);
+    }
+
+    /* // Bases de datos */
+    /* // $db = conectDB(); */
     Productos::setDB($db); // ← IMPORTANTE: Configura DB en la clase
 
-    // Proveedores
-    $sellers      = "SELECT * FROM proveedores";
-    $sellers_list = mysqli_query($db, $sellers);
-
-    // Categorias
-    $categories      = "SELECT * FROM categorias";
-    $categories_list = mysqli_query($db, $categories);
+    // Listas: Proveedores y Categorias de Productos
+    $sellers_list    = mysqli_query($db, "SELECT * FROM proveedores") ?: die(mysqli_error($db));
+    $categories_list = mysqli_query($db, "SELECT * FROM categorias") ?: die(mysqli_error($db));
 
     // template to use here
-    $template = 'product-form';
-    // $template_path = PATH_TEMPLATES . '/' . basename($template);
+    $form_template = 'product-form';
 
     // ubicacion de la imagenes
     $images_folder  = '../../uploads/';
@@ -30,10 +36,14 @@
     $imagen_mostrar = $no_image; // Por defecto
 
     /* // instanciar producto */
-    $producto = new Productos(); // ← SIEMPRE existe
+    $producto = new Productos();
 
-    // Arreglo con mensajes de errores
-    $errores = Productos::getErrores();
+    $producto->proveedor_id = 1;
+    $producto->categoria_id = 1;
+
+    // // Arreglo con mensajes de errores
+    // $errores = Productos::getErrores();
+    $errores = [];
 
     // Ejecutar despues que se envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,6 +51,7 @@
         // Guardar en sesión ANTES de validar
         $_SESSION['form_data'] = $_POST;
 
+        // 1. Instanciar el objeto con datos del formulario
         $producto = new Productos($_POST);
 
         // BEGIN procesar imagen
@@ -53,39 +64,48 @@
 
                                               // actualiza la referencia de la imagen
             $producto->setImage($imgNewName); // if (! $_FILES['imagen']) {
-                                              //     $imagen_mostrar = $_FILES['tmp_name'];
-                                              //     debugResult($imagen_mostrar, false);
+                                              // $imagen_mostrar = $_FILES['tmp_name'];
+                                              // debugResult($imagen_mostrar, false);
                                               // }
             $imagen_mostrar = $imgNewName;
         }
 
-        // 2. Validar campos
-        $errores = $producto->validateEntry();
+        // error_log("DESPUÉS CONSTRUCTOR: " . $producto->nombre_producto);
+        // error_log(print_r($producto, true));
 
-        // Validar y sanitizar → la clase maneja errores internamente
-        // $producto->sanitize();
+        // 2. Validar entradas (errores que el usuario debe corregir)
+        $erroresValid = $producto->validateEntry();
 
-        // // Solo consultas los errores centralizados
-        // $errores = Productos::getErrores();
+        error_log("=== DESPUÉS validateEntry + sanitize ===");
+        error_log(print_r($producto, true));
 
-        if (! $producto->sanitize()) {
-            // $errores = array_merge($errores, $producto->getErrores());
-            $errores = array_merge($errores, $producto::getErrores());
-        } else {
-            unset($_SESSION['form_data']); // Limpiar al éxito
-        }
+        // 3. Sanitizar entradas (limpieza y detección de intentos sospechosos)
+        $sanOk = $producto->sanitize();
 
-        // 4. Si todo OK, procesar data
-        if (empty($errores)) {
+        error_log("DESPUÉS SANITIZE: " . $producto->nombre_producto);
+        error_log(print_r($producto, true));
 
-            // nuevo modo de almacenar en el servidor
+        $erroresSan = $producto->getErrores('sanitize');
+
+        // $erroresValid = $producto->validarDescripcion();
+
+        // 4. Consolidar errores de validación + sanitización
+        $errores = array_merge($erroresValid, $erroresSan);
+
+        // 5. Si todo OK, procesar data
+        if (empty($errores) && $sanOk) {
+
+            // Guardar imagen en servidor
             $img->save(PATH_UPLOADS . $imgNewName);
-            // $img->save($images_folder . $imgNewName);
 
+            // Intentar guardar en BD
             if ($producto->guardarRecord()) {
-                // header('Location: /admin/productos/');
                 header('Location: /admin?result=1');
                 exit;
+            } else {
+                // Acumular errores de sistema si falla el guardado
+                $erroresSys = $producto->getErrores('system');
+                $errores    = array_merge($errores, $erroresSys);
             }
         }
 
@@ -94,8 +114,6 @@
             $imagen_mostrar = $images_folder . $_FILES['imagen']['name'];
         }
     }
-
-    includeTemplate('header');
 
     $hay_imagen_nueva = isset($_FILES['imagen']) &&
     $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
@@ -120,34 +138,59 @@
 
     <a href="/admin/index.php" class="btn-secondary btn-block-10 btn-left">Salir</a>
 
-    <?php if ($errores): ?>
+    <?php if (! empty($errores)): ?>
     <div class="notification-bar error medium center">
         <span class="icon">⚠️</span>
         <div class="message">
             <ul>
                 <?php foreach ($errores as $error): ?>
-                <li><?php echo htmlspecialchars($error) ?></li>
+                <li><?php echo sanitizeHTML($error) ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
         <span class="close-btn">
             <img src="/assets/icons/close.svg" width="40px" height="40px" alt="">
-            <!-- <i class="ri-close-large-line"></i></span> -->
+        </span>
     </div>
     <?php endif; ?>
 
 
     <form method="POST" class="form-productos" enctype="multipart/form-data">
-        <!-- action="/admin/productos/create.php"> -->
 
-        <?php includeTemplate('product-form'); ?>
+        <?php
 
-        <button type="submit" class="btn-primary btn-block-30 btn-right">Enviar</button>
+            // Incluir formulario con variables necesarias
+            $is_form_ok = includeForm('form-productos', [
+                'producto'        => $producto,
+                'errores'         => $errores,
+                'categories_list' => $categories_list,
+                'sellers_list'    => $sellers_list,
+                'imagen_mostrar'  => $imagen_mostrar,
+                'mostrar_spinner' => $mostrar_spinner,
+            ]);
+
+        ?>
+        <?php if ($is_form_ok): ?>
+        <button type="submit" class="btn-primary btn-block-20 btn-left">Enviar</button>
+        <?php else: ?>
+        <?php showNotification("Form not found: " . htmlspecialchars($tpl), false); ?>
+        <?php endif; ?>
 
 
     </form>
+
+
+
 </main>
 
-<?php includeTemplate('footer');
-includeTemplate('scripts');
-includeTemplate('end-page'); ?>
+<?php
+
+    $templates_to_load = ['footer', 'scripts', 'end-page'];
+
+    foreach ($templates_to_load as $tpl) {
+        if (! includeTemplate($tpl)) {
+            showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($tpl), false);
+        }
+    }
+
+?>

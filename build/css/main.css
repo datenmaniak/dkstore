@@ -1091,6 +1091,24 @@ header {
     datenmaniak@outlook.com
 
 */
+@keyframes show-hide {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -1132,6 +1150,9 @@ header {
 .notification-bar.success .close-btn:hover {
   opacity: 1;
 }
+.notification-bar.success.hide {
+  animation: show-hide 3s forwards;
+}
 .notification-bar.error {
   display: flex;
   align-items: center;
@@ -1162,6 +1183,9 @@ header {
 }
 .notification-bar.error .close-btn:hover {
   opacity: 1;
+}
+.notification-bar.error.hide {
+  animation: show-hide 3s forwards;
 }
 .notification-bar.warning {
   display: flex;
@@ -1194,6 +1218,9 @@ header {
 .notification-bar.warning .close-btn:hover {
   opacity: 1;
 }
+.notification-bar.warning.hide {
+  animation: show-hide 3s forwards;
+}
 .notification-bar.info {
   display: flex;
   align-items: center;
@@ -1225,6 +1252,9 @@ header {
 .notification-bar.info .close-btn:hover {
   opacity: 1;
 }
+.notification-bar.info.hide {
+  animation: show-hide 3s forwards;
+}
 .notification-bar.primary {
   display: flex;
   align-items: center;
@@ -1255,6 +1285,9 @@ header {
 }
 .notification-bar.primary .close-btn:hover {
   opacity: 1;
+}
+.notification-bar.primary.hide {
+  animation: show-hide 3s forwards;
 }
 .notification-bar.left {
   margin-left: 0;

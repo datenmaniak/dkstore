@@ -9,7 +9,7 @@
     requireRole('admin'); // obliga a ser admin
 
     // template to use here
-    $form_template = 'form-productos';
+    $form_template = 'product-form';
 
     // get the record and validate the URL
     $id = $_GET['id'];
@@ -21,10 +21,8 @@
 
     includeTemplate('header');
 
-    $images_folder   = '../../uploads/';
-    $no_image        = '../../assets/img/no-image.jpg';
-    $imagen_mostrar  = $no_image; // Por defecto
-    $mostrar_spinner = false;
+    $images_folder = '../../uploads/';
+    $no_image      = '../../assets/img/no-image.jpg';
 
     // Productos::setDB($db); // ← IMPORTANTE: Configura DB en la clase
 
@@ -104,20 +102,20 @@
         //     }
         // }
 
-    }
-    // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
-    $hay_imagen_nueva = isset($_FILES['imagen']) &&
-    $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
-    ! empty($_FILES['imagen']['name']);
+        // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
+        $hay_imagen_nueva = isset($_FILES['imagen']) &&
+        $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
+        ! empty($_FILES['imagen']['name']);
 
-    if ($hay_imagen_nueva) {
-        // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
-        $imagen_mostrar  = $imgNewName;
-        $mostrar_spinner = true;
-    } else {
-        // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
-        $imagen_mostrar  = $no_image;
-        $mostrar_spinner = false;
+        if ($hay_imagen_nueva) {
+            // 🎯 ESCENARIO 3: Usuario cargó imagen → Spinner "procesando"
+            $imagen_mostrar  = $imgNewName;
+            $mostrar_spinner = true;
+        } else {
+            // 🎯 ESCENARIO 1 + 2: GET inicial O POST sin imagen → Por defecto
+            $imagen_mostrar  = $no_image;
+            $mostrar_spinner = false;
+        }
     }
 ?>
 
@@ -126,7 +124,7 @@
     <!-- <main class="add-products-container mt-15 basic-container"> -->
     <h2>Actualizar Producto</h2>
 
-    <!-- <a href="/admin/index.php" class="btn btn-secondary btn-block-10 btn-left">Salir</a> -->
+    <a href="/admin/index.php" class="btn btn-secondary btn-block-10 btn-left">Salir</a>
 
 
     <?php if ($errores): ?>
@@ -152,24 +150,13 @@
 
 
         <?php
-            // Incluir formulario con variables necesarias
-            $is_form_ok = includeForm($form_template, [
-                'producto'        => $producto,
-                'errores'         => $errores,
-                'categories_list' => $categories_list,
-                'sellers_list'    => $sellers_list,
-                'imagen_mostrar'  => $imagen_mostrar,
-                'mostrar_spinner' => $mostrar_spinner,
-            ]);
 
+            if (! includeTemplate($form_template)) {
+                showNotification("Plantilla no existe o no autorizada: " . htmlspecialchars($form_template), true);
+            }
         ?>
-        <?php if ($is_form_ok): ?>
-        <button type="submit" class="btn-success btn-block-30 btn-left">Aceptar cambios</button>
-        <a href="/admin/index.php" class="btn-warning btn-block-30 btn-right">Cancelar</a>
 
-        <?php else: ?>
-        <?php showNotification("Form not found: " . htmlspecialchars($form_template), false); ?>
-        <?php endif; ?>
+        <button type="submit" class="btn-primary btn-right ">Enviar los cambios</button>
     </form>
 
 

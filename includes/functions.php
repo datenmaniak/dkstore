@@ -7,6 +7,69 @@
     // before
     // require __DIR__ . '/app.php';
 
+    /**
+     * Incluye un formulario de manera segura y DRY
+     *
+     * @param string $tpl   Nombre del archivo de plantilla (sin extensión)
+     * @param array  $vars  Variables que el formulario necesita
+     */
+    function ViewForm(string $tpl, array $vars = []): bool
+    {
+        // Convierte las claves del array en variables locales
+        extract($vars, EXTR_SKIP);
+
+        $path = __DIR__ . "/templates/forms/{$tpl}.php";
+
+        if (file_exists($path)) {
+            include $path;
+            return true;
+        } else {
+            showNotification("Formulario no existe: " . htmlspecialchars($tpl), false);
+            // echo "<div class='notification-bar error '>Formulario no encontrado: {$tpl}</div>";
+            return false;
+        }
+    }
+    // includes/functions.php
+    function includeForm($form_name, $data = [])
+    {
+        /*
+    Formularios DRY: Estado + Scope + Seguridad
+    Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers_list]);
+    */
+
+        // $form_path = $_SERVER['DOCUMENT_ROOT'] . "/templates/forms/{$form_name}.php";
+        $form_path = PATH_INCLUDES . "/templates/forms/{$form_name}.php";
+
+        if (! file_exists($form_path)) {
+            showNotification("Formulario no existe: {$form_name}", true);
+            return false;
+        }
+
+        // ✅ SEGURIDAD: Solo variables específicas de formulario
+        $safe_data = [
+            'producto'        => $data['producto'] ?? null,
+            'sellers_list'    => $data['sellers_list'] ?? [],
+            'categories_list' => $data['categories_list'] ?? [],
+            'errores'         => $data['errores'] ?? [],
+            'images_folder'   => $data['images_folder'] ?? '',
+            'no_image'        => $data['no_image'] ?? '',
+        ];
+
+        // ✅ RENDIMIENTO: Solo variables necesarias
+        extract($safe_data, EXTR_SKIP | EXTR_REFS);
+
+        // ✅ DRY: Formularios reutilizables
+        include $form_path;
+        return true;
+    }
+
+    // escapa el HTML
+    function sanitizeHTML($html): string
+    {
+        $s = htmlspecialchars($html);
+        return $s;
+    }
+
     function debugResult($var = '', $must_end = true)
     {
         echo "<pre>";
@@ -61,32 +124,41 @@
 
         // Validar si la plantilla está permitida
         if (! in_array($page, $allowed, true)) {
-            showNotification("Plantilla no ha sido autorizada: " . htmlspecialchars($page));
-            exit;
+            showNotification("Plantilla no ha sido autorizada: " . htmlspecialchars($page), true);
             return false;
         }
-        $file = PATH_TEMPLATES . "/$page.php";
+        $template_path = PATH_TEMPLATES . "/$page.php";
 
         // Validar si el archivo existe
-        if (! file_exists($file)) {
-            showNotification("Plantilla no existe: " . htmlspecialchars($page));
-            exit;
-            return false;
-        }
+        if (file_exists($template_path)) {
+            extract(get_defined_vars(), EXTR_SKIP); // ← PASA TODAS variables
+            include $template_path;                 // ✅ UX suave
+            return true;
 
-        // require PATH_TEMPLATES . "/$page.php";
-        require $file;
-        return true;
+        } else {
+            showNotification("Plantilla no existe: " . htmlspecialchars($page), true);
+            return false;
+
+        }
 
     }
     /**
      * Renderiza una notificación estándar
      */
-    function showNotification(string $message): void
+    function showNotification(string $message, bool $hide): void
     {
-        echo '<div class="notification-bar warning high center">';
+
+        if ($hide) {
+            echo '<div class="notification-bar warning high center hide">';
+        } else {
+            echo '<div class="notification-bar warning high center">';
+
+        }
         echo '    <span class="icon">⚠️</span>';
         echo '    <div class="message">' . $message . '</div>';
+        // echo '<span class="close-btn">';
+        // echo 'img src="/assets/icons/close.svg" width="40px" height="40px" alt="">';
+        // echo '</span>';
         echo '</div>';
     }
 

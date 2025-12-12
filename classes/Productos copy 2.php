@@ -1,8 +1,6 @@
 <?php
 namespace dkstore;
 
-use Exception;
-
 class Productos
 {
 
@@ -35,7 +33,7 @@ class Productos
     public $proveedor_id;
     public $categoria_id;
 
-    public function __construct($args = [])
+    public function __construct(array $args = [])
     {
 
         $defaults = [
@@ -47,25 +45,21 @@ class Productos
             'descripcion'     => '',
             'existencia'      => 0,
             'stock_minimo'    => 0,
-            'is_active'       => 1,
+            'is_active'       => 0,
             'is_deleted'      => 0,
             'proveedor_id'    => 1,
             'categoria_id'    => 1,
         ];
 
         // ⭐ DEBUG: Verifica que $args tenga datos
-
-        error_log("=== Constructor invocado ===");
-        error_log("Record info: " . print_r($args, true));
-        error_log("=== END ===");
+        error_log("Constructor recibe: " . print_r($args, true));
 
         foreach ($defaults as $prop => $default) {
             $this->$prop = $args[$prop] ?? $default;
         }
 
         // Normalizar checkbox
-        $this->is_active  = isset($args['is_active']) ? 1 : 0;
-        $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
+        $this->is_active = isset($args['is_active']) ? 1 : 0;
 
         // Normalizar numéricos
         $this->precio       = isset($args['precio']) ? (float) $args['precio'] : 0.0;
@@ -76,63 +70,9 @@ class Productos
         $this->proveedor_id = $args['proveedor_id'] ?? 1;
         $this->categoria_id = $args['categoria_id'] ?? 1;
 
-        error_log("=== Constructor Output ===");
-        error_log("Created:  '" . $this->codigo_sku . ' ' . $this->nombre_producto . "'");
+        error_log("Objecto creado - '" . $this->nombre_producto . "'");
 
     }
-
-    // Métodos para acumular y consultar errores
-    private function addError(string $type, string $message): void
-    {
-        switch ($type) {
-            case 'validation':
-                $this->errorsValidation[] = $message;
-                break;
-            case 'sanitize':
-                $this->errorsSanitize[] = $message;
-                break;
-            case 'system':
-                $this->errorsSystem[] = $message;
-                break;
-        }
-    }
-    // public function getErrores(?string $type = null): array
-    // {
-    //     if ($type === 'validation') {
-    //         return $this->errorsValidation;
-    //     }
-
-    //     if ($type === 'sanitize') {
-    //         return $this->errorsSanitize;
-    //     }
-
-    //     if ($type === 'system') {
-    //         return $this->errorsSystem;
-    //     }
-
-    //     // todos juntos
-    //     return array_merge($this->errorsValidation, $this->errorsSanitize, $this->errorsSystem);
-    // }
-    public function getErrores(?string $type = null): array
-    {
-        return match ($type) {
-            'validation' => $this->errorsValidation,
-            'sanitize'   => $this->errorsSanitize,
-            'system'     => $this->errorsSystem,
-            default      => array_merge(
-                $this->errorsValidation,
-                $this->errorsSanitize,
-                $this->errorsSystem
-            ),
-        };
-    }
-
-    // REMOVE  -- Old version
-    //  public static function getErrores(): array
-    // {
-    //     return self::$errores;
-    // }
-    // END
 
     // REMOVE --- Desabilitada debido a que resultó vulnerables a SQL injection
     // public function guardarRecord()
@@ -179,58 +119,58 @@ class Productos
     public function guardarRecord(): bool
     {
 
-        try {
+        if (! $this->sanitize()) {
+            return false; // Maneja errores con getErrores()
+        }
 
-            // begin Block  - 99.99% SQLi-PROFF
-            $stmt = self::$db->prepare("
+        // Begin  ********* Antes  *** vulnerables a SQL injection
+        //     $query = "INSERT INTO productos (
+        //     codigo_sku, nombre_producto, precio, imagen, descripcion,
+        //     existencia, stock_minimo, activo, eliminado,
+        //     proveedor_id, categoria_id
+        // ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        //     $stmt = self::$db->prepare($query);
+        // End ***********
+
+        // begin Block  - 99.99% SQLi-PROFF
+        $stmt = self::$db->prepare("
             INSERT INTO productos (
             codigo_sku, nombre_producto, precio, imagen, descripcion,
             existencia, stock_minimo, activo, eliminado,
             proveedor_id, categoria_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ");
+        ");
 
-            // if (! $stmt) {
-            //     throw new \Exception("Error preparando el query SQL: " . self::$db->error);
-            // }
-
-            // $activo    = $this->is_active ? 1 : 0;
-            // $eliminado = $this->is_deleted ? 1 : 0;
-
-            // Tipos: s = string, d = double, i = integer
-            $stmt->bind_param(
-                "ssdssiiiiii",
-                $this->codigo_sku,      // s → texto
-                $this->nombre_producto, // s → texto
-                $this->precio,          // d → decimal
-                $this->imagen,          // s → texto
-                $this->descripcion,     // s → texto
-                $this->existencia,      // i → entero
-                $this->stock_minimo,    // i → entero
-                $this->is_active,       // i → tinyint
-                $this->is_deleted,      // i → tinyint
-                $this->proveedor_id,    // i → entero
-                $this->categoria_id     // i → entero
-            );
-
-            // $result = $stmt->execute();
-
-            if (! $stmt->execute()) {
-                // Si falla la ejecución, acumulamos error de sistema
-                $this->addError('system', 'Error al guardar el registro en la base de datos.');
-                return false;
-            }
-
-            $stmt->close();
-            return true;
-
-        } catch (Exception $e) {
-            // Capturamos cualquier excepción inesperada
-            error_log("[ERROR SISTEMA] " . $e->getMessage());
-            $this->addError('system', 'Ocurrió un error interno al guardar el producto.');
-            return false;
+        if (! $stmt) {
+            throw new \Exception("Error preparando el query SQL: " . self::$db->error);
         }
 
+        $activo    = $this->is_active ? 1 : 0;
+        $eliminado = $this->is_deleted ? 1 : 0;
+
+        // Tipos: s = string, d = double, i = integer
+        $stmt->bind_param(
+            "ssdssiiiiii",
+            $this->codigo_sku,      // s → texto
+            $this->nombre_producto, // s → texto
+            $this->precio,          // d → decimal
+            $this->imagen,          // s → texto
+            $this->descripcion,     // s → texto
+            $this->existencia,      // i → entero
+            $this->stock_minimo,    // i → entero
+            $this->is_active,       // i → tinyint
+            $this->is_deleted,      // i → tinyint
+            $this->proveedor_id,    // i → entero
+            $this->categoria_id     // i → entero
+        );
+
+        $result = $stmt->execute();
+
+        // debugResult($result);
+
+        $stmt->close();
+
+        return $result;
     }
 
     private array $sanitizers = [
@@ -250,9 +190,8 @@ class Productos
 
     public function sanitize(): bool
     {
-        /* // REMOVE   self::$errores = []; // limpiar antes de sanitizar */
-
-        $this->errorsSanitize = []; // limpiar antes de sanitizar
+        echo 'Sanitize record ahora...';
+        self::$errores = []; // limpiar antes de sanitizar
 
         // 1. VALIDACIONES DE LONGITUD (NUEVO)
         $longitudes = [
@@ -267,12 +206,12 @@ class Productos
                 $long  = mb_strlen($valor, 'UTF-8');
 
                 if (isset($limites['min']) && $long < $limites['min']) {
-                    $this->addError('sanitize', "El campo $campo debe tener al menos {$limites['min']} caracteres.");
+                    self::$errores[] = "El campo $campo debe tener al menos {$limites['min']} caracteres.";
                     continue;
                 }
                 if (isset($limites['max']) && $long > $limites['max']) {
-                    $this->addError('sanitize', "El campo $campo no puede exceder {$limites['max']} caracteres.");
-                    $this->$campo = mb_substr($valor, 0, $limites['max']);
+                    self::$errores[] = "El campo $campo no puede exceder {$limites['max']} caracteres.";
+                    $this->$campo    = mb_substr($valor, 0, $limites['max']); // CORTA
                     continue;
                 }
             }
@@ -282,7 +221,7 @@ class Productos
         if (isset($this->descripcion) && $this->descripcion !== '') {
             [$valido, $resultado] = $this->validarDescripcion($this->descripcion);
             if (! $valido) {
-                $this->addError('sanitize', $resultado);
+                self::$errores[] = $resultado;
             } else {
                 $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML
                 $this->revisarIntentos("descripcion", $this->descripcion);
@@ -302,29 +241,17 @@ class Productos
             // $this->validarRegex("codigo_sku", $this->codigo_sku);
         }
         // Validar precio
-        // if (isset($this->precio)) {
-        //     $this->validarRegex("precio", (string) $this->precio);
-        // }
+        if (isset($this->precio)) {
+            $this->validarRegex("precio", (string) $this->precio);
+        }
 
         // Validar existencia y stock
-        // if (isset($this->existencia)) {
-        //     $this->validarRegex("existencia", (string) $this->existencia);
-        // }
-        // if (isset($this->stock_minimo)) {
-        //     $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
-        // }
-
-        // Sanitizar nombre y SKU
-        $this->nombre_producto = strip_tags(trim($this->nombre_producto ?? ''));
-        $this->codigo_sku      = strip_tags(trim($this->codigo_sku ?? ''));
-
-        // Validar numéricos con regex
-        // $this->validarRegex("precio", (string) $this->precio);
-        // $this->validarRegex("existencia", (string) $this->existencia);
-        // $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
-
-        // $this->is_active  = isset($args['is_active']) ? '1' : '0';
-        // $this->is_deleted = isset($args['is_deleted']) ? '1' : '0';
+        if (isset($this->existencia)) {
+            $this->validarRegex("existencia", (string) $this->existencia);
+        }
+        if (isset($this->stock_minimo)) {
+            $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
+        }
 
         foreach (get_object_vars($this) as $prop => $valor) {
             if (isset($this->sanitizers[$prop]) && $valor !== null) {
@@ -341,13 +268,11 @@ class Productos
                     if ($sanitized !== false) {
                         $this->$prop = $sanitized;
                     }
-                    // } else {
-                    //     $this->addError('sanitize', "El campo $prop contiene un valor inválido.");
-                    // }
                 }
             }
         }
-        return empty($this->errorsSanitize); // true si todo OK
+        debugResult(self::$errores, false);
+        return empty(self::$errores); // true si todo OK
     }
 
     public function validarDescripcion(string $descripcion, int $min = 24, int $max = 1000): array
@@ -374,18 +299,14 @@ class Productos
             'INTO', 'OUTFILE',
             'TRUNCATE',
             'onerror=', 'onload=', 'javascript:',
-            '@param', 'array',
-            '$vars', 'function',
-            'include', 'bool',
         ];
 
         foreach ($patrones as $patron) {
             if (stripos($valor, $patron) !== false) {
                 // Muestra en consola (error_log)
                 error_log("[INTENTO SOSPECHOSO] Campo: {$campo} | Patrón: {$patron} | Valor: {$valor}");
-
                 // También puedes añadirlo a self::$errores si quieres bloquear
-                $this->addError('sanitize', "Entrada sospechosa detectada en {$campo} (patrón: {$patron}).");
+                self::$errores[] = "Entrada sospechosa detectada en {$campo} (patrón: {$patron}).";
 
                 // 🚨 Vaciar el campo automáticamente
                 $this->$campo = '';
@@ -407,52 +328,48 @@ class Productos
         if (isset($regexMap[$campo])) {
             if (! preg_match($regexMap[$campo], $valor)) {
                 error_log("[VALIDACIÓN FALLIDA] Campo: {$campo} | Valor: {$valor}");
-
-                // Ahora acumulamos en errores de sanitización
-                $this->addError('sanitize', "El campo {$campo} contiene caracteres inválidos o no cumple el formato.");
-
-                // Vaciarl el campo para evitar que llegue a la BD
-                $this->$campo = '';
+                self::$errores[] = "El campo {$campo} contiene caracteres inválidos o no cumple el formato.";
+                $this->$campo    = '';
                 return false;
             }
         }
         return true;
     }
 
+    // Mover el bloque de validación aqui
     public function validateEntry(): array
     {
 
-        /* //REMOVE -  self::$errores = []; // limpiar antes de validar */
-        $this->errorsValidation = []; // limpiar antes de validar
+        self::$errores = []; // limpiar antes de validar
 
         if (empty($this->codigo_sku)) {
-            $this->errorsValidation[] = 'Es obligatorio el código del producto!';
+            self::$errores[] = 'Es obligatorio el código del producto!';
         }
 
         // validacion
         if (empty($this->nombre_producto)) {
-            $this->errorsValidation[] = 'Es obligatorio incluir un nombre';
+            self::$errores[] = 'Es obligatorio incluir un nombre';
         }
 
         // Llama validación de la clase
         [$esValido, $resultado] = $this->validarDescripcion($this->descripcion);
         if (! $esValido) {
-            $this->errorsValidation[] = $resultado;
+            self::$errores[] = $resultado;
         }
         // } else {
         //     $this->descripcion = $resultado; // Usa versión limpia
         // }
         if (empty($this->descripcion)) {
-            $this->errorsValidation[] = 'La descripción es obligatoria';
+            self::$errores[] = 'La descripción es obligatoria';
         }
         if (empty($this->existencia)) {
-            $this->errorsValidation[] = 'Es necesario incluir un existencia';
+            self::$errores[] = 'Es necesario incluir un existencia';
         }
         if (empty($this->precio)) {
-            $this->errorsValidation[] = 'Es necesario incluir un precio';
+            self::$errores[] = 'Es necesario incluir un precio';
         }
         if (empty($this->stock_minimo)) {
-            $this->errorsValidation[] = 'Es necesario incluir un stock minimo del inventario';
+            self::$errores[] = 'Es necesario incluir un stock minimo del inventario';
         }
         // REMOVE:   suspendido temporalmente
         // if (empty($this->proveedor_id)) {
@@ -463,18 +380,20 @@ class Productos
         // }
 
         if (empty($this->imagen)) {
-            $this->errorsValidation[] = 'La imagen es obligatoria';
+            self::$errores[] = 'La imagen es obligatoria';
         }
 
-        /* // REMOVE       return self::$errores; */
-        return $this->errorsValidation;
+        return self::$errores;
     }
-
     public function setImage($imagen)
     {
         if ($imagen) {
             $this->imagen = $imagen;
         }
+    }
+    public static function getErrores(): array
+    {
+        return self::$errores;
     }
 
     // listar todos los productos
@@ -537,7 +456,5 @@ class Productos
         debugResult($args, false);
 
     }
-
-}{
 
 }
