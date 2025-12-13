@@ -42,6 +42,8 @@ composer require invervention/image
 
 ---
 
+\*\* Migración del proyecto a MVC
+
 ## 📂 Estructura del proyecto
 
 Visite **web-template-core** para saber más de la estructura base.
