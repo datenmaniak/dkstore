@@ -67,11 +67,13 @@
                 header('Location: /admin?result=3');
                 exit();
             } else {
-                echo '<p  class="notification-bar error medium center">Error durante la eliminación</p>';
+                // echo '<p  class="notification-bar error medium center">Error durante la eliminación</p>';
+                echo renderNotification('Error durante la eliminación del registro', 'error');
 
             }
         } else {
-            echo '<p class="alerta error">ID inválido</p>';
+            // echo '<p class="alerta error">ID inválido</p>';
+            echo renderNotification('ID inválido', 'error');
         }
     }
 
@@ -165,7 +167,7 @@
 
                             <td class="text-center active-in-catalog">
                                 <span
-                                    class="status-badge                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <?php echo (int) $item->is_active === 1 ? 'active' : 'inactive'; ?>">
+                                    class="status-badge                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <?php echo (int) $item->is_active === 1 ? 'active' : 'inactive'; ?>">
                                     <i
                                         class="<?php echo (int) $item->is_active === 1 ? 'ri-checkbox-line me-1' : 'ri-close-line me-1'; ?>"></i>
                                     <?php echo (int) $item->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
