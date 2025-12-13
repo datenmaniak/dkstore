@@ -2,16 +2,54 @@
 
 <?php
 
-    /* Functions file */
+    /* Globals Functions file */
 
-    // before
-    // require __DIR__ . '/app.php';
+    /**
+     * Genera una notificación HTML.
+     *
+     * @param int|string $result Puede ser un código numérico o directamente un mensaje personalizado
+     * @param string|null $type Tipo de notificación: success | warning | error | info
+     * @return string HTML de la notificación
+     */
+    function renderNotification($result, ?string $type = null): string
+    {
+        // Mapeo de códigos a mensajes y tipos
+        $resultMessages = [
+            1 => ['Producto registrado correctamente', 'success'],
+            2 => ['Producto actualizado correctamente', 'success'],
+            3 => ['Producto eliminado correctamente', 'warning'],
+            9 => ['Error: Notifique al administrador de sistemas', 'error'],
+        ];
+
+        // Caso: resultado numérico
+        if (is_int($result)) {
+            if ($result === 0) {
+                return ''; // No mostrar nada
+            }
+            [$message, $resolvedType] = $resultMessages[$result] ?? ['Acción desconocida o no registrada', 'warning'];
+            $type                     = $type ?? $resolvedType;
+        } else {
+            // Caso: mensaje personalizado
+            $message      = $result;
+            $allowedTypes = ['success', 'warning', 'error', 'info'];
+            $type         = in_array($type, $allowedTypes) ? $type : 'info';
+        }
+
+        return "<p class=\"notification-bar {$type} medium center hide\">{$message}</p>";
+
+        // // Ejemplo con códigos predefinidos
+        // echo renderNotification(1); // Producto registrado correctamente
+
+        // // Ejemplo con mensaje personalizado
+        // echo renderNotification('Este producto ya existe en la base de datos', 'warning');
+        // echo renderNotification('Error crítico al conectar con la base de datos', 'error');
+    }
 
     /**
      * Incluye un formulario de manera segura y DRY
      *
-     * @param string $tpl   Nombre del archivo de plantilla (sin extensión)
-     * @param array  $vars  Variables que el formulario necesita
+     * @param string $tpl Nombre del archivo de plantilla (sin extensión)
+     * @param array $vars Variables que el formulario necesita
      */
     function ViewForm(string $tpl, array $vars = []): bool
     {
@@ -33,9 +71,9 @@
     function includeForm($form_name, $data = [])
     {
         /*
-    Formularios DRY: Estado + Scope + Seguridad
-    Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers_list]);
-    */
+Formularios DRY: Estado + Scope + Seguridad
+Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers_list]);
+*/
 
         // $form_path = $_SERVER['DOCUMENT_ROOT'] . "/templates/forms/{$form_name}.php";
         $form_path = PATH_INCLUDES . "/templates/forms/{$form_name}.php";
@@ -76,7 +114,8 @@
 
     function debugResult($var = '', $must_end = true)
     {
-        echo "<pre>";
+        echo "
+<pre>";
         var_dump($var);
         echo "</pre>";
         if ($must_end) {
@@ -158,8 +197,8 @@
             echo '<div class="notification-bar warning high center">';
 
         }
-        echo '    <span class="icon">⚠️</span>';
-        echo '    <div class="message">' . $message . '</div>';
+        echo ' <span class="icon">⚠️</span>';
+        echo ' <div class="message">' . $message . '</div>';
         // echo '<span class="close-btn">';
         // echo 'img src="/assets/icons/close.svg" width="40px" height="40px" alt="">';
         // echo '</span>';
@@ -207,19 +246,19 @@
         // // finfo_close($finfo);
 
         // $mimePermitidos = [
-        //     'jpg',
-        //     'jpeg' => 'image/jpeg',
-        //     'png' => 'image/png',
-        //     'gif' => 'image/gif'
+        // 'jpg',
+        // 'jpeg' => 'image/jpeg',
+        // 'png' => 'image/png',
+        // 'gif' => 'image/gif'
         // ];
 
         // if (!isset($mimePermitidos[$ext]) || $mime !== $mimePermitidos[$ext]) {
-        //     return ['valida' => false, 'error' => 'Tipo MIME inválido'];
+        // return ['valida' => false, 'error' => 'Tipo MIME inválido'];
         // }
 
         // Validar tamaño
         if ($archivo['size'] > $maxSizeBytes || $archivo['size'] === 0) {
-            return ['valida' => false, 'error' => "El tamaño del archivo  excede $maxSizeBytes bytes (imagen)"];
+            return ['valida' => false, 'error' => "El tamaño del archivo excede $maxSizeBytes bytes (imagen)"];
         }
 
         return ['valida' => true, 'archivo' => $archivo];

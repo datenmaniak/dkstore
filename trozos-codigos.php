@@ -1,3 +1,28 @@
+<!-- index.php - admin 13.12.25,  17.38 -->
+<?php
+    if ($result !== 0) {
+
+        switch ($result) {
+            case 1:
+                echo '<p  class="notification-bar success medium center hide">Producto registrado correctamente</p>';
+                break;
+            case 2:
+                echo '<p  class="notification-bar success medium center hide">Producto actualizado correctamente</p>';
+                break;
+            case 3:
+                echo '<p  class="notification-bar warning medium center hide">Producto eliminado correctamente</p>';
+                break;
+            case 9:
+                echo '<p  class="notification-bar warning medium center hide">Error: Notifique al administrador de sistemas</p>';
+                break;
+            default:
+                echo '<p  class="notification-bar warning medium center hide">Acción desconocida o no registrada</p>';
+
+                break;
+        }
+    }
+?>
+
 <!-- formulario: 12.12.25, 18h00 -->
 
 <?php if (! empty($producto->imagen)): ?>
@@ -301,7 +326,7 @@ echo "Error: " . $validacion['error'];
 </div>
 
 // end
-<!--                                                                                                                                              <?php else: ?>
+<!--                                                                                                                                                      <?php else: ?>
             <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto"> -->
 
 

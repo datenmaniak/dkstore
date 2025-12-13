@@ -91,29 +91,7 @@
     </div>
     <!-- <h3>Productos</h3> -->
 
-    <?php
-        if ($result !== 0) {
-
-            switch ($result) {
-                case 1:
-                    echo '<p  class="notification-bar success medium center hide">Producto registrado correctamente</p>';
-                    break;
-                case 2:
-                    echo '<p  class="notification-bar success medium center hide">Producto actualizado correctamente</p>';
-                    break;
-                case 3:
-                    echo '<p  class="notification-bar warning medium center hide">Producto eliminado correctamente</p>';
-                    break;
-                case 9:
-                    echo '<p  class="notification-bar warning medium center hide">Error: Notifique al administrador de sistemas</p>';
-                    break;
-                default:
-                    echo '<p  class="notification-bar warning medium center hide">Acción desconocida o no registrada</p>';
-
-                    break;
-            }
-        }
-    ?>
+    <?php echo renderNotification($result); ?>
 
     <div class="admin-container ">
         <!--
@@ -187,7 +165,7 @@
 
                             <td class="text-center active-in-catalog">
                                 <span
-                                    class="status-badge                                                                                                                                                                                                                                                                                                                                                                                                  <?php echo (int) $item->is_active === 1 ? 'active' : 'inactive'; ?>">
+                                    class="status-badge                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <?php echo (int) $item->is_active === 1 ? 'active' : 'inactive'; ?>">
                                     <i
                                         class="<?php echo (int) $item->is_active === 1 ? 'ri-checkbox-line me-1' : 'ri-close-line me-1'; ?>"></i>
                                     <?php echo (int) $item->is_active === 1 ? 'Activo' : 'Inactivo'; ?>
