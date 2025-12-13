@@ -48,11 +48,15 @@
         // ✅ SEGURIDAD: Solo variables específicas de formulario
         $safe_data = [
             'producto'        => $data['producto'] ?? null,
-            'sellers_list'    => $data['sellers_list'] ?? [],
-            'categories_list' => $data['categories_list'] ?? [],
             'errores'         => $data['errores'] ?? [],
+            'categories_list' => $data['categories_list'] ?? [],
+            'sellers_list'    => $data['sellers_list'] ?? [],
             'images_folder'   => $data['images_folder'] ?? '',
+            'imagen_mostrar'  => $data['imagen_mostrar'] ?? '',
+            'mostrar_spinner' => $data['mostrar_spinner'] ?? '',
+            'imgNewName'      => $data['imgNewName'] ?? '',
             'no_image'        => $data['no_image'] ?? '',
+
         ];
 
         // ✅ RENDIMIENTO: Solo variables necesarias

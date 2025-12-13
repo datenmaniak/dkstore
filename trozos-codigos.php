@@ -1,5 +1,18 @@
 <!-- formulario: 12.12.25, 18h00 -->
 
+<?php if (! empty($producto->imagen)): ?>
+<img src="<?php echo htmlspecialchars($images_folder . $producto->imagen, ENT_QUOTES, 'UTF-8'); ?>" class="img-prod"
+    alt="<?php echo htmlspecialchars($producto->nombre ?? 'Imagen del producto', ENT_QUOTES, 'UTF-8'); ?>"
+    loading="lazy" decoding="async">
+<?php endif; ?>
+
+
+<?php if (! empty($producto->imagen)): ?>
+<img src="<?php echo PATH_UPLOADS . $producto->imagen; ?>" class="img-prod" alt="product image">
+<?php else: ?>
+<!-- Imagen por defecto -->
+<img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="image no available">
+<?php endif; ?>
 
 <fieldset>
     <legend>Visible en el catálogo </legend>
@@ -288,7 +301,7 @@ echo "Error: " . $validacion['error'];
 </div>
 
 // end
-<!--                                                                                                                                          <?php else: ?>
+<!--                                                                                                                                              <?php else: ?>
             <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="Imagen por defecto"> -->
 
 

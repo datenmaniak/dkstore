@@ -1,4 +1,7 @@
 <?php
+
+    $_SESSION['imgNewName'] = $imgNewName;
+
     // 🔥 AQUÍ → JUSTO DESPUÉS de if(empty($errores))
     $hay_imagen_nueva = isset($_FILES['imagen']) &&
     $_FILES['imagen']['error'] === UPLOAD_ERR_OK &&
@@ -45,19 +48,8 @@
     <?php endif; ?>
     <?php debugResult($producto->imagen, false); ?>
 
-    <?php if (! empty($producto->imagen)): ?>
-    <img src="<?php echo htmlspecialchars($images_folder . $producto->imagen, ENT_QUOTES, 'UTF-8'); ?>" class="img-prod"
-        alt="<?php echo htmlspecialchars($producto->nombre ?? 'Imagen del producto', ENT_QUOTES, 'UTF-8'); ?>"
-        loading="lazy" decoding="async">
-    <?php endif; ?>
 
 
-    <?php if (! empty($producto->imagen)): ?>
-    <img src="<?php echo PATH_UPLOADS . $producto->imagen; ?>" class="img-prod" alt="product image">
-    <?php else: ?>
-    <!-- Imagen por defecto -->
-    <img src="<?php echo $imagen_mostrar; ?>" class="img-prod" alt="image no available">
-    <?php endif; ?>
 
     <!-- Contenedor para la vista previa (siempre presente) -->
     <div id="previewContainer" class="preview">
@@ -66,7 +58,7 @@
         <button type="button" id="previewClear" class="btn-primary  btn-right" style="display:none; ">Quitar
             imagen</button>
     </div>
-    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php debugResult($producto->imagen, false); ?> -->
+    <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php debugResult($producto->imagen, false); ?> -->
 
 </div>
 

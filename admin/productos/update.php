@@ -172,10 +172,11 @@
                 'errores'         => $errores,
                 'categories_list' => $categories_list,
                 'sellers_list'    => $sellers_list,
+                'images_folder'   => $images_folder,
                 'imagen_mostrar'  => $imagen_mostrar,
                 'mostrar_spinner' => $mostrar_spinner,
                 'imgNewName'      => $imgNewName,
-                'images_folder'   => $images_folder,
+                'no_image'        => $no_image,
             ]);
 
         ?>
