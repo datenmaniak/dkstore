@@ -35,7 +35,10 @@
             $type         = in_array($type, $allowedTypes) ? $type : 'info';
         }
 
-        return "<p class=\"notification-bar {$type} medium center hide\">{$message}</p>";
+        // Sanitizar salida para evitar inyecciones
+        $safeMessage = sanitizeHTML($message);
+
+        return "<p class=\"notification-bar {$type} medium center hide\">{$safeMessage}</p>";
 
         // // Ejemplo con códigos predefinidos
         // echo renderNotification(1); // Producto registrado correctamente
@@ -108,8 +111,9 @@ Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers
     // escapa el HTML
     function sanitizeHTML($html): string
     {
-        $s = htmlspecialchars($html);
-        return $s;
+        // $s = htmlspecialchars($html);
+        // return $s;
+        return htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     function debugResult($var = '', $must_end = true)
