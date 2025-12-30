@@ -87,7 +87,7 @@ $imagen_mostrar = $no_image; // Por defecto
 
 <main class="admin-layout ">
     <h3>Panel de Administración - Productos</h3>
-    <a href="/admin/productos/create.php" class="btn-secondary btn-block-10 btn-right">Agregar</a>
+    <a href="/admin/productos/add.php" class="btn-secondary btn-block-10 btn-right">Agregar</a>
     <div class="panel-options ">
         <!-- <a href="/admin/logout.php" class="btn-secondary">Cerrar sesión</a> -->
     </div>
