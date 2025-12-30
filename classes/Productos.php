@@ -1,4 +1,5 @@
 <?php
+
 namespace dkstore;
 
 use Exception;
@@ -23,62 +24,66 @@ class Productos
     protected static array $errores = [];
 
     public $id;
-    public $codigo_sku;
-    public $nombre_producto;
-    public $precio;
-    public $imagen;
-    public $descripcion;
-    public $existencia;
-    public $stock_minimo;
-    public $is_active;
+    public $sku;
+    public $product_name;
+    public $price;
+    public $product_image;
+    public $description;
+    public $stock_quantity;
+    public $low_stock_threshold;
+    public $status;
     public $is_deleted;
-    public $proveedor_id;
-    public $categoria_id;
+    public $supplier_id;
+    public $category_id;
+    public $weight;
+    public $dimensions;
+    public $cost_price;
+
 
     public function __construct($args = [])
     {
 
         $defaults = [
             'id'              => '',
-            'codigo_sku'      => '',
-            'nombre_producto' => '',
-            'precio'          => 0.0,
-            'imagen'          => '',
-            'descripcion'     => '',
-            'existencia'      => 0,
-            'stock_minimo'    => 0,
-            'is_active'       => 1,
+            'sku'      => '',
+            'product_name' => '',
+            'price'          => 0.0,
+            'product_image'      => '',
+            'description'     => '',
+            'stock_quantity'      => 0,
+            'low_stock_threshold'    => 0,
+            'status'       => 'active',
             'is_deleted'      => 0,
-            'proveedor_id'    => 1,
-            'categoria_id'    => 1,
+            'supplier_id'    => 1,
+            'category_id'    => 1,
+            'weight' => 0.0,
+            'dimensions' => '',
+            'cost_price' => 0.0
         ];
 
         // ⭐ DEBUG: Verifica que $args tenga datos
 
-        error_log("=== Constructor invocado ===");
-        error_log("Record info: " . print_r($args, true));
-        error_log("=== END ===");
+        error_log("_constructor info: " . print_r($args, true));
+        // error_log("_constructor info: " . print_r($args, true) . "\n");
 
         foreach ($defaults as $prop => $default) {
             $this->$prop = $args[$prop] ?? $default;
         }
 
         // Normalizar checkbox
-        // $this->is_active  = isset($args['is_active']) ? 1 : 0;
+        // $this->status$status  = isset($args['status$status']) ? 1 : 0;
         // $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
 
         // Normalizar numéricos
-        $this->precio       = isset($args['precio']) ? (float) $args['precio'] : 0.0;
-        $this->existencia   = isset($args['existencia']) ? (int) $args['existencia'] : 0;
-        $this->stock_minimo = isset($args['stock_minimo']) ? (int) $args['stock_minimo'] : 0;
+        $this->price       = isset($args['price']) ? (float) $args['price'] : 0.0;
+        $this->stock_quantity   = isset($args['stock_quantity']) ? (int) $args['stock_quantity'] : 0;
+        $this->low_stock_threshold = isset($args['low_stock_threshold']) ? (int) $args['low_stock_threshold'] : 0;
 
         // Proveedor y categoría
-        $this->proveedor_id = $args['proveedor_id'] ?? 1;
-        $this->categoria_id = $args['categoria_id'] ?? 1;
+        $this->supplier_id = $args['supplier_id'] ?? 1;
+        $this->category_id = $args['category_id'] ?? 1;
 
-        error_log("=== Constructor Output ===");
-        error_log("Created:  '" . $this->codigo_sku . ' ' . $this->nombre_producto . "'");
-
+        error_log("Created:  '" . $this->sku . ' ' . $this->product_name . "'");
     }
 
     // Métodos para acumular y consultar errores
@@ -141,19 +146,19 @@ class Productos
     //     if ($this->sanitize()) {
 
     //         // insertar en la DB
-    //         $query = "INSERT INTO productos (codigo_sku,
-    //     nombre_producto,
-    // precio, imagen, descripcion,
-    // existencia, stock_minimo,
+    //         $query = "INSERT INTO productos (sku,
+    //     product_name,
+    // price, imagen, description,
+    // stock_quantity, low_stock_threshold$low_stock_threshold,
     // activo, is_deleted,
-    // proveedor_id, categoria_id )
-    // VALUES ('$this->codigo_sku', '$this->nombre_producto',
-    // '$this->precio', '$this->imagen', '$this->descripcion',
-    // '$this->existencia',
-    //  $this->stock_minimo,
-    //  $this->is_active,
+    // supplier_id$supplier_id, category_id$category_id )
+    // VALUES ('$this->sku', '$this->product_name',
+    // '$this->price', '$this->imagen', '$this->description',
+    // '$this->stock_quantity',
+    //  $this->low_stock_threshold$low_stock_threshold,
+    //  $this->status$status,
     //  $this->is_deleted,
-    // '$this->proveedor_id', '$this->categoria_id' )";
+    // '$this->supplier_id$supplier_id', '$this->category_id$category_id' )";
 
     //         // Save the record
     //         $result = self::$db->query($query);
@@ -167,9 +172,9 @@ class Productos
     // + Tu Situación Actual de este bloque (PROBLEMA GRAVE):
     // +
     // +  // VERSIÓN PELIGROSA (la que usas ahora)
-    // +  $query = "INSERT INTO productos (...) VALUES ('$this->descripcion', ...)";
+    // +  $query = "INSERT INTO productos (...) VALUES ('$this->description', ...)";
     // +  $result = self::$db->query($query);  // ← SQL INJECTION!
-    // +  Si alguien envía descripcion = "'; DROP TABLE productos; --", borra  tabla.
+    // +  Si alguien envía description = "'; DROP TABLE productos; --", borra  tabla.
     // +
     // +
     // +
@@ -183,10 +188,10 @@ class Productos
 
             // begin Block  - 99.99% SQLi-PROFF
             $stmt = self::$db->prepare("
-            INSERT INTO productos (
-            codigo_sku, nombre_producto, precio, imagen, descripcion,
-            existencia, stock_minimo, is_active, is_deleted,
-            proveedor_id, categoria_id)
+            INSERT INTO products (
+            sku, product_name, price, product_image, description,
+            stock_quantity, low_stock_threshold, status, is_deleted,
+            supplier_id, category_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");
 
@@ -194,23 +199,23 @@ class Productos
             //     throw new \Exception("Error preparando el query SQL: " . self::$db->error);
             // }
 
-            // $activo    = $this->is_active ? 1 : 0;
+            // $activo    = $this->status$status ? 1 : 0;
             // $is_deleted = $this->is_deleted ? 1 : 0;
 
             // Tipos: s = string, d = double, i = integer
             $stmt->bind_param(
-                "ssdssiiiiii",
-                $this->codigo_sku,      // s → texto
-                $this->nombre_producto, // s → texto
-                $this->precio,          // d → decimal
-                $this->imagen,          // s → texto
-                $this->descripcion,     // s → texto
-                $this->existencia,      // i → entero
-                $this->stock_minimo,    // i → entero
-                $this->is_active,       // i → tinyint
+                "ssdssiisiii",
+                $this->sku,      // s → texto
+                $this->product_name, // s → texto
+                $this->price,          // d → decimal
+                $this->product_image,          // s → texto
+                $this->description,     // s → texto
+                $this->stock_quantity,      // i → entero
+                $this->low_stock_threshold,    // i → entero
+                $this->status,       // s
                 $this->is_deleted,      // i → tinyint
-                $this->proveedor_id,    // i → entero
-                $this->categoria_id     // i → entero
+                $this->supplier_id,    // i → entero
+                $this->category_id     // i → entero
             );
 
             // $result = $stmt->execute();
@@ -223,29 +228,27 @@ class Productos
 
             $stmt->close();
             return true;
-
         } catch (Exception $e) {
             // Capturamos cualquier excepción inesperada
             error_log("[ERROR SISTEMA] " . $e->getMessage());
             $this->addError('system', 'Ocurrió un error interno al guardar el producto.');
             return false;
         }
-
     }
 
     private array $sanitizers = [
         'id'              => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 1]],
-        'codigo_sku'      => ['callback' => 'strip_tags'],
-        'nombre_producto' => ['callback' => 'strip_tags'],
-        'precio'          => FILTER_VALIDATE_FLOAT, // ← Era 0?
-        'imagen'          => ['callback' => 'strip_tags'],
-        'descripcion'     => ['callback' => 'strip_tags'],
-        'existencia'      => FILTER_VALIDATE_INT,
-        'stock_minimo'    => FILTER_VALIDATE_INT,
-        'is_active'       => FILTER_VALIDATE_BOOLEAN,
+        'sku'      => ['callback' => 'strip_tags'],
+        'product_name' => ['callback' => 'strip_tags'],
+        'price'          => FILTER_VALIDATE_FLOAT, // ← Era 0?
+        'product_image'          => ['callback' => 'strip_tags'],
+        'description'     => ['callback' => 'strip_tags'],
+        'stock_quantity'      => FILTER_VALIDATE_INT,
+        'low_stock_threshold'    => FILTER_VALIDATE_INT,
+        'status'       => FILTER_VALIDATE_BOOLEAN,
         'is_deleted'      => FILTER_VALIDATE_BOOLEAN,
-        'proveedor_id'    => FILTER_VALIDATE_INT,
-        'categoria_id'    => FILTER_VALIDATE_INT,
+        'supplier_id'    => FILTER_VALIDATE_INT,
+        'category_id'    => FILTER_VALIDATE_INT,
     ];
 
     public function sanitize(): bool
@@ -256,10 +259,10 @@ class Productos
 
         // 1. VALIDACIONES DE LONGITUD (NUEVO)
         $longitudes = [
-            'nombre_producto' => ['max' => 64], // ← AJUSTA según tu esquema
-            'descripcion'     => ['min' => 24, 'max' => 1000],
-            'codigo_sku'      => ['max' => 32],
-            'imagen'          => ['max' => 250],
+            'product_name' => ['max' => 64], // ← AJUSTA según tu esquema
+            'description'     => ['min' => 24, 'max' => 1000],
+            'sku'      => ['max' => 32],
+            'product_image'          => ['max' => 250],
         ];
         foreach ($longitudes as $campo => $limites) {
             if (property_exists($this, $campo) && $this->$campo !== '') {
@@ -279,49 +282,49 @@ class Productos
         }
 
         /* // Sanitiza descripción, nombre y otros atributos tipo string  */
-        if (isset($this->descripcion) && $this->descripcion !== '') {
-            [$valido, $resultado] = $this->validarDescripcion($this->descripcion);
+        if (isset($this->description) && $this->description !== '') {
+            [$valido, $resultado] = $this->validardescription($this->description);
             if (! $valido) {
                 $this->addError('sanitize', $resultado);
             } else {
-                $this->descripcion = strip_tags(trim($resultado)); // Limpia HTML
-                $this->revisarIntentos("descripcion", $this->descripcion);
-                // $this->validarRegex("descripcion", $this->descripcion);
+                $this->description = strip_tags(trim($resultado)); // Limpia HTML
+                $this->revisarIntentos("description", $this->description);
+                // $this->validarRegex("description", $this->description);
             }
         }
-        // Otras sanitizaciones (ej: nombre_producto)...
-        if (isset($this->nombre_producto)) {
-            $this->nombre_producto = strip_tags(trim($this->nombre_producto));
-            $this->revisarIntentos("nombre_producto", $this->nombre_producto);
-            // $this->validarRegex("nombre_producto", $this->nombre_producto);
+        // Otras sanitizaciones (ej: product_name)...
+        if (isset($this->product_name)) {
+            $this->product_name = strip_tags(trim($this->product_name));
+            $this->revisarIntentos("product_name", $this->product_name);
+            // $this->validarRegex("product_name", $this->product_name);
         }
         /* Codigo SKU */
-        if (isset($this->codigo_sku)) {
-            $this->codigo_sku = strip_tags(trim($this->codigo_sku));
-            $this->revisarIntentos("codigo_sku", $this->codigo_sku);
-            // $this->validarRegex("codigo_sku", $this->codigo_sku);
+        if (isset($this->sku)) {
+            $this->sku = strip_tags(trim($this->sku));
+            $this->revisarIntentos("sku", $this->sku);
+            // $this->validarRegex("sku", $this->sku);
         }
-        // Validar precio
-        // if (isset($this->precio)) {
-        //     $this->validarRegex("precio", (string) $this->precio);
+        // Validar price
+        // if (isset($this->price)) {
+        //     $this->validarRegex("price", (string) $this->price);
         // }
 
-        // Validar existencia y stock
-        // if (isset($this->existencia)) {
-        //     $this->validarRegex("existencia", (string) $this->existencia);
+        // Validar stock_quantity y stock
+        // if (isset($this->stock_quantity)) {
+        //     $this->validarRegex("stock_quantity", (string) $this->stock_quantity);
         // }
-        // if (isset($this->stock_minimo)) {
-        //     $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
+        // if (isset($this->low_stock_threshold$low_stock_threshold)) {
+        //     $this->validarRegex("low_stock_threshold$low_stock_threshold", (string) $this->low_stock_threshold$low_stock_threshold);
         // }
 
         // Sanitizar nombre y SKU
-        $this->nombre_producto = strip_tags(trim($this->nombre_producto ?? ''));
-        $this->codigo_sku      = strip_tags(trim($this->codigo_sku ?? ''));
+        $this->product_name = strip_tags(trim($this->product_name ?? ''));
+        $this->sku      = strip_tags(trim($this->sku ?? ''));
 
         // Validar numéricos con regex
-        // $this->validarRegex("precio", (string) $this->precio);
-        // $this->validarRegex("existencia", (string) $this->existencia);
-        // $this->validarRegex("stock_minimo", (string) $this->stock_minimo);
+        // $this->validarRegex("price", (string) $this->price);
+        // $this->validarRegex("stock_quantity", (string) $this->stock_quantity);
+        // $this->validarRegex("low_stock_threshold$low_stock_threshold", (string) $this->low_stock_threshold$low_stock_threshold);
 
         foreach (get_object_vars($this) as $prop => $valor) {
             if (isset($this->sanitizers[$prop]) && $valor !== null) {
@@ -347,10 +350,10 @@ class Productos
         return empty($this->errorsSanitize); // true si todo OK
     }
 
-    public function validarDescripcion(string $descripcion, int $min = 24, int $max = 1000): array
+    public function validardescription(string $description, int $min = 24, int $max = 1000): array
     {
-        $descripcion = strip_tags(trim($descripcion));
-        $longitud    = mb_strlen($descripcion, 'UTF-8');
+        $description = strip_tags(trim($description));
+        $longitud    = mb_strlen($description, 'UTF-8');
 
         if ($longitud < $min) {
             return [false, "La descripción debe tener al menos {$min} caracteres."];
@@ -359,21 +362,37 @@ class Productos
             return [false, "La descripción no puede exceder {$max} caracteres."];
         }
 
-        return [true, $descripcion]; // [válido, valor_limpio]
+        return [true, $description]; // [válido, valor_limpio]
     }
 
     // Detecta patrones sospechosos en un campo
     private function revisarIntentos(string $campo, string $valor): void
     {
-        $patrones = ['SELECT', 'DROP', 'DELETE', 'UPDATE', 'INSERT',
-            '<script>', '--', 'EXEC',
-            'SLEEP', 'BENCHMARK', 'LOAD_FILE',
-            'INTO', 'OUTFILE',
+        $patrones = [
+            'SELECT',
+            'DROP',
+            'DELETE',
+            'UPDATE',
+            'INSERT',
+            '<script>',
+            '<--',
+            '-->',
+            'EXEC',
+            'SLEEP',
+            'BENCHMARK',
+            'LOAD_FILE',
+            'INTO',
+            'OUTFILE',
             'TRUNCATE',
-            'onerror=', 'onload=', 'javascript:',
-            '@param', 'array',
-            '$vars', 'function',
-            'include', 'bool',
+            'onerror=',
+            'onload=',
+            'javascript:',
+            '@param',
+            'array',
+            '$vars',
+            'function',
+            'include',
+            'bool',
         ];
 
         foreach ($patrones as $patron) {
@@ -393,12 +412,12 @@ class Productos
     private function validarRegex(string $campo, string $valor): bool
     {
         $regexMap = [
-            'codigo_sku'      => '/^[A-Z0-9\-]{3,32}$/',
-            'nombre_producto' => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,]{3,64}$/u',
-            'descripcion'     => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,;:()]{24,1000}$/u',
-            'precio'          => '/^\d+(\.\d{1,2})?$/',
-            'existencia'      => '/^\d+$/',
-            'stock_minimo'    => '/^\d+$/',
+            'sku'      => '/^[A-Z0-9\-]{3,32}$/',
+            'product_name' => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,]{3,64}$/u',
+            'description'     => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s\-\.,;:()]{24,1000}$/u',
+            'price'          => '/^\d+(\.\d{1,2})?$/',
+            'stock_quantity'      => '/^\d+$/',
+            'low_stock_threshold'    => '/^\d+$/',
         ];
 
         if (isset($regexMap[$campo])) {
@@ -422,72 +441,75 @@ class Productos
         /* //REMOVE -  self::$errores = []; // limpiar antes de validar */
         $this->errorsValidation = []; // limpiar antes de validar
 
-        if (empty($this->codigo_sku)) {
+        if (empty($this->sku)) {
             $this->errorsValidation[] = 'Es obligatorio el código del producto!';
         }
 
         // validacion
-        if (empty($this->nombre_producto)) {
+        if (empty($this->product_name)) {
             $this->errorsValidation[] = 'Es obligatorio incluir un nombre';
         }
 
         // Llama validación de la clase
-        [$esValido, $resultado] = $this->validarDescripcion($this->descripcion);
+        [$esValido, $resultado] = $this->validardescription($this->description);
         if (! $esValido) {
             $this->errorsValidation[] = $resultado;
         }
         // } else {
-        //     $this->descripcion = $resultado; // Usa versión limpia
+        //     $this->description = $resultado; // Usa versión limpia
         // }
-        if (empty($this->descripcion)) {
+        if (empty($this->description)) {
             $this->errorsValidation[] = 'La descripción es obligatoria';
         }
-        if (empty($this->existencia)) {
-            $this->errorsValidation[] = 'Es necesario incluir un existencia';
+        if (empty($this->stock_quantity)) {
+            $this->errorsValidation[] = 'Es necesario incluir un stock_quantity';
         }
-        if (empty($this->precio)) {
-            $this->errorsValidation[] = 'Es necesario incluir un precio';
+        if (empty($this->price)) {
+            $this->errorsValidation[] = 'Es necesario incluir un price';
         }
-        if (empty($this->stock_minimo)) {
+        if (empty($this->low_stock_threshold)) {
             $this->errorsValidation[] = 'Es necesario incluir un stock minimo del inventario';
         }
         // REMOVE:   suspendido temporalmente
-        // if (empty($this->proveedor_id)) {
+        // if (empty($this->supplier_id$supplier_id)) {
         //     self::$errores[] = 'Es obligatorio incluir el código del proveedor';
         // }
-        // if (empty($this->categoria_id)) {
+        // if (empty($this->category_id$category_id)) {
         //     self::$errores[] = 'Es obligatorio incluir el código de categoría';
         // }
 
-        if (empty($this->imagen)) {
+        // REMOVE
+        // if (empty($this->product_image)) {
+        //     $this->errorsValidation[] = 'La imagen es obligatoria';
+        // }
+        if (!isset($this->product_image) || trim($this->product_image) === '') {
             $this->errorsValidation[] = 'La imagen es obligatoria';
         }
 
-        /* // REMOVE       return self::$errores; */
         return $this->errorsValidation;
     }
+
+
+
 
     public function setImage($imagen, $ruta_imagen_anterior)
     {
         if ($imagen) {
-            $this->imagen = $imagen;
-            error_log("=== Imagen agregada ===");
-            error_log($this->imagen);
+            $this->product_image = $imagen;
+            error_log("\nImagen nueva agregada -->\n");
+            error_log($this->product_image . "\n");
         }
-        if (
-            ! empty($ruta_imagen_anterior) && file_exists($ruta_imagen_anterior)
-        ) {
+        if (!empty($ruta_imagen_anterior) && file_exists($ruta_imagen_anterior)) {
             unlink($ruta_imagen_anterior);
-            error_log("=== Imagen eliminada ===");
-            error_log($ruta_imagen_anterior);
-
+            error_log("Imagen anterior eliminada -->\n");
+            error_log("\n" . $ruta_imagen_anterior . "\n");
         }
     }
 
     // listar todos los productos
     public static function getAll()
     {
-        $sql = "SELECT * from productos WHERE is_deleted = 0 ORDER BY updated_at DESC;";
+        $sql = "SELECT * from products WHERE is_deleted = 0 ORDER BY updated_at DESC;";
 
         $listing = self::consultaSQL($sql);
 
@@ -498,13 +520,12 @@ class Productos
     {
         // Busca un registro por su ID
 
-        $sql = "SELECT * FROM productos WHERE id = $id AND is_deleted = 0";
+        $sql = "SELECT * FROM products WHERE id = $id AND is_deleted = 0";
 
         $found = self::consultaSQL($sql);
 
         // Devuelve el primer elemento del array
         return array_shift($found);
-
     }
 
     public static function consultaSQL($sql)
@@ -558,13 +579,13 @@ class Productos
         }
 
         // Normalización explícita de checkboxes
-        $this->is_active  = isset($args['is_active']) ? 1 : 0;
+        $this->status  = isset($args['status']) ? 'active' : 'inactive';
         $this->is_deleted = isset($args['is_deleted']) ? 1 : 0;
         //  **** Para futuras implementacion, considerar estos modelos. ***
         // Radio Buttons
         // $this->tipo = $args['tipo'] ?? 'default';
         // Campos numericos
-        // $this->precio = isset($args['precio']) ? (float)$args['precio'] : 0.0;
+        // $this->price = isset($args['price']) ? (float)$args['price'] : 0.0;
         // $this->stock  = isset($args['stock']) ? (int)$args['stock'] : 0;
         // *****************************
 
@@ -574,18 +595,18 @@ class Productos
     {
         try {
             $stmt = self::$db->prepare("
-            UPDATE productos SET
-                codigo_sku = ?,
-                nombre_producto = ?,
-                precio = ?,
-                imagen = ?,
-                descripcion = ?,
-                existencia = ?,
-                stock_minimo = ?,
-                is_active = ?,
+            UPDATE products SET
+                sku = ?,
+                product_name = ?,
+                price = ?,
+                product_image = ?,
+                description = ?,
+                stock_quantity = ?,
+                low_stock_threshold = ?,
+                status = ?,
                 is_deleted = ?,
-                proveedor_id = ?,
-                categoria_id = ?
+                supplier_id = ?,
+                category_id = ?
             WHERE id = ?
         ");
 
@@ -595,18 +616,18 @@ class Productos
 
             // Tipos: s = string, d = double, i = integer
             $stmt->bind_param(
-                "ssdssiiiiiii",
-                $this->codigo_sku,      // s → texto
-                $this->nombre_producto, // s → texto
-                $this->precio,          // d → decimal
-                $this->imagen,          // s → texto
-                $this->descripcion,     // s → texto
-                $this->existencia,      // i → entero
-                $this->stock_minimo,    // i → entero
-                $this->is_active,       // i → tinyint
+                "ssdssiisiiii",
+                $this->sku,      // s → texto
+                $this->product_name, // s → texto
+                $this->price,          // d → decimal
+                $this->product_image,          // s → texto
+                $this->description,     // s → texto
+                $this->stock_quantity,      // i → entero
+                $this->low_stock_threshold,    // i → entero
+                $this->status,       // s → texto /string
                 $this->is_deleted,      // i → tinyint
-                $this->proveedor_id,    // i → entero
-                $this->categoria_id,    // i → entero
+                $this->supplier_id,    // i → entero
+                $this->category_id,    // i → entero
                 $this->id               // i → entero (WHERE id=?)
             );
 
@@ -617,12 +638,10 @@ class Productos
 
             $stmt->close();
             return true;
-
         } catch (Exception $e) {
             error_log("[ERROR SISTEMA] " . $e->getMessage());
             $this->addError('system', 'Ocurrió un error interno al actualizar el producto.');
             return false;
         }
     }
-
 }
