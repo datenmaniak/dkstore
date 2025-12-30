@@ -1,0 +1,62 @@
+{
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontFamily": "Fira Code, monospace",
+  "editor.fontLigatures": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.lineHeight": 16,
+  "terminal.integrated.fontFamily": "monospace",
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": ["keyword", "storage"],
+        "settings": {
+          "foreground": "#9b59b6"
+        }
+      },
+      {
+        "scope": ["variable", "string"],
+        "settings": {
+          "foreground": "#8e44ad"
+        }
+      }
+    ]
+  },
+  "workbench.settings.applyToAllProfiles": [
+    
+  ],
+  "better-comments.tags": [
+    {
+      "tag": "TODO",
+      "color": "#FFFFFF",
+      "backgroundColor": "#F00077",
+      "bold": true
+    },
+    {
+      "tag": "REMOVE",
+      "color": "#FFFFFF",
+      "backgroundColor": "#FF0033",
+      "bold": true
+    },
+    {
+      "tag": "LEARN",
+      "color": "#000000",
+      "backgroundColor": "#FF9900",
+      "bold": true
+    },
+    {
+      "tag": "BEGIN",
+      "color": "#000000",
+      "backgroundColor": "#EDF000",
+      "bold": true
+    },
+    {
+      "tag": "END",
+      "color": "#000000",
+      "backgroundColor": "#EDF000",
+      "bold": true
+    }
+  ],
+  "editor.minimap.enabled": false
+}

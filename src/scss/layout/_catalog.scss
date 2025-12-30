@@ -22,7 +22,8 @@
         font-family: core.$brand-secondary-font;
         color: core.$brand-dark-color;
         font-weight: 400;
-        @include responsive-font($section-titles-sizes);
+        // @include responsive-font($section-titles-sizes);
+        @include responsive-font($h2-sizes);
 
     }
 

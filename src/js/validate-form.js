@@ -3,7 +3,7 @@
 (function () {
     document.addEventListener("DOMContentLoaded", () => {
 
-        const textarea = document.querySelector('[name="descripcion"]');
+        const textarea = document.querySelector('[name="description"]');
         const contador = document.getElementById('description_input_counter');
         textarea.addEventListener('input', () => {
             contador.textContent = `${textarea.value.length}/255`;

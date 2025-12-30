@@ -1,5 +1,18 @@
 <?php
 
+// function conectDB(): mysqli
+// {
+//
+//     $db = new mysqli('localhost', 'dk', 'chachita', 'dkstore');
+//
+//     if (! $db) {
+//         echo "DB conection error";
+//         exit;
+//     }
+//     return $db;
+// }
+
+// <?php
 function conectDB() {
     $host = 'db-dev';  // ← Nombre contenedor
     $db = 'dkstore_db';

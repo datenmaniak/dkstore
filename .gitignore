@@ -8,7 +8,5 @@ assets/hero/*
 assets/icons/*
 assets/logos/*
 assets/obsolete
-/uploads
-
-
+/uploads/*
 /vendor/

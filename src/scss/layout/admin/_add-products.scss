@@ -79,6 +79,13 @@
 
 }
 
+// Variables para consistencia
+$input-height: 40px;
+$input-padding: 0.5rem;
+$input-border: 1px solid #ccc;
+$input-radius: 6px;
+
+
 .form-productos {
     max-width: 900px;
     margin: 2rem auto;
@@ -93,12 +100,28 @@
         grid-column: 1 / -1; // título ocupa todo el ancho
         color: core.$brand-primary-color;
         margin-bottom: 1rem;
+        background-color: #28a745;
     }
 
     label {
-        display: flex;
+        // display: flex;
         flex-direction: column;
         font-weight: bold;
+
+        input[type="text"],
+        input[type="number"] {
+            height: $input-height;
+            padding: $input-padding;
+            border: $input-border;
+
+        }
+
+        textarea {
+            width: 100%; // ocupa todo el ancho del contenedor
+            min-height: 100px;
+            // altura mínima
+            max-height: 300px; // altura máxima 
+        }
 
         input,
         textarea,
@@ -107,6 +130,7 @@
             padding: 0.6rem;
             border: 1px solid core.$brand-primary-color;
             border-radius: 4px;
+
         }
     }
 

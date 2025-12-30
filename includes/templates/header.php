@@ -61,7 +61,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <!-- User has logged -->
                         <li class="nav__login">
-                            <a href="/admin/logout.php">Cerrar Sessión</a>
+                            <a href="./admin/logout.php">Cerrar Sessión</a>
                         </li>
                     <?php else: ?>
 

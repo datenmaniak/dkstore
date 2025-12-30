@@ -669,7 +669,7 @@ header {
 }
 
 .top-margin {
-  margin-top: 5.625rem;
+  margin-top: 7.625rem;
 }
 
 .mt {
@@ -756,7 +756,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -781,7 +781,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -806,7 +806,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -831,7 +831,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -856,7 +856,7 @@ header {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -880,7 +880,7 @@ header {
   background-color: transparent;
   color: #7700F0;
   border: 1px solid #7700F0;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
   text-align: center;
@@ -1389,7 +1389,6 @@ header {
   width: 100%;
   position: fixed;
   top: 0;
-  height: 5.625rem;
   z-index: 9999;
   background-color: transparent;
   transition: background-color 0.3s ease;
@@ -1639,7 +1638,7 @@ header {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;
@@ -1757,7 +1756,7 @@ header {
   background-color: transparent;
   color: #7700F0;
   border: 1px solid #7700F0;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
   text-align: center;
@@ -1827,7 +1826,7 @@ header {
 .hero {
   position: relative;
   width: 100%;
-  margin-top: -5.625rem;
+  margin-top: -8.625rem;
   z-index: 1;
 }
 .hero__container {
@@ -2537,37 +2536,37 @@ nav .top-bar p {
 }
 @media (min-width: 250px) {
   .catalog h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 }
 @media (min-width: 320px) {
   .catalog h2 {
-    font-size: 2.6rem;
+    font-size: 1.9rem;
   }
 }
 @media (min-width: 576px) {
   .catalog h2 {
-    font-size: 3.4rem;
+    font-size: 1.9rem;
   }
 }
 @media (min-width: 768px) {
   .catalog h2 {
-    font-size: 3.8rem;
+    font-size: 2rem;
   }
 }
 @media (min-width: 992px) {
   .catalog h2 {
-    font-size: 4rem;
+    font-size: 2.7rem;
   }
 }
 @media (min-width: 1200px) {
   .catalog h2 {
-    font-size: 5rem;
+    font-size: 3.1rem;
   }
 }
 @media (min-width: 1400px) {
   .catalog h2 {
-    font-size: 5.5rem;
+    font-size: 3.3rem;
   }
 }
 .catalog__grid {
@@ -3409,11 +3408,22 @@ nav .top-bar p {
   grid-column: 1/-1;
   color: #7700F0;
   margin-bottom: 1rem;
+  background-color: #28a745;
 }
 .form-productos label {
-  display: flex;
   flex-direction: column;
   font-weight: bold;
+}
+.form-productos label input[type=text],
+.form-productos label input[type=number] {
+  height: 40px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+.form-productos label textarea {
+  width: 100%;
+  min-height: 100px;
+  max-height: 300px;
 }
 .form-productos label input,
 .form-productos label textarea,
@@ -3669,7 +3679,7 @@ textarea {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 1.135rem 0.825rem;
   cursor: pointer;
   text-align: center;

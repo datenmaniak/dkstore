@@ -3,47 +3,66 @@
 │   ├── admin.php
 │   ├── adm.php
 │   ├── categorias
-│   ├── index copy.php
+│   ├── index-backup.php
 │   ├── index.php
+│   ├── login.php
+│   ├── logout.php
+│   ├── no-access.php
 │   ├── productos
 │   └── proveedores
+├── arbol
 ├── assets
 │   ├── dark-mode
 │   ├── hero
 │   ├── icons
 │   └── logos
-├── backup-header.html
 ├── backup-setting.json
+├── bitacora-phpoop.md
 ├── build
 │   ├── css
 │   ├── img
 │   └── js
+├── classes
+│   ├── Productos copy 2.php
+│   ├── Productos copy.php
+│   └── Productos.php
+├── composer.json
+├── composer.lock
+├── dir-structure-before-set-path-for-php-apps.txt
 ├── gulpfile.mjs
 ├── includes
 │   ├── app.php
 │   ├── config
 │   ├── functions.php
 │   └── templates
+├── index.html
 ├── index.php
-├── login.php
+├── info.php
 ├── package.json
 ├── package-lock.json
 ├── productos.php
 ├── README.MD
-└── uploads
-    ├── 04b723838d4f8959692e12a74fd127.43694490.jpg
-    
+├── sql-scripts
+│   ├── add-user.sql
+│   ├── README.md
+│   ├── update-password.php
+│   └── usuarios.sql
+├── src
+│   ├── img
+│   ├── js
+│   └── scss
+└── trash
+    ├── arbol
+    ├── backup-header.html
+    ├── db-test.php
+    ├── demo-botones.html
+    ├── footer.html
+    ├── modelando-botones.html
+    ├── modelo-botones-solidos.html
+    ├── modelo-notifications.html
+    ├── producto.txt
+    ├── README-old.md
+    ├── trozos-codigos.php
+    └── usuarios.txt
 
-
-
-    script src="/build/js/bundle.js"></script>
-
-<?php
-
-/* includeTemplate('footer'); */
-/* includeTemplate('end-page'); */
-
-// cerrar la conexion a la DB
-mysqli_close($db);
-
-?>
+24 directories, 42 files

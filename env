@@ -1,0 +1,7 @@
+# En ~/proyectos/dk-store/config.php (o .env):
+DB_HOST=host.containers.internal
+DB_PORT=3306
+DB_NAME=dk_store_dev
+DB_USER=root
+DB_PASS=dev123
+
