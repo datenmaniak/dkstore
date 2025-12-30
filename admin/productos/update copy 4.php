@@ -52,36 +52,12 @@ $errores = []; // antes Productos::getErrores();
 // MAIN Ejecutar despues que se envia el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // MAIN 1 - Guardar en sesión ANTES de validar
+    // Guardar en sesión ANTES de validar
     $_SESSION['form_data'] = $_POST;
 
-    // MAIN 2 - Data binding: asignar valores desde formulario al objeto
+    // Data binding: asignar valores del formulario al objeto
+    // Binding directo desde el formulario
     $producto->dataBinding($_POST);
-
-
-    // STEP  1. procesa la imagen del producto
-    $hay_nueva_imagen = ! empty($_FILES['product_image']['tmp_name'])
-        && $_FILES['product_image']['error'] === UPLOAD_ERR_OK;
-
-    if ($hay_nueva_imagen) {
-
-        // Guardar imagen anterior
-        $imagen_anterior = $producto->product_image;
-
-        // Ruta para eliminar imagen anterior SOLO si existe
-        $ruta_imagen_anterior = $images_folder . $imagen_anterior;
-
-        $imgNewName = generarNombreUnico($_FILES['product_image']['name']);
-        $imgManager = new ImageManager(Driver::class);
-        $img        = $imgManager->read($_FILES['product_image']['tmp_name'])->cover(800, 600);
-
-        error_log("-- product_image --\n");
-
-        // debugResult($producto, false);
-
-        /*  actualiza la referencia de la imagen */
-        $producto->setImage($imgNewName, $ruta_imagen_anterior);
-    }
 
     // STEP 2. Validar entradas (errores que el usuario debe corregir)
     $erroresValid = $producto->validateEntry();
@@ -108,38 +84,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores) && $sanOk) {
 
 
-        // // STEP 1. Detectar si realmente se subió una imagen nueva (ANTES)
-        // $hay_nueva_imagen = isset($_FILES['product_image']) &&
-        //     $_FILES['product_image']['error'] === UPLOAD_ERR_OK &&
-        //     !empty($_FILES['product_image']['name']);
+        // Detectar si realmente se subió una imagen nueva
+        $hay_nueva_imagen = isset($_FILES['product_image']) &&
+            $_FILES['product_image']['error'] === UPLOAD_ERR_OK &&
+            !empty($_FILES['product_image']['name']);
 
 
-        // if ($hay_nueva_imagen) {
-
-        //     // Guardar imagen anterior
-        //     $imagen_anterior = $producto->product_image;
-
-        //     // Ruta para eliminar imagen anterior SOLO si existe
-        //     $ruta_imagen_anterior = $images_folder . $imagen_anterior;
-
-        //     $imgNewName = generarNombreUnico($_FILES['product_image']['name']);
-        //     $imgManager = new ImageManager(Driver::class);
-        //     $img        = $imgManager->read($_FILES['product_image']['tmp_name'])->cover(800, 600);
-
-
-        //     // debugResult($ruta_imagen_anterior, false);
-        //     // debugResult($imgNewName, false);
-        //     // debugResult(PATH_UPLOADS, false);
-
-        //     /*  actualiza la referencia de la imagen */
-        //     $producto->setImage($imgNewName, $ruta_imagen_anterior);
-
-        //     // Actualiza / almacena la referencia de la imagen en el servidor
-        //     $img->save(PATH_UPLOADS . $imgNewName);
-        // }
-
-        // STEP 7. Actualiza / almacena la imagen en el servidor
         if ($hay_nueva_imagen) {
+
+            // Guardar imagen anterior
+            $imagen_anterior = $producto->product_image;
+
+            // Ruta para eliminar imagen anterior SOLO si existe
+            $ruta_imagen_anterior = $images_folder . $imagen_anterior;
+
+            $imgNewName = generarNombreUnico($_FILES['product_image']['name']);
+            $imgManager = new ImageManager(Driver::class);
+            $img        = $imgManager->read($_FILES['product_image']['tmp_name'])->cover(800, 600);
+
+
+            // debugResult($ruta_imagen_anterior, false);
+            // debugResult($imgNewName, false);
+            // debugResult(PATH_UPLOADS, false);
+
+            /*  actualiza la referencia de la imagen */
+            $producto->setImage($imgNewName, $ruta_imagen_anterior);
+
+            // Actualiza / almacena la referencia de la imagen en el servidor
             $img->save(PATH_UPLOADS . $imgNewName);
         }
 
