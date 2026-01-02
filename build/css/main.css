@@ -930,6 +930,13 @@ header {
   margin-right: auto;
 }
 
+.btn-block-35 {
+  display: block;
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .btn-block-30 {
   display: block;
   width: 30%;
@@ -3349,6 +3356,41 @@ nav .top-bar p {
   padding-bottom: 2rem;
   background-color: rgb(235.224375, 233.35875, 236.84125);
   height: auto;
+}
+@media (min-width: 250px) {
+  .admin-layout a {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 320px) {
+  .admin-layout a {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 576px) {
+  .admin-layout a {
+    font-size: 1.1rem;
+  }
+}
+@media (min-width: 768px) {
+  .admin-layout a {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 992px) {
+  .admin-layout a {
+    font-size: 1.3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .admin-layout a {
+    font-size: 1.4rem;
+  }
+}
+@media (min-width: 1400px) {
+  .admin-layout a {
+    font-size: 1.5rem;
+  }
 }
 
 .panel-options {

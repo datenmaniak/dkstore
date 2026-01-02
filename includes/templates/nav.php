@@ -3,7 +3,7 @@
 <li><a href="">Blog</a></li>
 <li><a href="">Contacto</a></li>
 <!-- Último elemento: acceso a cuenta -->
-<li class="nav__login"><a href="login.php" class="">Mi cuenta</a>
+<li class="nav__login "><a href="/admin/login.php" class="">Mi cuenta</a>
     <!-- <a href="login.html" class="btn-ghost">Mi cuenta</a> -->
 </li>
 <!-- <li class="dark-mode-button"></li> -->

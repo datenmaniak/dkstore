@@ -247,7 +247,9 @@
     font-size: 1.5rem;
     font-weight: 500;
     font-family: core.$secondary-font;
+    // Modo 1: 
     @include ui.button-ghost;
+    // Modo 2: aplicar directamente en el html: btn-ghost  (NO FUNCIONO)
     color: #fff;
 
     .btn-account {
