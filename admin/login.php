@@ -43,7 +43,7 @@
                     // Verificar contraseña
                     if (password_verify($password, $usuario['password_hash'])) {
                         // Guardar sesión
-                        session_start();
+                        // session_start();
                         $_SESSION['user_id'] = $usuario['id'];
                         $_SESSION['email']   = $usuario['email'];
                         $_SESSION['role']    = $usuario['role'];

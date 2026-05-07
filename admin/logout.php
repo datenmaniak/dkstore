@@ -1,5 +1,8 @@
 <?php
-session_start();
+// 1. Incluimos la configuración centralizada de la aplicación
+require_once __DIR__ . '../../includes/app.php';
+
+
 
 // Eliminar todas las variables de sesión
 $_SESSION = [];
@@ -23,4 +26,4 @@ session_destroy();
 
 // Redirigir al login
 header("Location: /index.php");
-exit();
+exit;

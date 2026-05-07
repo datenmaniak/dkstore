@@ -1,6 +1,7 @@
 <?php
-ob_start();       // Captura cualquier salida accidental (espacios, BOM)
-session_start();  // Levanta la sesión globalmente para toda la app
+
+// Sin espacios ni nada antes de <?php
+// session_start();
 
     // Activar autoload de Composer
     require_once __DIR__ . '/../vendor/autoload.php';
@@ -27,4 +28,3 @@ session_start();  // Levanta la sesión globalmente para toda la app
     use dkstore\Productos;
 
 Productos::setDB($db);
-?>

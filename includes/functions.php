@@ -1,5 +1,3 @@
-<!-- functions.php -->
-
 <?php
 
     /* Globals Functions file */
@@ -130,7 +128,7 @@ Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers
 
     function requireLogin()
     {
-        session_start();
+        // session_start();   // ya fue iniciado en app.php
         if (! isset($_SESSION['user_id'])) {
             header("Location: /admin/login.php");
             exit;
@@ -139,7 +137,7 @@ Uso: includeForm('product', ['producto' => $producto, 'sellers_list' => $sellers
 
     function requireRole($role)
     {
-        session_start();
+        // session_start();  // creo no necesario. Ya es llamado en app.php
         if (! isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
             header("Location: /admin/no-access.php");
             exit;

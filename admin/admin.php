@@ -6,9 +6,6 @@
 // simplificado
 require_once __DIR__ . '/../../includes/app.php';
 
-
-
-
 includeTemplate('header');
 
 ?>

@@ -1,10 +1,10 @@
 <?php
 
 function conectDB() {
-    $host = 'db-dev';  // ← Nombre contenedor
-    $db = 'dkstore_db';
-    $user = 'dkstore_user';
-    $pass = 'dkstore123';
+    $host = 'ws.homelab';  // ← Nombre contenedor
+    $db = 'dkstore';
+    $user = 'dk';
+    $pass = 'chachita';
 
     $conn = new mysqli($host, $user, $pass, $db);
     if ($conn->connect_error) {
